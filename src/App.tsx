@@ -1,9 +1,11 @@
+import MenuInferior from "./Components/Footer/MenuInferior";
+import Navegacion from "./Components/Home/Navegacion";
+
 function App() {
   return (
     <>
-      <div className=" text-center text-4xl text-red-900 justify-center justify-items-center">
-        Hola mundo
-      </div>
+      <Navegacion />
+      <MenuInferior />
     </>
   );
 }
