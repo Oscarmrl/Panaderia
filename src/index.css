@@ -1,4 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@tailwind variants;
+
+/* Estilo de las tarjetas */
+.Product {
+  @apply flex flex-col w-full h-full bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200;
+}
+
+.Product .img {
+  @apply w-full h-28 sm:h-40 md:h-64 object-cover;
+}
+
+.Product .name {
+  @apply text-sm sm:text-base md:text-lg font-semibold text-gray-800;
+}
+
+.Product .description{
+  @apply text-xs sm:text-sm md:text-xl text-gray-600 m-2 flex-grow;
+}
+.Product .actions {
+  @apply mt-auto flex items-center justify-between;
+}
+.Product .price {
+  @apply text-sm md:text-xl font-bold text-green-600;
+}
+
+.Product button {
+  @apply px-2 py-1 text-xs sm:text-sm bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-300;
+}

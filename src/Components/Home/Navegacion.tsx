@@ -80,7 +80,7 @@ export default function Navegacion() {
           </label>
         </div>
         {/* Page content here */}
-        <Baner />
+        <Baner/>
       </div>
       <div className="drawer-side">
         <label
