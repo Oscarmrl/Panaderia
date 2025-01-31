@@ -8,7 +8,7 @@
 }
 
 .Product .img {
-  @apply w-full h-28 sm:h-40 md:h-64 object-cover;
+  @apply w-full h-28 sm:h-40 md:h-56 object-cover;
 }
 
 .Product .name {

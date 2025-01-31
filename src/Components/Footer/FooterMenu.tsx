@@ -1,56 +1,42 @@
+import { useState } from "react";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import { MdFavoriteBorder } from "react-icons/md";
+import { IoHomeOutline } from "react-icons/io5";
+
 export default function MenuInferior() {
+  const [activeTab, setActiveTab] = useState("home"); // ✅ useState definido primero
+
+  const handleClick = (e) => {
+    setActiveTab(e.currentTarget.dataset.tab); // ✅ Obtiene `data-tab` correctamente
+  };
+
   return (
-    <div className="btm-nav">
-      <button>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-          />
-        </svg>
+    <div className="flex flex-row bg-white bottom-0 fixed w-full justify-evenly py-2">
+      <button
+        data-tab="home"
+        className={activeTab === "home" ? "active" : "flex flex-col items-center justify-center"}
+        onClick={handleClick}
+      >
+        <IoHomeOutline className="w-6 h-6"/>
         <span className="btm-nav-label">Home</span>
       </button>
-      <button className="active">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
+
+      <button
+        data-tab="favoritos"
+        className={activeTab === "favoritos" ? "active" : "flex flex-col items-center justify-center"}
+        onClick={handleClick} // ✅ Ahora está en el botón, no en el span
+      >
+        <MdFavoriteBorder className="w-6 h-6" />
         <span className="btm-nav-label">Favoritos</span>
       </button>
-      <button>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-          />
-        </svg>
-        <span className="btm-nav-label">Pedidos</span>
+
+      <button
+        data-tab="carrito"
+        className={activeTab === "carrito" ? "active" : "flex flex-col items-center justify-center"}
+        onClick={handleClick}
+      >
+        <MdOutlineShoppingCart className="w-6 h-6" />
+        <span className="btm-nav-label">Carrito</span>
       </button>
     </div>
   );
