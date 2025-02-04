@@ -11,20 +11,21 @@ export default {
     themes: [
       {
         light: {
-          primary: "#DED1BA", // Warm putty
-          secondary: "#8A7356", // RICH EARTH BROWN
-          accent: "#5B4C3A", // DEEP ESPRESSO CLAY
-          neutral: "#C4B39A", // SOFT MUSHROOM BEIGE
+          primary: "#fff8f5", // Oat Milk
+          secondary: "#6D3914", //Roasted Chestnut 
+          accent: "#AB7843", //Caramel Drizzle
+          neutral: "#4C2B08", // SOFT MUSHROOM BEIGE
           "base-100": "#fff8f5", // Blanco cálido
         },
       },
       {
         dark: {
-          primary: "#32373d", // Oscuro-azul
-          secondary: "A5ABAF", //gris
+          primary: "#4C2B08", // Oscuro-azul
+          secondary: "#4C2B08", //gris
           accent: "#D64218", // rojo
           neutral: "#2F2A25", //negro
-          "base-100": "#3f3c3a", // oscuro-cafe
+          texto:"#fff8f5",
+          "base-100": "#D7BDA6", // oscuro-cafe
         },
       },
     ],

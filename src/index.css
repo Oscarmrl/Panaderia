@@ -4,7 +4,7 @@
 
 /* Estilo de las tarjetas */
 .Product {
-  @apply flex flex-col w-full h-full bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200;
+  @apply flex flex-col w-full h-full bg-primary rounded-2xl shadow-lg overflow-hidden;
 }
 
 .Product .img {
@@ -26,5 +26,10 @@
 }
 
 .Product button {
-  @apply px-2 py-1 text-xs sm:text-sm bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-300;
+  @apply px-2 w-10 h-8 md:h-10 py-1 text-xs sm:text-sm bg-accent text-white font-medium rounded-lg hover:bg-neutral transition duration-300;
+}
+
+
+.Menu_active{
+  @apply w-20 md:w-40 flex flex-col items-center justify-center bg-secondary text-white px-6 py-3 font-semibold shadow-lg rounded-[50%_50%_0%_0%] transition-all duration-300;
 }

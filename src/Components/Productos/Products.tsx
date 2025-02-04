@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { product } from "./DataProducts"
+import { IoMdAdd } from "react-icons/io";
+import IconoNav from "../ui/IconoNav";
 const Nrows = 6;
 export default function Products() {
   const[currentPage,setCurrentPage] = useState(1);
@@ -26,7 +28,7 @@ export default function Products() {
   const selectedProducts = product.slice(startIndex, startIndex + Nrows);
 
   return (
-    <div className=" bg-red-600 h-auto py-5 pb-20">
+    <div className=" bg-base h-auto py-5 pb-20">
 
         <h2 className=" text-center text-3xl md:text-5xl ">Hasta aqui mi reporte joakin</h2>
 
@@ -50,7 +52,7 @@ return (
     <div className="actions">
       <span className="price">{pro.price}</span>
       <button className="button">
-        Comprar Ahora
+      <IconoNav icon={IoMdAdd} size="w-4 h-4" label="" />
       </button>
     </div>
   </div>
@@ -67,7 +69,7 @@ return (
 
         <div className="flex justify-center mt-4 space-x-2">
         <button
-          className="px-4 py-2 bg-gray-800 text-white rounded disabled:opacity-50"
+          className="px-4 py-2 bg-accent text-white rounded disabled:opacity-50"
           onClick={handlePrevPages}
           disabled={currentPage === 1}
         >
@@ -75,7 +77,7 @@ return (
         </button>
         <span className="text-white">Página {currentPage} de {totalPages}</span>
         <button
-          className="px-4 py-2 bg-gray-800 text-white rounded disabled:opacity-50"
+          className="px-4 py-2 bg-accent text-white rounded disabled:opacity-50"
           onClick={handleNextPages}
           disabled={currentPage === totalPages}
         >

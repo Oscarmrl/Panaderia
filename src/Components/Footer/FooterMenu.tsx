@@ -1,42 +1,45 @@
 import { useState } from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
+import IconoNav from "../ui/IconoNav";
 import { IoHomeOutline } from "react-icons/io5";
 
 export default function MenuInferior() {
   const [activeTab, setActiveTab] = useState("home"); // ✅ useState definido primero
 
-  const handleClick = (e) => {
-    setActiveTab(e.currentTarget.dataset.tab); // ✅ Obtiene `data-tab` correctamente
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setActiveTab(e.currentTarget.dataset.tab || ""); // ✅ Obtiene `data-tab` correctamente
   };
 
   return (
-    <div className="flex flex-row bg-white bottom-0 fixed w-full justify-evenly py-2">
+    <div className="flex flex-row bg-base-100 bottom-0 fixed w-full justify-evenly py-2 md:hidden">
       <button
         data-tab="home"
-        className={activeTab === "home" ? "active" : "flex flex-col items-center justify-center"}
+        className={activeTab === "home" ? "Menu_active" : "flex flex-col items-center justify-center w-20 md:w-40"}
         onClick={handleClick}
       >
-        <IoHomeOutline className="w-6 h-6"/>
-        <span className="btm-nav-label">Home</span>
+        <IconoNav icon={IoHomeOutline} size="w-4 h-4" label="Inicio" />
+
       </button>
 
       <button
         data-tab="favoritos"
-        className={activeTab === "favoritos" ? "active" : "flex flex-col items-center justify-center"}
-        onClick={handleClick} // ✅ Ahora está en el botón, no en el span
+        className={activeTab === "favoritos" ? "Menu_active" : "flex flex-col items-center justify-center w-20 md:w-40"}
+        onClick={handleClick} 
       >
-        <MdFavoriteBorder className="w-6 h-6" />
-        <span className="btm-nav-label">Favoritos</span>
+
+<IconoNav icon={MdFavoriteBorder} size="w-4 h-4" label="Favoritos" />
+      
       </button>
 
       <button
         data-tab="carrito"
-        className={activeTab === "carrito" ? "active" : "flex flex-col items-center justify-center"}
+        className={activeTab === "carrito" ? "Menu_active" : "flex flex-col items-center justify-center w-20 md:w-40"}
         onClick={handleClick}
       >
-        <MdOutlineShoppingCart className="w-6 h-6" />
-        <span className="btm-nav-label">Carrito</span>
+
+<IconoNav icon={MdOutlineShoppingCart} size="w-4 h-4" label="Carrito" />
+
       </button>
     </div>
   );
