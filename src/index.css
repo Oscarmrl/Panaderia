@@ -4,7 +4,7 @@
 
 /* Estilo de las tarjetas */
 .Product {
-  @apply flex flex-col w-full h-full bg-primary rounded-2xl shadow-lg overflow-hidden;
+  @apply flex flex-col w-full h-full bg-base-100 rounded-2xl shadow-lg overflow-hidden;
 }
 
 .Product .img {
@@ -12,24 +12,23 @@
 }
 
 .Product .name {
-  @apply text-sm sm:text-base md:text-lg font-semibold text-gray-800;
+  @apply text-sm sm:text-lg md:text-xl font-bold text-secondary text-accent;
 }
 
-.Product .description{
-  @apply text-xs sm:text-sm md:text-xl text-gray-600 m-2 flex-grow;
+.Product .description {
+  @apply text-sm sm:text-lg text-primary m-2 flex-grow;
 }
 .Product .actions {
-  @apply mt-auto flex items-center justify-between;
+  @apply mt-auto flex items-center justify-between m-2;
 }
 .Product .price {
-  @apply text-sm md:text-xl font-bold text-green-600;
+  @apply text-sm  md:text-xl font-bold text-accent;
 }
 
 .Product button {
-  @apply px-2 w-10 h-8 md:h-10 py-1 text-xs sm:text-sm bg-accent text-white font-medium rounded-lg hover:bg-neutral transition duration-300;
+  @apply w-10  h-10 py-1 text-xs sm:text-sm bg-accent text-white font-medium rounded-full hover:bg-neutral transition duration-300;
 }
 
-
-.Menu_active{
+.Menu_active {
   @apply w-20 md:w-40 flex flex-col items-center justify-center bg-secondary text-white px-6 py-3 font-semibold shadow-lg rounded-[50%_50%_0%_0%] transition-all duration-300;
 }

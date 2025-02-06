@@ -11,8 +11,8 @@ export default {
     themes: [
       {
         light: {
-          primary: "#fff8f5", // Oat Milk
-          secondary: "#6D3914", //Roasted Chestnut 
+          primary: "#2F2A25", // Oat Milk
+          secondary: "#6D3914", //Roasted Chestnut
           accent: "#AB7843", //Caramel Drizzle
           neutral: "#4C2B08", // SOFT MUSHROOM BEIGE
           "base-100": "#fff8f5", // Blanco cálido
@@ -20,12 +20,12 @@ export default {
       },
       {
         dark: {
-          primary: "#4C2B08", // Oscuro-azul
+          primary: "#fff8f5", // Oscuro-azul
           secondary: "#4C2B08", //gris
-          accent: "#D64218", // rojo
-          neutral: "#2F2A25", //negro
-          texto:"#fff8f5",
-          "base-100": "#D7BDA6", // oscuro-cafe
+          accent: "#AB7843", // rojo
+          neutral: "#4C2B08", //negro
+          texto: "#fff8f5",
+          "base-100": "#6D3914", // oscuro-cafe
         },
       },
     ],
