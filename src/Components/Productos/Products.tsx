@@ -1,8 +1,10 @@
 import { useState } from "react";
+import useNavigation from "../../hook/useNavigation";
 import { IoMdAdd } from "react-icons/io";
 import IconoNav from "../ui/IconoNav";
 import Data from "../Data/Data";
 const Nrows = 6;
+
 export default function Products() {
   const { products } = Data();
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,6 +28,8 @@ export default function Products() {
   const startIndex = (currentPage - 1) * Nrows;
   const selectedProducts = products.slice(startIndex, startIndex + Nrows);
 
+  const { goToAdd } = useNavigation();
+
   return (
     <div className=" bg-base-100 h-auto py-5 pb-20">
       <h2 className=" text-center text-3xl md:text-5xl ">
@@ -48,7 +52,10 @@ export default function Products() {
 
                 <div className="actions">
                   <span className="price">{pro.precio}</span>
-                  <button className="button">
+                  <button
+                    className="button"
+                    onClick={() => goToAdd(pro.idProductos.toString())}
+                  >
                     <IconoNav icon={IoMdAdd} size="w-4 h-4" label="" />
                   </button>
                 </div>
@@ -60,21 +67,21 @@ export default function Products() {
 
       <div className="flex justify-center mt-4 space-x-2">
         <button
-          className="px-4 py-2 bg-accent text-white rounded disabled:opacity-50"
+          className="btn btn-circle"
           onClick={handlePrevPages}
           disabled={currentPage === 1}
         >
-          Anterior
+          ❮
         </button>
-        <span className="text-white">
+        <span className="text-primary">
           Página {currentPage} de {totalPages}
         </span>
         <button
-          className="px-4 py-2 bg-accent text-white rounded disabled:opacity-50"
+          className="btn btn-circle"
           onClick={handleNextPages}
           disabled={currentPage === totalPages}
         >
-          Siguiente
+          ❯
         </button>
       </div>
     </div>

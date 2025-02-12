@@ -1,8 +1,10 @@
 export type Tema = "light" | "dark";
 
-export type Produc ={
-    id: number;
-    name: string;
-    description:string;
-    price: number;
-}
+export type Product = {
+  idProductos: number;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  stock: number;
+  imagen: string;
+};

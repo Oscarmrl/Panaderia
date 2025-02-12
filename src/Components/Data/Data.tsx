@@ -1,13 +1,5 @@
 import { useEffect, useState } from "react";
-
-interface Product {
-  idProductos: number;
-  nombre: string;
-  descripcion: string;
-  precio: number;
-  stock: number;
-  imagen: string;
-}
+import type { Product } from "../../types";
 
 export default function Data() {
   const [products, setProducts] = useState<Product[]>([]);
