@@ -4,6 +4,6 @@ export default function useNavigation() {
   const navigate = useNavigate();
   return {
     gotToHome: () => navigate("/Panaderia"),
-    goToAdd: (id) => navigate(`/Panaderia/product/${id}`),
+    goToAdd: (id: string) => navigate(`/Panaderia/product/${id}`),
   };
 }

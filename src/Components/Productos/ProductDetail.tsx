@@ -1,6 +1,6 @@
 import useNavigation from "../../hook/useNavigation";
 import { useParams } from "react-router-dom";
-import Data from "../Data/Data";
+import { useProduct } from "../Data/Data";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import Button from "../ui/Button";
 import { IoIosArrowBack } from "react-icons/io";
@@ -10,9 +10,9 @@ import { IoMdRemove } from "react-icons/io";
 export default function ProductDetail() {
   const { gotToHome } = useNavigation();
   const { id } = useParams();
-  const { products } = Data();
+  const { products } = useProduct();
 
-  const product = products.find((pro) => pro.idProductos.toString() === id);
+  const product = products.find((pro) => pro.idProducts.toString() === id);
 
   return (
     <div className="lg:flex lg:justify-center">
@@ -61,7 +61,9 @@ export default function ProductDetail() {
           </p>
         </div>
       </div>
-      <div className="product-detail__description"></div>
+      <div className="product-detail__description">
+        <button className="btn btn-outline">agregar a carrito</button>
+      </div>
     </div>
   );
 }

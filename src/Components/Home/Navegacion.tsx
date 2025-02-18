@@ -1,19 +1,9 @@
-import { ComprasReducer, ComprasState } from "../../reducers/Compras-Reducers";
-import { useReducer, useEffect } from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
 import IconoNav from "../ui/IconoNav";
 import { IoHomeOutline } from "react-icons/io5";
 
-const initialState: ComprasState = { tema: "light" };
-
 export default function Navegacion() {
-  const [state, dispatch] = useReducer(ComprasReducer, initialState);
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", state.tema);
-  }, [state.tema]);
-
   return (
     <div className="navbar bg-base">
       <div className="flex-1">
@@ -48,11 +38,7 @@ export default function Navegacion() {
         <label className="swap swap-rotate">
           {/* Checkbox para cambiar el tema */}
 
-          <input
-            type="checkbox"
-            defaultChecked={state.tema === "dark"}
-            onClick={() => dispatch({ type: "Cambio-tema" })}
-          />
+          <input type="checkbox" />
 
           {/* Icono del sol */}
           <svg
