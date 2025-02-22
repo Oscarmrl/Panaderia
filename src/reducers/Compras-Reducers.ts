@@ -1,7 +1,4 @@
-import { useData } from "../Components/Data/Data";
 import { Product, ProductItem } from "../types";
-
-const { products } = useData();
 
 export type CartActions =
   | { type: "add-to-cart"; payload: { item: Product } }
@@ -15,27 +12,22 @@ export type CartState = {
   cart: ProductItem[];
 };
 
-const initialCart = (): ProductItem[] => {
-  const localStorageCart = localStorage.getItem("cart");
-  return localStorageCart ? JSON.parse(localStorageCart) : [];
-};
-
 export const initialState: CartState = {
   data: [], // Iniciamos con un array vacío
-  cart: initialCart(), // Carrito vacío también
+  cart: [], // Carrito vacío también
 };
 
 export const comprasReducer = (
   state: CartState = initialState,
   action: CartActions
 ) => {
-  const MAX_ITEMS = 5;
   const MIN_ITEMS = 1;
   if (action.type === "add-to-cart") {
     const itemExists = state.cart.find(
       (products) => products.idProducts === action.payload.item.idProducts
     );
 
+    const MAX_ITEMS = action.payload.item.stock;
     let updatedCart: ProductItem[] = [];
 
     //si el producto ya existe  en el carrito, aumenta la cantidad
@@ -96,6 +88,7 @@ export const comprasReducer = (
 
   if (action.type === "increaseQuantity") {
     const updatedCart = state.cart.map((item) => {
+      const MAX_ITEMS = item.stock;
       if (item.idProducts === action.payload.id && item.quantity < MAX_ITEMS) {
         return {
           ...item,
@@ -117,4 +110,6 @@ export const comprasReducer = (
       cart: [],
     };
   }
+
+  return state;
 };

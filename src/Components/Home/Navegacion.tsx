@@ -2,8 +2,9 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
 import IconoNav from "../ui/IconoNav";
 import { IoHomeOutline } from "react-icons/io5";
-
+import { UseTheme } from "../../hook/theme";
 export default function Navegacion() {
+  const { handleTheme } = UseTheme();
   return (
     <div className="navbar bg-base">
       <div className="flex-1">
@@ -38,7 +39,7 @@ export default function Navegacion() {
         <label className="swap swap-rotate">
           {/* Checkbox para cambiar el tema */}
 
-          <input type="checkbox" />
+          <input type="checkbox" onClick={handleTheme} />
 
           {/* Icono del sol */}
           <svg

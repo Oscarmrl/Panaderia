@@ -6,13 +6,28 @@ import Button from "../ui/Button";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdOutlineAdd } from "react-icons/md";
 import { IoMdRemove } from "react-icons/io";
+import { CartActions } from "../../reducers/compras-Reducers";
+import { ProductItem } from "../../types";
 
-export default function ProductDetail() {
+type ProductDetailProps = {
+  cart: ProductItem[];
+  dispatch: React.Dispatch<CartActions>;
+};
+
+export default function ProductDetail({ cart, dispatch }: ProductDetailProps) {
   const { gotToHome } = useNavigation();
   const { id } = useParams();
   const { products } = useProduct();
 
   const product = products.find((pro) => pro.idProducts.toString() === id);
+
+  const productInCart = cart.find(
+    (item) => item.idProducts === product?.idProducts
+  );
+
+  const quantity = productInCart ? productInCart.quantity : 1;
+
+  <span>{quantity}</span>;
 
   return (
     <div className="lg:flex lg:justify-center">
@@ -37,18 +52,43 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      <div className="w-full lg:w-2/3">
+      <div className="w-full lg:w-2/3 lg:mt-10">
         <div className="w-full grid grid-cols-2">
           <h2 className="text-2xl md:text-4xl m-2 font-bold text-accent col-span-1 lg:col-span-2">
-            Product Name
+            {product?.name}
           </h2>
           <div className="flex flex-col justify-start items-end lg:items-start m-2 lg:col-span-2 lg:row-start-3">
             <div className="flex justify-between text-white  p-2 mr-2 bg-secondary rounded-badge w-24">
-              <Button>
+              <Button
+                onClick={() =>
+                  dispatch({
+                    type: "decreaseQuantity",
+                    payload: { id: product!.idProducts },
+                  })
+                }
+              >
                 <IoMdRemove />
               </Button>
-              <span>1</span>
-              <Button>
+              <span>{quantity}</span>
+              <Button
+                onClick={() => {
+                  dispatch({
+                    type: "increaseQuantity",
+                    payload: { id: product!.idProducts },
+                  });
+
+                  if (
+                    !cart.find(
+                      (item) => item.idProducts === product!.idProducts
+                    )
+                  ) {
+                    dispatch({
+                      type: "add-to-cart",
+                      payload: { item: product! },
+                    });
+                  }
+                }}
+              >
                 <MdOutlineAdd />
               </Button>
             </div>
@@ -60,10 +100,34 @@ export default function ProductDetail() {
             perferendis voluptate voluptas inventore reiciendis quas at.
           </p>
         </div>
+
+        {productInCart && (
+          <div className="w-full grid grid-cols-2 p-2 md:mt-5">
+            <div className="col-start-1 flex flex-col justify-center">
+              <h3 className="text-sm">Sub total</h3>
+              <span className="font-bold text-2xl">
+                {`L${productInCart.quantity * productInCart.price}`}
+              </span>
+            </div>
+            <button
+              className="btn btn-outline col-start-2 text-1xl"
+              onClick={() => {
+                if (product) {
+                  dispatch({
+                    type: "add-to-cart",
+                    payload: { item: product },
+                  });
+                } else {
+                  console.error("Producto no encontrado.");
+                }
+              }}
+            >
+              ver carrito
+            </button>
+          </div>
+        )}
       </div>
-      <div className="product-detail__description">
-        <button className="btn btn-outline">agregar a carrito</button>
-      </div>
+      <div className="product-detail__description"></div>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import useNavigation from "../../hook/useNavigation";
 import { IoMdAdd } from "react-icons/io";
 import IconoNav from "../ui/IconoNav";
 import { useProduct } from "../Data/Data";
+
 const Nrows = 6;
 
 export default function Products() {
