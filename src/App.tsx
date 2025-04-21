@@ -11,6 +11,7 @@ import Baner from "./Components/Home/Baner";
 import Navegacion from "./Components/Home/Navegacion";
 import Products from "./Components/Productos/Products";
 import ProductDetail from "./Components/Productos/ProductDetail";
+import OtrasOpciones from "./Components/Productos/OtrasOpciones";
 import { initialState, comprasReducer } from "./reducers/compras-Reducers";
 
 function App() {
@@ -37,10 +38,14 @@ function MainContent() {
       <Routes>
         <Route path="/Panaderia" element={<Products />} />
 
-        {/* Ruta para el detalle de un producto específico */}
         <Route
           path="/Panaderia/product/:id"
-          element={<ProductDetail cart={state?.cart} dispatch={dispatch} />}
+          element={
+            <>
+              <ProductDetail cart={state?.cart} dispatch={dispatch} />
+              <OtrasOpciones cart={state.cart} dispatch={dispatch} />
+            </>
+          }
         />
       </Routes>
       {showNavegacion && <MenuInferior />}{" "}

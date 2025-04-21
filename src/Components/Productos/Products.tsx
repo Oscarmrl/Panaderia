@@ -44,7 +44,11 @@ export default function Products() {
 
               <div className="flex flex-col flex-grow sm:p-2 md:p-6">
                 <h3 className="name">{pro.name}</h3>
-                <p className="description">{pro.description}</p>
+                <p className="description">
+                  {pro.description.length > 100
+                    ? pro.description.slice(0, 60) + "..."
+                    : pro.description}
+                </p>
 
                 <div className="actions">
                   <span className="price">{pro.price}</span>

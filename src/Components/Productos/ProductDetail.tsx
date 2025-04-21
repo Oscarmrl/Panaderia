@@ -94,10 +94,7 @@ export default function ProductDetail({ cart, dispatch }: ProductDetailProps) {
             </div>
           </div>
           <p className="text-lg m-2 col-span-2 col-start-1 row-start-2">
-            Product Description Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Esse ducimus eligendi itaque velit quis fugiat
-            deserunt, harum excepturi nobis! Neque molestias velit nobis
-            perferendis voluptate voluptas inventore reiciendis quas at.
+            {product?.description}
           </p>
         </div>
 
