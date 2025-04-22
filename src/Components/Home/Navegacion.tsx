@@ -6,7 +6,7 @@ import { UseTheme } from "../../hook";
 import useNavigation from "../../hook/useNavigation";
 export default function Navegacion() {
   const { handleTheme } = UseTheme();
-  const { goToCart } = useNavigation();
+  const { goToCart, gotToHome, goToFavorites } = useNavigation();
 
   return (
     <div className="navbar bg-base">
@@ -16,13 +16,13 @@ export default function Navegacion() {
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 hidden md:flex">
           <li>
-            <a>
+            <button onClick={goToFavorites}>
               <IconoNav
                 icon={MdFavoriteBorder}
                 size="w-6 h-6"
                 label="Favoritos"
               />
-            </a>
+            </button>
           </li>
           <li>
             <button onClick={goToCart}>
@@ -34,9 +34,9 @@ export default function Navegacion() {
             </button>
           </li>
           <li>
-            <a>
+            <button onClick={gotToHome}>
               <IconoNav icon={IoHomeOutline} size="w-6 h-6" label="Inicio" />
-            </a>
+            </button>
           </li>
         </ul>
         <label className="swap swap-rotate">

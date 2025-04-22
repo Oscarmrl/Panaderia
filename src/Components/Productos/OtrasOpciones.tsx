@@ -19,7 +19,7 @@ export default function OtrasOpciones({ cart, dispatch }: OtrasOpcionesProps) {
   if (!products || !currentProduct) return null;
 
   return (
-    <div className="mt-10">
+    <div className="m-5 md:m-10">
       <h3 className="text-2xl text-accent font-bold mb-4">
         También te podría interesar:
       </h3>

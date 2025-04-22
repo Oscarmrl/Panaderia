@@ -6,6 +6,7 @@ import {
   OtrasOpciones,
   Cart,
   FooterMenu,
+  Favoritos,
 } from "./Components";
 
 import {
@@ -29,8 +30,8 @@ function App() {
 function MainContent() {
   const location = useLocation();
 
-  const showBaner = !location.pathname.startsWith("/Panaderia/product");
-  const showNavegacion = !location.pathname.startsWith("/Panaderia/product");
+  const showBaner = location.pathname === "/Panaderia";
+  const showNavegacion = location.pathname === "/Panaderia";
 
   const [state, dispatch] = useReducer(comprasReducer, initialState);
 
@@ -41,6 +42,7 @@ function MainContent() {
       <Routes>
         <Route path="/Panaderia" element={<Products />} />
         <Route path="/Panaderia/cart" element={<Cart />} />
+        <Route path="/Panaderia/favoritos" element={<Favoritos />} />
 
         <Route
           path="/Panaderia/product/:id"

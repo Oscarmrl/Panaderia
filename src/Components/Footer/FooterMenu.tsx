@@ -6,7 +6,7 @@ import { IoHomeOutline } from "react-icons/io5";
 import useNavigation from "../../hook/useNavigation";
 
 export default function MenuInferior() {
-  const { goToCart } = useNavigation();
+  const { goToCart, gotToHome, goToFavorites } = useNavigation();
   const [activeTab, setActiveTab] = useState("home"); // ✅ useState definido primero
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -22,7 +22,10 @@ export default function MenuInferior() {
             ? "Menu_active"
             : "flex flex-col items-center justify-center w-20 md:w-40"
         }
-        onClick={handleClick}
+        onClick={(e) => {
+          handleClick(e);
+          gotToHome();
+        }}
       >
         <IconoNav icon={IoHomeOutline} size="w-4 h-4" label="Inicio" />
       </button>
@@ -34,7 +37,10 @@ export default function MenuInferior() {
             ? "Menu_active"
             : "flex flex-col items-center justify-center w-20 md:w-40"
         }
-        onClick={handleClick}
+        onClick={(e) => {
+          handleClick(e);
+          goToFavorites();
+        }}
       >
         <IconoNav icon={MdFavoriteBorder} size="w-4 h-4" label="Favoritos" />
       </button>

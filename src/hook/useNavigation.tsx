@@ -6,5 +6,6 @@ export default function useNavigation() {
     gotToHome: () => navigate("/Panaderia"),
     goToAdd: (id: string) => navigate(`/Panaderia/product/${id}`),
     goToCart: () => navigate("/Panaderia/cart"),
+    goToFavorites: () => navigate("/Panaderia/favoritos"),
   };
 }
