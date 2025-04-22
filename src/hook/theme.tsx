@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import type { Tema } from "../types";
 
-export function UseTheme() {
+export default function UseTheme() {
   const [theme, setTheme] = useState<Tema>("dark");
 
   const handleTheme = () => {

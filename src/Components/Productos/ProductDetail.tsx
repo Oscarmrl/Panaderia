@@ -6,7 +6,7 @@ import Button from "../ui/Button";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdOutlineAdd } from "react-icons/md";
 import { IoMdRemove } from "react-icons/io";
-import { CartActions } from "../../reducers/compras-Reducers";
+import { CartActions } from "../../reducers";
 import { ProductItem } from "../../types";
 
 type ProductDetailProps = {
@@ -15,7 +15,7 @@ type ProductDetailProps = {
 };
 
 export default function ProductDetail({ cart, dispatch }: ProductDetailProps) {
-  const { gotToHome } = useNavigation();
+  const { gotToHome, goToCart } = useNavigation();
   const { id } = useParams();
   const { products } = useProduct();
 
@@ -108,16 +108,7 @@ export default function ProductDetail({ cart, dispatch }: ProductDetailProps) {
             </div>
             <button
               className="btn btn-outline col-start-2 text-1xl"
-              onClick={() => {
-                if (product) {
-                  dispatch({
-                    type: "add-to-cart",
-                    payload: { item: product },
-                  });
-                } else {
-                  console.error("Producto no encontrado.");
-                }
-              }}
+              onClick={goToCart}
             >
               ver carrito
             </button>

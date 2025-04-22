@@ -2,9 +2,12 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
 import IconoNav from "../ui/IconoNav";
 import { IoHomeOutline } from "react-icons/io5";
-import { UseTheme } from "../../hook/theme";
+import { UseTheme } from "../../hook";
+import useNavigation from "../../hook/useNavigation";
 export default function Navegacion() {
   const { handleTheme } = UseTheme();
+  const { goToCart } = useNavigation();
+
   return (
     <div className="navbar bg-base">
       <div className="flex-1">
@@ -22,13 +25,13 @@ export default function Navegacion() {
             </a>
           </li>
           <li>
-            <a href="">
+            <button onClick={goToCart}>
               <IconoNav
                 icon={MdOutlineShoppingCart}
                 size="w-6 h-6"
                 label="Carrito"
               />
-            </a>
+            </button>
           </li>
           <li>
             <a>

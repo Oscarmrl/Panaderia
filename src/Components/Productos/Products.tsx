@@ -1,6 +1,6 @@
 import { useState } from "react";
-import useNavigation from "../../hook/useNavigation";
 import { IoMdAdd } from "react-icons/io";
+import { useNavigation } from "../../hook";
 import IconoNav from "../ui/IconoNav";
 import { useProduct } from "../Data/Data";
 

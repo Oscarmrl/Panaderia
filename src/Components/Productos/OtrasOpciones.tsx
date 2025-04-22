@@ -1,5 +1,5 @@
 import { ProductItem } from "../../types";
-import { CartActions } from "../../reducers/compras-Reducers";
+import { CartActions } from "../../reducers";
 import { useParams } from "react-router-dom";
 import { useProduct } from "../Data/Data";
 import useNavigation from "../../hook/useNavigation";

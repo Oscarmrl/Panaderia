@@ -1,18 +1,21 @@
 import {
+  Navegacion,
+  Baner,
+  ProductDetail,
+  Products,
+  OtrasOpciones,
+  Cart,
+  FooterMenu,
+} from "./Components";
+
+import {
   BrowserRouter as Router,
   Route,
   Routes,
   useLocation,
 } from "react-router-dom";
 import { useReducer } from "react";
-
-import MenuInferior from "./Components/Footer/FooterMenu";
-import Baner from "./Components/Home/Baner";
-import Navegacion from "./Components/Home/Navegacion";
-import Products from "./Components/Productos/Products";
-import ProductDetail from "./Components/Productos/ProductDetail";
-import OtrasOpciones from "./Components/Productos/OtrasOpciones";
-import { initialState, comprasReducer } from "./reducers/compras-Reducers";
+import { initialState, comprasReducer } from "./reducers";
 
 function App() {
   return (
@@ -37,6 +40,7 @@ function MainContent() {
       {showBaner && <Baner />}{" "}
       <Routes>
         <Route path="/Panaderia" element={<Products />} />
+        <Route path="/Panaderia/cart" element={<Cart />} />
 
         <Route
           path="/Panaderia/product/:id"
@@ -48,7 +52,7 @@ function MainContent() {
           }
         />
       </Routes>
-      {showNavegacion && <MenuInferior />}{" "}
+      {showNavegacion && <FooterMenu />}{" "}
     </>
   );
 }
