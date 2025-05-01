@@ -103,7 +103,7 @@ export default function ProductDetail({ cart, dispatch }: ProductDetailProps) {
             <div className="col-start-1 flex flex-col justify-center">
               <h3 className="text-sm">Sub total</h3>
               <span className="font-bold text-2xl">
-                {`L${productInCart.quantity * productInCart.price}`}
+                {`L ${productInCart.quantity * productInCart.price}`}
               </span>
             </div>
             <button

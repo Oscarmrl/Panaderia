@@ -52,7 +52,7 @@ export default function OtrasOpciones({ cart, dispatch }: OtrasOpcionesProps) {
                   Ver Producto
                 </button>
                 <button
-                  className="btn btn-primary btn-sm"
+                  className="btn btn-secondary btn-sm"
                   onClick={() => {
                     dispatch({
                       type: "increaseQuantity",

@@ -41,7 +41,10 @@ function MainContent() {
       {showBaner && <Baner />}{" "}
       <Routes>
         <Route path="/Panaderia" element={<Products />} />
-        <Route path="/Panaderia/cart" element={<Cart />} />
+        <Route
+          path="/Panaderia/cart"
+          element={<Cart cart={state.cart} dispatch={dispatch} />}
+        />
         <Route path="/Panaderia/favoritos" element={<Favoritos />} />
 
         <Route

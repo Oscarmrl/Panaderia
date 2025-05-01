@@ -12,7 +12,7 @@
 }
 
 .Product .name {
-  @apply text-sm sm:text-lg md:text-xl font-bold  text-accent;
+  @apply text-sm sm:text-lg md:text-3xl font-bold  text-accent;
 }
 
 .Product .description {
