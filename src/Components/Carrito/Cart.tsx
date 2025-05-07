@@ -16,7 +16,7 @@ export default function Cart({ cart, dispatch }: CartActionsProps) {
       <div className="relative flex items-center w-full m-1 md:m-5">
         <button
           onClick={gotToHome}
-          className="btn btn-circle absolute left-0 btn-outline"
+          className="btn btn-circle absolute  left-0 btn-outline"
         >
           <IoIosArrowBack />
         </button>
@@ -24,13 +24,10 @@ export default function Cart({ cart, dispatch }: CartActionsProps) {
       </div>
 
       {cart.length > 0 ? (
-        <div className="mt-10 grid grid-cols-1 grid-rows-1 gap-4 place-items-center md:m-10  ">
+        <div className="mt-10 grid grid-cols-1 grid-rows-1 gap-4 place-items-center lg:place-items-start md:m-2  ">
           {cart.map((item, index) => {
             return (
-              <div
-                key={index}
-                className="flex flex-col w-full lg:w-2/3 h-full  sm:p-2 "
-              >
+              <div key={index} className="flex flex-col w-full h-full  sm:p-2 ">
                 <div className=" flex rounded-badge shadow-lg">
                   <img
                     src="/Panaderia/Principal.jpeg"
@@ -44,11 +41,12 @@ export default function Cart({ cart, dispatch }: CartActionsProps) {
                     <p className="text-center text-sm sm:text-lg">
                       {item.description.slice(0, 40) + "..."}
                     </p>
+
                     <span className="font-bold ml-4 md:ml-8 2xl">
-                      {item.price * item.quantity}
+                      {item.price}
                     </span>
                   </div>
-                  <div className="flex flex-col flex-1 w-56 h-full place-items-end ">
+                  <div className="flex flex-col  w-56 h-full place-items-end ">
                     <div className="flex justify-between text-white p-3 sm:p-4 bg-secondary rounded-badge w-20 sm:w-36">
                       <button
                         onClick={() => {
