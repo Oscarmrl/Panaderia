@@ -6,7 +6,7 @@ export function useProduct() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/productos")
+    fetch("https://backendpanaderia-production.up.railway.app/productos")
       .then((response) => response.json())
       .then((products) => setProducts(products))
       .catch((error) => setError(error));

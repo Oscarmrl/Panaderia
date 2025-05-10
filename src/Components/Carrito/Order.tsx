@@ -48,7 +48,10 @@ export default function Order({ cart }: OrderProps) {
           <span className="text-2xl font-bold">{total}</span>
         </div>
 
-        <button className="btn rounded-badge btn-outline w-full  mb-24 md:mb-5 text-xl font-bold">
+        <button
+          className={`btn rounded-badge btn-outline w-full mb-24 text-xl font-bold disabled:opacity-45`}
+          disabled={cart.length === 0}
+        >
           Ordenar ya
         </button>
       </div>
