@@ -3,6 +3,7 @@ import { IoMdAdd } from "react-icons/io";
 import { useNavigation } from "../../hook";
 import IconoNav from "../ui/IconoNav";
 import { useProduct } from "../Data/Data";
+import { FormatCurrency } from "../../helpers";
 
 const Nrows = 6;
 
@@ -51,7 +52,7 @@ export default function Products() {
                 </p>
 
                 <div className="actions">
-                  <span className="price">{pro.price}</span>
+                  <span className="price">{FormatCurrency(pro.price)}</span>
                   <button
                     className="button"
                     onClick={() => goToAdd(pro.idProducts.toString())}

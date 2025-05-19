@@ -3,6 +3,7 @@ import { CartActions } from "../../reducers";
 import { useParams } from "react-router-dom";
 import { useProduct } from "../Data/Data";
 import useNavigation from "../../hook/useNavigation";
+import { FormatCurrency } from "../../helpers";
 
 type OtrasOpcionesProps = {
   cart: ProductItem[];
@@ -41,7 +42,9 @@ export default function OtrasOpciones({ cart, dispatch }: OtrasOpcionesProps) {
                 {product.name}
               </h4>
               <p className="text-lg">{product.description.slice(0, 60)}...</p>
-              <span className="font-bold block mt-1">{`L${product.price}`}</span>
+              <span className="font-bold block mt-1">
+                {FormatCurrency(product.price)}
+              </span>
               <div className="flex gap-4 mt-2 ">
                 <button
                   className="btn btn-outline btn-sm"

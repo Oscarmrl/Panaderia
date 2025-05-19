@@ -15,7 +15,7 @@ export default {
           secondary: "#6D3914", //Roasted Chestnut
           accent: "#AB7843", //Caramel Drizzle
           neutral: "#4C2B08", // SOFT MUSHROOM BEIGE
-          "base-100": "#feffeb", // Blanco cálido
+          "base-100": "#f9fffd", // Blanco cálido
         },
       },
       {

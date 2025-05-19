@@ -7,6 +7,7 @@ import {
   Cart,
   FooterMenu,
   Favoritos,
+  Order,
 } from "./Components";
 
 import {
@@ -17,14 +18,20 @@ import {
 } from "react-router-dom";
 import { useReducer } from "react";
 import { initialState, comprasReducer } from "./reducers";
-import Order from "./Components/Carrito/Order";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 function App() {
   return (
-    <Router>
-      {" "}
-      <MainContent />
-    </Router>
+    <PayPalScriptProvider
+      options={{
+        clientId:
+          "Ae6J5LA_I8y4mIkMJxceS71Q3Y5_2HzUwFFYftq8vahkiQ6vxbrH4py8xwBBT0WTNXZKsq-0HdKqIqlK",
+      }}
+    >
+      <Router>
+        <MainContent />
+      </Router>
+    </PayPalScriptProvider>
   );
 }
 

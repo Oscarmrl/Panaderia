@@ -3,6 +3,7 @@ import { ProductItem } from "../../types";
 import { IoMdRemove, IoIosArrowBack } from "react-icons/io";
 import { MdDeleteForever, MdOutlineAdd } from "react-icons/md";
 import { useNavigation } from "../../hook";
+import { FormatCurrency } from "../../helpers";
 
 type CartActionsProps = {
   cart: ProductItem[];
@@ -43,7 +44,7 @@ export default function Cart({ cart, dispatch }: CartActionsProps) {
                     </p>
 
                     <span className="font-bold ml-4 md:ml-8 2xl">
-                      {item.price}
+                      {FormatCurrency(item.price)}
                     </span>
                   </div>
                   <div className="flex flex-col  w-56 h-full place-items-end ">

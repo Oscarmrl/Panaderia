@@ -8,6 +8,7 @@ import { MdOutlineAdd } from "react-icons/md";
 import { IoMdRemove } from "react-icons/io";
 import { CartActions } from "../../reducers";
 import { ProductItem } from "../../types";
+import { FormatCurrency } from "../../helpers";
 
 type ProductDetailProps = {
   cart: ProductItem[];
@@ -103,7 +104,7 @@ export default function ProductDetail({ cart, dispatch }: ProductDetailProps) {
             <div className="col-start-1 flex flex-col justify-center">
               <h3 className="text-sm">Sub total</h3>
               <span className="font-bold text-2xl">
-                {`L ${productInCart.quantity * productInCart.price}`}
+                {FormatCurrency(productInCart.quantity * productInCart.price)}
               </span>
             </div>
             <button
