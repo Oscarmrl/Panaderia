@@ -7,9 +7,12 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "@fontsource/roboto/900.css";
 import App from "./App.tsx";
+import { NavigationProvider } from "./context/NavegationContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <NavigationProvider>
+      <App />
+    </NavigationProvider>
   </StrictMode>
 );

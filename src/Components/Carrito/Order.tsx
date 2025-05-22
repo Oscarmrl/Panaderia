@@ -10,6 +10,8 @@ type OrderProps = {
 export default function Order({ cart }: OrderProps) {
   const [showModal, setShowModal] = useState(false);
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalFormatted = FormatCurrency(total);
+
   return (
     <div className="m-2 md:m-8">
       <div className="relative flex items-center w-full m-1 md:m-5">
@@ -23,19 +25,19 @@ export default function Order({ cart }: OrderProps) {
         </div>
 
         {cart.length > 0 ? (
-          <div className="flex flex-col gap-2 md:gap-6">
+          <ul className="flex flex-col gap-2 md:gap-6">
             {cart.map((item, index) => {
               return (
-                <div
+                <li
                   key={index}
                   className="flex flex-row gap-2 md:gap-4 text-lg md:text-2xl font-semibold"
                 >
                   <h4>{item.name} :</h4>
-                  <span>{FormatCurrency(item.price * item.quantity)} Lps</span>
-                </div>
+                  <span>{FormatCurrency(item.price * item.quantity)}</span>
+                </li>
               );
             })}
-          </div>
+          </ul>
         ) : (
           <h3 className="text-center font-semibold m-10 text-lg">
             Agregue productos para hacer una orden
@@ -49,11 +51,11 @@ export default function Order({ cart }: OrderProps) {
 
         <div className="flex flex-row gap-2">
           <h3 className="text-2xl font-bold">total :</h3>
-          <span className="text-2xl font-bold">{FormatCurrency(total)}</span>
+          <span className="text-2xl font-bold">{totalFormatted}</span>
         </div>
 
         <button
-          className={`btn rounded-badge btn-outline w-full mb-10 md:mb-3 text-xl font-bold disabled:opacity-45`}
+          className={`btn rounded-badge btn-outline w-full mb-28 md:mb-3 text-xl font-bold disabled:opacity-45`}
           disabled={cart.length === 0}
           onClick={() => setShowModal(true)}
         >
@@ -74,6 +76,16 @@ export default function Order({ cart }: OrderProps) {
                   Seleccione su metodo de pago
                 </h2>
               </div>
+
+              <ul className="mb-2 font-semibold text-sm md:text-xl">
+                {cart.map((item) => (
+                  <li key={item.name}>
+                    {item.name} × {item.quantity} = $
+                    {(item.price * item.quantity).toFixed(2)}
+                  </li>
+                ))}
+                <li className="font-bold">Total = {totalFormatted}</li>
+              </ul>
 
               <PayPalButton cart={cart} />
             </div>

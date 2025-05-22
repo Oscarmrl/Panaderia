@@ -10,7 +10,7 @@ function calcularTotal(cart: ProductItem[]): string {
   return total.toFixed(2); // PayPal espera string con 2 decimales
 }
 
-export default function PayPalButtonProps({ cart }: PayPalButtonProps) {
+export default function PayPalButton({ cart }: PayPalButtonProps) {
   if (cart.length === 0) return null;
 
   return (
@@ -18,17 +18,22 @@ export default function PayPalButtonProps({ cart }: PayPalButtonProps) {
       <PayPalButtons
         style={{ layout: "vertical" }}
         createOrder={(_data, actions) => {
-          return actions.order.create({
-            intent: "CAPTURE",
-            purchase_units: [
-              {
-                amount: {
-                  value: calcularTotal(cart),
-                  currency_code: "USD",
+          try {
+            return actions.order.create({
+              intent: "CAPTURE",
+              purchase_units: [
+                {
+                  amount: {
+                    value: calcularTotal(cart),
+                    currency_code: "USD",
+                  },
                 },
-              },
-            ],
-          });
+              ],
+            });
+          } catch (err) {
+            console.error("Error al crear la orden de PayPal:", err);
+            return Promise.reject(err);
+          }
         }}
         onApprove={async (_data, actions) => {
           if (!actions.order) {

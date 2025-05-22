@@ -116,7 +116,6 @@ export default function ProductDetail({ cart, dispatch }: ProductDetailProps) {
           </div>
         )}
       </div>
-      <div className="product-detail__description"></div>
     </div>
   );
 }

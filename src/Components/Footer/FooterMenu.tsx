@@ -1,17 +1,13 @@
-import { useState } from "react";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
 import IconoNav from "../ui/IconoNav";
 import { IoHomeOutline } from "react-icons/io5";
 import useNavigation from "../../hook/useNavigation";
+import { useNavigationContext } from "../../context/useNavigationContext";
 
 export default function MenuInferior() {
   const { goToCart, gotToHome, goToFavorites } = useNavigation();
-  const [activeTab, setActiveTab] = useState("home"); // ✅ useState definido primero
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setActiveTab(e.currentTarget.dataset.tab || ""); // ✅ Obtiene `data-tab` correctamente
-  };
+  const { activeTab } = useNavigationContext();
 
   return (
     <div className="flex flex-row bg-base-100 bottom-0 fixed w-full justify-evenly py-2 md:hidden">
@@ -22,10 +18,7 @@ export default function MenuInferior() {
             ? "Menu_active"
             : "flex flex-col items-center justify-center w-20 md:w-40"
         }
-        onClick={(e) => {
-          handleClick(e);
-          gotToHome();
-        }}
+        onClick={gotToHome}
       >
         <IconoNav icon={IoHomeOutline} size="w-4 h-4" label="Inicio" />
       </button>
@@ -37,10 +30,7 @@ export default function MenuInferior() {
             ? "Menu_active"
             : "flex flex-col items-center justify-center w-20 md:w-40"
         }
-        onClick={(e) => {
-          handleClick(e);
-          goToFavorites();
-        }}
+        onClick={goToFavorites}
       >
         <IconoNav icon={MdFavoriteBorder} size="w-4 h-4" label="Favoritos" />
       </button>
@@ -52,10 +42,7 @@ export default function MenuInferior() {
             ? "Menu_active"
             : "flex flex-col items-center justify-center w-20 md:w-40"
         }
-        onClick={(e) => {
-          handleClick(e);
-          goToCart();
-        }}
+        onClick={goToCart}
       >
         <IconoNav icon={MdOutlineShoppingCart} size="w-4 h-4" label="Carrito" />
       </button>

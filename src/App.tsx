@@ -39,9 +39,6 @@ function MainContent() {
   const location = useLocation();
 
   const showBaner = location.pathname === "/Panaderia";
-  const showNavegacion =
-    location.pathname === "/Panaderia" ||
-    location.pathname === "/Panaderia/cart";
 
   const [state, dispatch] = useReducer(comprasReducer, initialState);
 
@@ -60,7 +57,10 @@ function MainContent() {
             </div>
           }
         />
-        <Route path="/Panaderia/favoritos" element={<Favoritos />} />
+        <Route
+          path="/Panaderia/favoritos"
+          element={<Favoritos favoritos={state.cart} dispatch={dispatch} />}
+        />
 
         <Route
           path="/Panaderia/product/:id"
@@ -72,7 +72,7 @@ function MainContent() {
           }
         />
       </Routes>
-      {showNavegacion && <FooterMenu />}{" "}
+      <FooterMenu />
     </>
   );
 }
