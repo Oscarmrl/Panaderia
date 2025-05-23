@@ -1,15 +1,15 @@
-import { ProductItem } from "../../types";
 import { FormatCurrency } from "../../helpers";
 import PayPalButton from "./PayPalButton";
 import { useState } from "react";
+import { useCart } from "../../hook/useCart";
 
-type OrderProps = {
-  cart: ProductItem[];
-};
-
-export default function Order({ cart }: OrderProps) {
+export default function Order() {
   const [showModal, setShowModal] = useState(false);
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const { state } = useCart();
+  const total = state.cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
   const totalFormatted = FormatCurrency(total);
 
   return (
@@ -24,9 +24,9 @@ export default function Order({ cart }: OrderProps) {
           <span className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary"></span>
         </div>
 
-        {cart.length > 0 ? (
+        {state.cart.length > 0 ? (
           <ul className="flex flex-col gap-2 md:gap-6">
-            {cart.map((item, index) => {
+            {state.cart.map((item, index) => {
               return (
                 <li
                   key={index}
@@ -56,7 +56,7 @@ export default function Order({ cart }: OrderProps) {
 
         <button
           className={`btn rounded-badge btn-outline w-full mb-28 md:mb-3 text-xl font-bold disabled:opacity-45`}
-          disabled={cart.length === 0}
+          disabled={state.cart.length === 0}
           onClick={() => setShowModal(true)}
         >
           Ordenar ya
@@ -78,7 +78,7 @@ export default function Order({ cart }: OrderProps) {
               </div>
 
               <ul className="mb-2 font-semibold text-sm md:text-xl">
-                {cart.map((item) => (
+                {state.cart.map((item) => (
                   <li key={item.name}>
                     {item.name} × {item.quantity} = $
                     {(item.price * item.quantity).toFixed(2)}
@@ -87,7 +87,7 @@ export default function Order({ cart }: OrderProps) {
                 <li className="font-bold">Total = {totalFormatted}</li>
               </ul>
 
-              <PayPalButton cart={cart} />
+              <PayPalButton cart={state.cart} />
             </div>
           </div>
         )}

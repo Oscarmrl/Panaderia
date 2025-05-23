@@ -16,10 +16,8 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { useReducer } from "react";
-import { initialState, comprasReducer } from "./reducers";
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 function App() {
   return (
     <PayPalScriptProvider
@@ -40,8 +38,6 @@ function MainContent() {
 
   const showBaner = location.pathname === "/Panaderia";
 
-  const [state, dispatch] = useReducer(comprasReducer, initialState);
-
   return (
     <>
       <Navegacion />
@@ -52,22 +48,19 @@ function MainContent() {
           path="/Panaderia/cart"
           element={
             <div className="grid grid-cols-1 lg:grid-cols-2  gap-4 ">
-              <Cart cart={state.cart} dispatch={dispatch} />
-              <Order cart={state.cart} />
+              <Cart />
+              <Order />
             </div>
           }
         />
-        <Route
-          path="/Panaderia/favoritos"
-          element={<Favoritos favoritos={state.cart} dispatch={dispatch} />}
-        />
+        <Route path="/Panaderia/favoritos" element={<Favoritos />} />
 
         <Route
           path="/Panaderia/product/:id"
           element={
             <>
-              <ProductDetail cart={state?.cart} dispatch={dispatch} />
-              <OtrasOpciones cart={state.cart} dispatch={dispatch} />
+              <ProductDetail />
+              <OtrasOpciones />
             </>
           }
         />

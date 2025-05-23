@@ -5,6 +5,7 @@ import { ProductItem } from "../../types";
 import { IoMdRemove, IoIosArrowBack } from "react-icons/io";
 import { MdDeleteForever, MdOutlineAdd } from "react-icons/md";
 import { FormatCurrency } from "../../helpers";
+import { useCart } from "../../hook/useCart";
 
 type ProductListProps = {
   title?: string;
@@ -18,11 +19,11 @@ type ProductListProps = {
 export default function ProductList({
   title = "Productos",
   products,
-  dispatch,
   showQuantityControls = true,
   showRemoveButton = true,
   onBack,
 }: ProductListProps) {
+  const { dispatch } = useCart();
   return (
     <div className="m-2 md:m-8">
       <div className="relative flex items-center w-full m-1 md:m-5">

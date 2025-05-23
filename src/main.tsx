@@ -8,11 +8,14 @@ import "@fontsource/roboto/700.css";
 import "@fontsource/roboto/900.css";
 import App from "./App.tsx";
 import { NavigationProvider } from "./context/NavegationContext.tsx";
+import { CartProvider } from "./context/CartContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <NavigationProvider>
-      <App />
-    </NavigationProvider>
+    <CartProvider>
+      <NavigationProvider>
+        <App />
+      </NavigationProvider>
+    </CartProvider>
   </StrictMode>
 );

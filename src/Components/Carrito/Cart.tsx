@@ -1,22 +1,17 @@
 // src/components/Cart.tsx
 
-import { CartActions } from "../../reducers";
-import { ProductItem } from "../../types";
+import { useCart } from "../../hook/useCart";
 import { useNavigation } from "../../hook";
 import ProductList from "../ui/ProductList";
 
-type CartActionsProps = {
-  cart: ProductItem[];
-  dispatch: React.Dispatch<CartActions>;
-};
-
-export default function Cart({ cart, dispatch }: CartActionsProps) {
+export default function Cart() {
   const { gotToHome } = useNavigation();
+  const { state, dispatch } = useCart();
 
   return (
     <ProductList
       title="Carrito"
-      products={cart}
+      products={state.cart}
       dispatch={dispatch}
       showQuantityControls={true}
       showRemoveButton={true}

@@ -35,7 +35,9 @@ export default function Products() {
 
   return (
     <div className=" bg-base-100 h-auto py-5 pb-20">
-      <h2 className=" text-center text-3xl md:text-5xl  ">Productos</h2>
+      <h2 className=" text-center text-3xl md:text-5xl font-bold mb-5  ">
+        Productos
+      </h2>
 
       <div className="grid grid-cols-2 m-1 md:m-4  text-center gap-2 md:gap-4 md:grid-cols-3">
         {products?.length > 0 ? (

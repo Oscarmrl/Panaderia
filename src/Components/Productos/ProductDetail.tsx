@@ -6,23 +6,18 @@ import Button from "../ui/Button";
 import { IoIosArrowBack } from "react-icons/io";
 import { MdOutlineAdd } from "react-icons/md";
 import { IoMdRemove } from "react-icons/io";
-import { CartActions } from "../../reducers";
-import { ProductItem } from "../../types";
+import { useCart } from "../../hook/useCart";
 import { FormatCurrency } from "../../helpers";
 
-type ProductDetailProps = {
-  cart: ProductItem[];
-  dispatch: React.Dispatch<CartActions>;
-};
-
-export default function ProductDetail({ cart, dispatch }: ProductDetailProps) {
+export default function ProductDetail() {
   const { gotToHome, goToCart } = useNavigation();
   const { id } = useParams();
   const { products } = useProduct();
+  const { state, dispatch } = useCart();
 
   const product = products.find((pro) => pro.idProducts.toString() === id);
 
-  const productInCart = cart.find(
+  const productInCart = state.cart.find(
     (item) => item.idProducts === product?.idProducts
   );
 
@@ -79,7 +74,7 @@ export default function ProductDetail({ cart, dispatch }: ProductDetailProps) {
                   });
 
                   if (
-                    !cart.find(
+                    !state.cart.find(
                       (item) => item.idProducts === product!.idProducts
                     )
                   ) {

@@ -1,19 +1,14 @@
-import { ProductItem } from "../../types";
-import { CartActions } from "../../reducers";
 import { useParams } from "react-router-dom";
 import { useProduct } from "../Data/Data";
 import useNavigation from "../../hook/useNavigation";
 import { FormatCurrency } from "../../helpers";
+import { useCart } from "../../hook/useCart";
 
-type OtrasOpcionesProps = {
-  cart: ProductItem[];
-  dispatch: React.Dispatch<CartActions>;
-};
-
-export default function OtrasOpciones({ cart, dispatch }: OtrasOpcionesProps) {
+export default function OtrasOpciones() {
   const { goToAdd } = useNavigation();
   const { id } = useParams();
   const { products } = useProduct();
+  const { state, dispatch } = useCart();
 
   const currentProduct = products.find((p) => p.idProducts.toString() === id);
 
@@ -63,7 +58,7 @@ export default function OtrasOpciones({ cart, dispatch }: OtrasOpcionesProps) {
                     });
 
                     if (
-                      !cart.find(
+                      !state.cart.find(
                         (item) => item.idProducts === product!.idProducts
                       )
                     ) {
