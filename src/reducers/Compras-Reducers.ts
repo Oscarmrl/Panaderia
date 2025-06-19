@@ -5,16 +5,20 @@ export type CartActions =
   | { type: "remove-from-cart"; payload: { id: Product["idProducts"] } }
   | { type: "decreaseQuantity"; payload: { id: Product["idProducts"] } }
   | { type: "increaseQuantity"; payload: { id: Product["idProducts"] } }
+  | { type: "add-to-favorite"; payload: { item: Product } }
+  | { type: "remove-from-favorite"; payload: { id: Product["idProducts"] } }
   | { type: "clearCart" };
 
 export type CartState = {
   data: Product[];
   cart: ProductItem[];
+  favorite: Product[];
 };
 
 export const initialState: CartState = {
   data: [], // Iniciamos con un array vacío
   cart: [], // Carrito vacío también
+  favorite: [],
 };
 
 export const comprasReducer = (
@@ -108,6 +112,29 @@ export const comprasReducer = (
     return {
       ...state,
       cart: [],
+    };
+  }
+
+  if (action.type === "add-to-favorite") {
+    const favoriteExist = state.favorite.find(
+      (item) => item.idProducts === action.payload.item.idProducts
+    );
+
+    if (favoriteExist) {
+      return state;
+    }
+    return {
+      ...state,
+      favorite: [...state.favorite, action.payload.item],
+    };
+  }
+
+  if (action.type === "remove-from-favorite") {
+    return {
+      ...state,
+      favorite: state.favorite.filter(
+        (item) => item.idProducts !== action.payload.id
+      ),
     };
   }
 

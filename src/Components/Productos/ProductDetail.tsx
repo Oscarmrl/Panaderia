@@ -42,7 +42,12 @@ export default function ProductDetail() {
             <IoIosArrowBack />
           </Button>
 
-          <Button className="btn btn-circle w-12 absolute right-4 inset-y-1/2 top-9 ">
+          <Button
+            className="btn btn-circle w-12 absolute right-4 inset-y-1/2 top-9 bg-red-800 "
+            onClick={() =>
+              dispatch({ type: "add-to-favorite", payload: { item: product! } })
+            }
+          >
             <MdOutlineFavoriteBorder />
           </Button>
         </div>
