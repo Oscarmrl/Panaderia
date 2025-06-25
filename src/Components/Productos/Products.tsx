@@ -35,7 +35,7 @@ export default function Products() {
 
   return (
     <div className=" bg-base-100 h-auto py-5 pb-20">
-      <h2 className=" text-center text-3xl md:text-5xl font-bold mb-5  ">
+      <h2 className=" text-center text-3xl md:text-5xl font-bold mb-5 text-accent">
         Productos
       </h2>
 

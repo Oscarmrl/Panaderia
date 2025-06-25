@@ -10,11 +10,12 @@ export default function Favoritos() {
   return (
     <ProductList
       title="Favoritos"
-      products={state.cart}
+      products={state.favorite}
       dispatch={dispatch}
       showQuantityControls={false}
       showRemoveButton={true}
       onBack={gotToHome}
+      removeActionType="remove-from-favorite"
     />
   );
 }

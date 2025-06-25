@@ -20,6 +20,9 @@ export default function ProductDetail() {
   const productInCart = state.cart.find(
     (item) => item.idProducts === product?.idProducts
   );
+  const isFavorite = state.favorite.some(
+    (item) => item.idProducts === product?.idProducts
+  );
 
   const quantity = productInCart ? productInCart.quantity : 1;
 
@@ -43,10 +46,22 @@ export default function ProductDetail() {
           </Button>
 
           <Button
-            className="btn btn-circle w-12 absolute right-4 inset-y-1/2 top-9 bg-red-800 "
-            onClick={() =>
-              dispatch({ type: "add-to-favorite", payload: { item: product! } })
-            }
+            className={`btn-circle w-12 h-12 flex items-center justify-center absolute transition-colors duration-400 ease-in-out right-4 inset-y-1/2 top-9 ${
+              isFavorite ? " bg-red-800 text-white" : " bg-base-200"
+            }`}
+            onClick={() => {
+              if (isFavorite) {
+                dispatch({
+                  type: "remove-from-favorite",
+                  payload: { id: product!.idProducts },
+                });
+              } else {
+                dispatch({
+                  type: "add-to-favorite",
+                  payload: { item: product! },
+                });
+              }
+            }}
           >
             <MdOutlineFavoriteBorder />
           </Button>

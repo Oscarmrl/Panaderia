@@ -1,7 +1,5 @@
-// src/components/ProductList.tsx
-
 import { CartActions } from "../../reducers";
-import { ProductItem } from "../../types";
+import { Product, ProductItem } from "../../types";
 import { IoMdRemove, IoIosArrowBack } from "react-icons/io";
 import { MdDeleteForever, MdOutlineAdd } from "react-icons/md";
 import { FormatCurrency } from "../../helpers";
@@ -9,11 +7,12 @@ import { useCart } from "../../hook/useCart";
 
 type ProductListProps = {
   title?: string;
-  products: ProductItem[];
+  products: ProductItem[] | Product[];
   dispatch?: React.Dispatch<CartActions>;
   showQuantityControls?: boolean;
   showRemoveButton?: boolean;
   onBack?: () => void;
+  removeActionType?: "remove-from-cart" | "remove-from-favorite";
 };
 
 export default function ProductList({
@@ -22,8 +21,13 @@ export default function ProductList({
   showQuantityControls = true,
   showRemoveButton = true,
   onBack,
+  removeActionType = "remove-from-cart",
 }: ProductListProps) {
   const { dispatch } = useCart();
+  function hasQuantity(product: Product | ProductItem): product is ProductItem {
+    return (product as ProductItem).quantity !== undefined;
+  }
+
   return (
     <div className="m-2 md:m-8">
       <div className="relative flex items-center w-full m-1 md:m-5">
@@ -67,7 +71,7 @@ export default function ProductList({
                 </div>
 
                 <div className="flex flex-col w-56 h-full place-items-end flex-1">
-                  {showQuantityControls && dispatch && (
+                  {showQuantityControls && hasQuantity(item) && dispatch && (
                     <div className="flex justify-between text-white p-3 sm:p-4 bg-secondary rounded-badge w-20 sm:w-36">
                       <button
                         onClick={() =>
@@ -100,7 +104,7 @@ export default function ProductList({
                       <button
                         onClick={() =>
                           dispatch({
-                            type: "remove-from-cart",
+                            type: removeActionType,
                             payload: { id: item.idProducts },
                           })
                         }
