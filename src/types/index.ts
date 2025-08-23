@@ -12,3 +12,8 @@ export type Product = {
 export type ProductItem = Product & {
   quantity: number;
 };
+
+export type login = {
+  email: string;
+  password: string;
+};

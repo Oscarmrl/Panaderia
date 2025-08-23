@@ -1,12 +1,13 @@
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { MdFavoriteBorder } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
 import IconoNav from "../ui/IconoNav";
 import { IoHomeOutline } from "react-icons/io5";
 import { UseTheme } from "../../hook";
 import useNavigation from "../../hook/useNavigation";
 export default function Navegacion() {
   const { handleTheme } = UseTheme();
-  const { goToCart, gotToHome, goToFavorites } = useNavigation();
+  const { goToCart, gotToHome, goToFavorites, gotoLogin } = useNavigation();
 
   return (
     <div className="navbar bg-base">
@@ -15,6 +16,11 @@ export default function Navegacion() {
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1 hidden md:flex">
+          <li>
+            <button onClick={gotoLogin}>
+              <IconoNav icon={FaRegUser} size="w-6 h-6" label="Login" />
+            </button>
+          </li>
           <li>
             <button onClick={goToFavorites}>
               <IconoNav

@@ -23,5 +23,8 @@ export default function useNavigation() {
       navigate("/Panaderia/favoritos");
       setActiveTab("favoritos");
     },
+    gotoLogin: () => {
+      navigate("/Panaderia/login");
+    },
   };
 }

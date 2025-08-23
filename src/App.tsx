@@ -10,6 +10,8 @@ import {
   Order,
 } from "./Components";
 
+import Login from "./auth/Login";
+
 import {
   BrowserRouter as Router,
   Route,
@@ -54,6 +56,8 @@ function MainContent() {
           }
         />
         <Route path="/Panaderia/favoritos" element={<Favoritos />} />
+
+        <Route path="/Panaderia/login" element={<Login />} />
 
         <Route
           path="/Panaderia/product/:id"
