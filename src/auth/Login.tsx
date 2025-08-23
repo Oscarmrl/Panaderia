@@ -2,6 +2,8 @@ import { useNavigation } from "../hook";
 import { useState } from "react";
 import useMutation from "../hook/useMutation";
 import type { login } from "../types";
+import { signInWithPopup, getIdToken } from "firebase/auth";
+import { auth, googleProvider } from "../src/firebaseConfig";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -24,7 +26,9 @@ export default function Login() {
       if (response && response.token) {
         localStorage.setItem("loggedIn", "true");
         localStorage.setItem("userEmail", email);
-        localStorage.setItem("rol", response.token || "user");
+        localStorage.setItem("role", response.role || "user");
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("username", response.username);
         console.log("Usuario ha iniciado sesión:", response);
         console.log("Respuesta del Login:", response);
 
@@ -43,13 +47,37 @@ export default function Login() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("loggedIn");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("rol");
-  };
+  const loginConGoogle = async () => {
+    try {
+      // 1. Iniciar sesión con Google
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
 
-  const loginConGoogle = () => {};
+      // 2. Obtener el idToken de Firebase
+      const googleToken = await getIdToken(user);
+
+      // 3. Mandar ese token a tu backend
+      const response = await mutate("http://localhost:3000/login", "POST", {
+        googleToken,
+      });
+
+      if (response && response.token) {
+        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("userEmail", user.email || "");
+        localStorage.setItem("role", response.role || "user");
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("username", response.username);
+        console.log("Usuario ha iniciado sesión con Google:", response);
+
+        gotToHome();
+      } else {
+        setMserror(response?.message || "Error en login con Google.");
+      }
+    } catch (error) {
+      console.error("Error en login con Google:", error);
+      setMserror("Error en login con Google");
+    }
+  };
 
   return (
     <div className="hero bg-base-200 min-h-screen">
@@ -89,8 +117,12 @@ export default function Login() {
             </button>
 
             <div className="divider divider-neutral">o</div>
-            <button className="btn btn-outline  mt-2 w-full">Google</button>
-            <button onClick={handleLogout}>Cerrar sesión</button>
+            <button
+              className="btn btn-outline  mt-2 w-full"
+              onClick={loginConGoogle}
+            >
+              Google
+            </button>
           </fieldset>
         </div>
       </div>
