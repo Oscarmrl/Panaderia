@@ -107,7 +107,9 @@ export default function Login() {
               </p>
             )}
             <div>
-              <a className="link link-hover font-semibold">Registrate</a>
+              <a className="link link-hover font-semibold">
+                ¿No tienes cuenta? Regístrate
+              </a>
             </div>
             <button
               className="btn btn-primary mt-2 w-full"

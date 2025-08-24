@@ -10,7 +10,7 @@ import { useCart } from "../../hook/useCart";
 import { FormatCurrency } from "../../helpers";
 
 export default function ProductDetail() {
-  const { gotToHome, goToCart } = useNavigation();
+  const { gotToHome, goToCart, gotoLogin } = useNavigation();
   const { id } = useParams();
   const { products } = useProduct();
   const { state, dispatch } = useCart();
@@ -88,6 +88,12 @@ export default function ProductDetail() {
               <span>{quantity}</span>
               <Button
                 onClick={() => {
+                  const loggedIn = localStorage.getItem("loggedIn") === "true";
+
+                  if (!loggedIn) {
+                    gotoLogin();
+                    return;
+                  }
                   dispatch({
                     type: "increaseQuantity",
                     payload: { id: product!.idProducts },

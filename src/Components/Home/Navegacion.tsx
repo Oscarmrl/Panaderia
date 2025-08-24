@@ -36,11 +36,19 @@ export default function Navegacion() {
           <li>
             {isLoggedIn() ? (
               <button onClick={handleLogout}>
-                <IconoNav icon={LuUserRoundX} size="w-6 h-6" label="Login" />
+                <IconoNav
+                  icon={LuUserRoundX}
+                  size="w-6 h-6"
+                  label="Cerrar sesión"
+                />
               </button>
             ) : (
               <button onClick={gotoLogin}>
-                <IconoNav icon={AiOutlineUser} size="w-6 h-6" label="Login" />
+                <IconoNav
+                  icon={AiOutlineUser}
+                  size="w-6 h-6"
+                  label="Iniciar sesión"
+                />
               </button>
             )}
           </li>
@@ -70,14 +78,22 @@ export default function Navegacion() {
         </ul>
 
         <ul className="flex gap-2">
-          <li>
+          <li className="md:hidden">
             {isLoggedIn() ? (
-              <button onClick={handleLogout}>
-                <IconoNav icon={LuUserRoundX} size="w-6 h-6" label="Login" />
+              <button className="text-xs" onClick={handleLogout}>
+                <IconoNav
+                  icon={LuUserRoundX}
+                  size="w-6 h-6"
+                  label="Cerrar sesión"
+                />
               </button>
             ) : (
-              <button onClick={gotoLogin}>
-                <IconoNav icon={AiOutlineUser} size="w-6 h-6" label="Login" />
+              <button className="text-xs" onClick={gotoLogin}>
+                <IconoNav
+                  icon={AiOutlineUser}
+                  size="w-6 h-6"
+                  label="Iniciar sesión"
+                />
               </button>
             )}
           </li>
