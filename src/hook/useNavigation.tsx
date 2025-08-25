@@ -26,5 +26,8 @@ export default function useNavigation() {
     gotoLogin: () => {
       navigate("/Panaderia/login");
     },
+    gotoRegister: () => {
+      navigate("/Panaderia/register");
+    },
   };
 }
