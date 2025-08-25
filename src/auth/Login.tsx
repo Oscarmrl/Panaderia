@@ -4,15 +4,15 @@ import useMutation from "../hook/useMutation";
 import type { login } from "../types";
 import { signInWithPopup, getIdToken } from "firebase/auth";
 import { auth, googleProvider } from "../src/firebaseConfig";
+import AuthForm from "../Components/ui/AuthForm";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setpassword] = useState("");
   const [mserror, setMserror] = useState("");
-  const { gotToHome } = useNavigation();
+  const { gotToHome, gotoRegister } = useNavigation();
   const { mutate } = useMutation<login>();
 
-  const handleLogin = async () => {
+  // Recibe los datos del formulario como argumento
+  const handleLogin = async ({ email, password }: login) => {
     if (!email || !password) {
       setMserror("Por favor, completa todos los campos.");
       return;
@@ -30,8 +30,6 @@ export default function Login() {
         localStorage.setItem("token", response.token);
         localStorage.setItem("username", response.username);
         console.log("Usuario ha iniciado sesión:", response);
-        console.log("Respuesta del Login:", response);
-
         gotToHome();
       } else {
         setMserror(response?.message || "Credenciales incorrectas.");
@@ -68,7 +66,6 @@ export default function Login() {
         localStorage.setItem("token", response.token);
         localStorage.setItem("username", response.username);
         console.log("Usuario ha iniciado sesión con Google:", response);
-
         gotToHome();
       } else {
         setMserror(response?.message || "Error en login con Google.");
@@ -82,50 +79,25 @@ export default function Login() {
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-        <div className="card-body">
-          <fieldset className="fieldset">
-            <h1 className="text-4xl md:text-5xl font-bold m-6">Login now!</h1>
-            <label className="label font-semibold">Correo</label>
-            <input
-              type="email"
-              className="input bg-base-300 shadow-lg w-full radio-primary"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <label className="label font-semibold">Contraseña</label>
-            <input
-              type="password"
-              className="input bg-base-300 shadow-lg w-full radio-primary"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setpassword(e.target.value)}
-            />
-            {mserror && (
-              <p className="text-red-600 text-sm font-semibold mt-2">
-                {mserror}
-              </p>
-            )}
-            <div>
-              <a className="link link-hover font-semibold">
-                ¿No tienes cuenta? Regístrate
-              </a>
-            </div>
-            <button
-              className="btn btn-primary mt-2 w-full"
-              onClick={handleLogin}
-            >
-              Login
-            </button>
-
-            <div className="divider divider-neutral">o</div>
-            <button
-              className="btn btn-outline  mt-2 w-full"
-              onClick={loginConGoogle}
-            >
-              Google
-            </button>
-          </fieldset>
+        <div className="card-body justify-center items-center">
+          <AuthForm
+            mode="login"
+            onSubmit={handleLogin}
+            errorMessage={mserror}
+            setErrorMessage={setMserror}
+          />
+          <div className="divider divider-neutral">o</div>
+          <button
+            className="btn btn-outline mt-2 w-full"
+            onClick={loginConGoogle}
+          >
+            Google
+          </button>
+          <div className="text-center mt-2 mb-5">
+            <a onClick={gotoRegister} className="link link-hover font-semibold">
+              ¿No tienes cuenta? Regístrate
+            </a>
+          </div>
         </div>
       </div>
     </div>
