@@ -18,16 +18,18 @@ export default function Login() {
       return;
     }
     try {
+      // Llamada a la API para iniciar sesión
       const response = await mutate("http://localhost:3000/login", "POST", {
         email,
         password,
       });
 
-      if (response && response.token) {
+      // Manejo de la respuesta
+      if (response && response.accessToken) {
         localStorage.setItem("loggedIn", "true");
         localStorage.setItem("userEmail", email);
         localStorage.setItem("role", response.role || "user");
-        localStorage.setItem("token", response.token);
+        localStorage.setItem("token", response.accessToken);
         localStorage.setItem("username", response.username);
         console.log("Usuario ha iniciado sesión:", response);
         gotToHome();
@@ -45,6 +47,7 @@ export default function Login() {
     }
   };
 
+  // Función para manejar el login con Google
   const loginConGoogle = async () => {
     try {
       // 1. Iniciar sesión con Google
@@ -59,11 +62,12 @@ export default function Login() {
         googleToken,
       });
 
-      if (response && response.token) {
+      // 4. Manejar la respuesta del backend
+      if (response && response.accessToken) {
         localStorage.setItem("loggedIn", "true");
         localStorage.setItem("userEmail", user.email || "");
         localStorage.setItem("role", response.role || "user");
-        localStorage.setItem("token", response.token);
+        localStorage.setItem("token", response.accessToken);
         localStorage.setItem("username", response.username);
         console.log("Usuario ha iniciado sesión con Google:", response);
         gotToHome();

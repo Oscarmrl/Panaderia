@@ -1,14 +1,9 @@
 import { useState } from "react";
+import type { register } from "../../types";
 
 type AuthFormProps = {
   mode: "login" | "register";
-  onSubmit: (data: {
-    email: string;
-    password: string;
-    name?: string;
-    phone?: string;
-    address?: string;
-  }) => void;
+  onSubmit: (data: register) => void;
   errorMessage?: string;
   setErrorMessage?: (msg: string) => void;
 };

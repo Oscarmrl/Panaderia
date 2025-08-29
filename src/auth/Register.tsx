@@ -1,27 +1,22 @@
 import { useState } from "react";
 import useMutation from "../hook/useMutation";
-import type { login } from "../types";
+import type { register } from "../types";
 import { useNavigation } from "../hook";
 import AuthForm from "../Components/ui/AuthForm";
 
 export default function Register() {
   const [mserror, setMserror] = useState("");
-  const { mutate } = useMutation<login>();
+  const { mutate } = useMutation<register>();
   const { gotToHome } = useNavigation();
 
+  // Función para manejar el registro
   const handleRegister = async ({
     email,
     password,
     name,
     phone,
     address,
-  }: {
-    email: string;
-    password: string;
-    name?: string;
-    phone?: string;
-    address?: string;
-  }) => {
+  }: register) => {
     if (!email || !password || !name || !phone || !address) {
       setMserror("Por favor, completa todos los campos.");
       return;
@@ -35,11 +30,11 @@ export default function Register() {
         address,
       });
       console.log(response);
-      if (response && response.token) {
+      if (response && response.accessToken) {
         localStorage.setItem("loggedIn", "true");
         localStorage.setItem("userEmail", email);
         localStorage.setItem("role", response.role || "user");
-        localStorage.setItem("token", response.token);
+        localStorage.setItem("token", response.accessToken);
         localStorage.setItem("username", response.username || name);
         gotToHome();
       } else {
