@@ -1,7 +1,7 @@
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { LuSunMoon } from "react-icons/lu";
 import { LuSun } from "react-icons/lu";
-
+import useMutation from "../../hook/useMutation";
 import { MdFavoriteBorder } from "react-icons/md";
 import { LuUserRoundX } from "react-icons/lu";
 import { AiOutlineUser } from "react-icons/ai";
@@ -12,20 +12,24 @@ import useNavigation from "../../hook/useNavigation";
 export default function Navegacion() {
   const { handleTheme } = UseTheme();
   const { goToCart, gotToHome, goToFavorites, gotoLogin } = useNavigation();
+  const { mutate } = useMutation();
   const isLoggedIn = () => {
     const token = localStorage.getItem("token");
     const loggedIn = localStorage.getItem("loggedIn");
     return loggedIn === "true" && token !== null;
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("loggedIn");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("role");
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    gotToHome();
+  // Manejar el cierre de sesión
+  const handleLogout = async () => {
+    try {
+      await mutate("http://localhost:3000/api/logout", "POST");
+      localStorage.clear();
+      gotToHome();
+    } catch (err) {
+      console.error("Error al hacer logout:", err);
+    }
   };
+
   return (
     <div className="navbar bg-base">
       <div className="flex-1">
