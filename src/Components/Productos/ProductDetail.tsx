@@ -1,6 +1,7 @@
 import useNavigation from "../../hook/useNavigation";
 import { useParams } from "react-router-dom";
-import { useProduct } from "../Data/Data";
+import useMutation from "../../hook/useMutation";
+import { useEffect } from "react";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import Button from "../ui/Button";
 import { IoIosArrowBack } from "react-icons/io";
@@ -8,14 +9,21 @@ import { MdOutlineAdd } from "react-icons/md";
 import { IoMdRemove } from "react-icons/io";
 import { useCart } from "../../hook/useCart";
 import { FormatCurrency } from "../../helpers";
+import { Product } from "../../types";
 
 export default function ProductDetail() {
   const { gotToHome, goToCart } = useNavigation();
   const { id } = useParams();
-  const { products } = useProduct();
+  const { mutate, data } = useMutation<Product>();
   const { state, dispatch } = useCart();
 
-  const product = products.find((pro) => pro.idProducts.toString() === id);
+  useEffect(() => {
+    if (id) {
+      mutate(`http://localhost:3000/productos/${id}`, "GET");
+    }
+  }, [id]);
+
+  const product = data;
 
   const productInCart = state.cart.find(
     (item) => item.idProducts === product?.idProducts
@@ -25,8 +33,6 @@ export default function ProductDetail() {
   );
 
   const quantity = productInCart ? productInCart.quantity : 1;
-
-  <span>{quantity}</span>;
 
   return (
     <div className="lg:flex lg:justify-center">
