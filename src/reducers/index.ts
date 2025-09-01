@@ -1,1 +1,1 @@
-export * from "./compras-Reducers";
+export * from "./Compras-Reducers";

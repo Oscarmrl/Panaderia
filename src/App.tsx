@@ -10,6 +10,10 @@ import {
   Order,
 } from "./Components";
 
+import Login from "./auth/Login";
+import ProtectedRoute from "./auth/ProtectedRoute";
+import Register from "./auth/Register";
+
 import {
   BrowserRouter as Router,
   Route,
@@ -48,12 +52,26 @@ function MainContent() {
           path="/Panaderia/cart"
           element={
             <div className="grid grid-cols-1 lg:grid-cols-2  gap-4 ">
-              <Cart />
-              <Order />
+              <ProtectedRoute>
+                <Cart />
+
+                <Order />
+              </ProtectedRoute>
             </div>
           }
         />
-        <Route path="/Panaderia/favoritos" element={<Favoritos />} />
+
+        <Route
+          path="/Panaderia/favoritos"
+          element={
+            <ProtectedRoute>
+              <Favoritos />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path="/Panaderia/login" element={<Login />} />
+        <Route path="/Panaderia/register" element={<Register />} />
 
         <Route
           path="/Panaderia/product/:id"
