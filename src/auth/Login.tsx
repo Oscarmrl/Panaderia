@@ -19,10 +19,15 @@ export default function Login() {
     }
     try {
       // Llamada a la API para iniciar sesión
-      const response = await mutate("http://localhost:3000/login", "POST", {
-        email,
-        password,
-      });
+      const response = await mutate(
+        "/login",
+        "POST",
+        {
+          email,
+          password,
+        },
+        false
+      );
 
       // Manejo de la respuesta
       if (response && response.accessToken) {
@@ -58,9 +63,14 @@ export default function Login() {
       const googleToken = await getIdToken(user);
 
       // 3. Mandar ese token a tu backend
-      const response = await mutate("http://localhost:3000/login", "POST", {
-        googleToken,
-      });
+      const response = await mutate(
+        "/login",
+        "POST",
+        {
+          googleToken,
+        },
+        false
+      );
 
       // 4. Manejar la respuesta del backend
       if (response && response.accessToken) {

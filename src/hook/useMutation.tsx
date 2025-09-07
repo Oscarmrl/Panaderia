@@ -1,48 +1,74 @@
 import { useState } from "react";
+
+// Lista de URLs de backend para intentar
+const API_URLS = [
+  "https://backendpanaderia-production.up.railway.app",
+  "http://localhost:3000",
+];
+
+// Hook personalizado para mutaciones (POST, PUT, DELETE)
 export default function useMutation<T>() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
-  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(false); // Estado de carga
+  const [error, setError] = useState<Error | null>(null); // Estado de error
+  const [data, setData] = useState<T | null>(null); // Estado de datos
 
-  // Función para realizar la mutación
+  const getAuthToken = () => localStorage.getItem("token"); // Obtener token de autenticación
+
   const mutate = async (
-    url: string,
-    method: string,
-    body?: Record<string, string | number | boolean | null>
+    path: string, // Ruta del endpoint
+    method: string, // Método HTTP
+    body?: Record<string, string | number | boolean | null>, // Cuerpo de la solicitud
+    requireAuth: boolean = false // Indica si se requiere autenticación
   ) => {
-    setLoading(true); // Indicamos que la mutacion esta en curso
-    setError(null); // Reiniciamos el estado de error
-    try {
-      // Realizamos la petición
-      const response = await fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: body ? JSON.stringify(body) : undefined,
-        // Incluimos las cookies en la petición
-        credentials: "include",
-      });
+    setLoading(true); // Iniciar carga
+    setError(null); // Resetear error
 
-      const result = await response.json(); // Parseamos la respuesta JSON
-
-      if (!response.ok) {
-        // Lanzamos un error con el mensaje que viene del backend
-        const error = new Error(result.message || "Error en la petición");
-        setError(error);
-        setLoading(false);
-        throw error;
-      } // Si todo va bien, guardamos los datos
-      setData(result);
-      // quitamos el loading
+    const token = getAuthToken(); // Llamar a la función para obtener el token
+    // Verificar si se requiere autenticación y si el token está ausente
+    if (requireAuth && !token) {
+      const err = new Error("Token de autenticación requerido");
+      setError(err);
       setLoading(false);
-      return result;
-    } catch (error) {
-      // Manejamos el error
-      setError(error as Error);
-      setLoading(false);
-      throw error;
+      return;
     }
+
+    // Configurar encabezados de la solicitud
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    };
+
+    // Intentar cada URL en la lista hasta que una funcione
+    for (const baseUrl of API_URLS) {
+      try {
+        // Realizar la solicitud fetch
+        const response = await fetch(`${baseUrl}${path}`, {
+          method, // Método HTTP
+          headers, // Encabezados
+          body: body ? JSON.stringify(body) : undefined, // Cuerpo de la solicitud
+          credentials: "include", // Incluir cookies
+        });
+
+        // Intentar parsear la respuesta JSON
+        const result = await response.json();
+
+        // Si la respuesta no es OK, lanzar un error
+        if (!response.ok) {
+          throw new Error(result.message || `${baseUrl} fallo`);
+        }
+
+        setData(result);
+        setLoading(false);
+        return result;
+      } catch (err) {
+        console.log(`Error con ${baseUrl}`, err);
+      }
+    }
+
+    setError(new Error("Ningún servidor respondió"));
+    setLoading(false);
   };
-  return { mutate, loading, error, data }; // Retornamos la funcion mutate y sus estados
+
+  // Retornar la función mutate y los estados
+  return { mutate, loading, error, data };
 }
