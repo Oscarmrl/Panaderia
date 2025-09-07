@@ -7,7 +7,9 @@ export type CartActions =
   | { type: "increaseQuantity"; payload: { id: Product["idProducts"] } }
   | { type: "add-to-favorite"; payload: { item: Product } }
   | { type: "remove-from-favorite"; payload: { id: Product["idProducts"] } }
-  | { type: "clearCart" };
+  | { type: "clearCart" }
+  | { type: "initCart"; payload: { cart: ProductItem[] } }
+  | { type: "initFavorite"; payload: { favorite: Product[] } };
 
 export type CartState = {
   data: Product[];

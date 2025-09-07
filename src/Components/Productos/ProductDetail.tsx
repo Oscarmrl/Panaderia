@@ -1,6 +1,5 @@
 import useNavigation from "../../hook/useNavigation";
 import { useParams } from "react-router-dom";
-import useMutation from "../../hook/useMutation";
 import { useEffect } from "react";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import Button from "../ui/Button";
@@ -10,29 +9,69 @@ import { IoMdRemove } from "react-icons/io";
 import { useCart } from "../../hook/useCart";
 import { FormatCurrency } from "../../helpers";
 import { Product } from "../../types";
+import {
+  useAddFavorite,
+  useRemoveFavorite,
+} from "../../services/favoriteService";
+import useMutation from "../../hook/useMutation";
 
 export default function ProductDetail() {
-  const { gotToHome, goToCart, gotoLogin } = useNavigation();
   const { id } = useParams();
-  const { mutate, data } = useMutation<Product>();
   const { state, dispatch } = useCart();
+  const { gotToHome, goToCart, gotoLogin } = useNavigation();
 
+  // Hook para traer el producto
+  const { mutate: fetchProduct, data: product } = useMutation<Product>();
+
+  // Hooks de favoritos
+
+  const { addFavorite } = useAddFavorite();
+  const { removeFavorite } = useRemoveFavorite();
+
+  // Traer el producto al cargar la página
   useEffect(() => {
     if (id) {
-      mutate(`http://localhost:3000/productos/${id}`, "GET");
+      fetchProduct(`/productos/${id}`, "GET");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const product = data;
-
-  const productInCart = state.cart.find(
-    (item) => item.idProducts === product?.idProducts
-  );
+  // Determinar si el producto está en favoritos (usando estado global)
   const isFavorite = state.favorite.some(
     (item) => item.idProducts === product?.idProducts
   );
 
+  // Determinar cantidad en carrito
+  const productInCart = state.cart.find(
+    (item) => item.idProducts === product?.idProducts
+  );
   const quantity = productInCart ? productInCart.quantity : 1;
+
+  // Manejo del click en favorito
+  const handleFavorite = async () => {
+    // Verificar si el usuario está logueado
+    const loggedIn = localStorage.getItem("loggedIn") === "true";
+    if (!loggedIn) return gotoLogin();
+
+    try {
+      // Si ya es favorito, eliminarlo; si no, agregarlo
+      if (isFavorite) {
+        await removeFavorite(product!.idProducts);
+        dispatch({
+          type: "remove-from-favorite",
+          payload: { id: product!.idProducts },
+        });
+      } else {
+        await addFavorite(product!.idProducts);
+        dispatch({
+          type: "add-to-favorite",
+          payload: { item: product! },
+        });
+      }
+    } catch (error) {
+      console.error("Error al actualizar favoritos", error);
+    }
+  };
 
   return (
     <div className="lg:flex lg:justify-center">
@@ -53,21 +92,9 @@ export default function ProductDetail() {
 
           <Button
             className={`btn-circle w-12 h-12 flex items-center justify-center absolute transition-colors duration-400 ease-in-out right-4 inset-y-1/2 top-9 ${
-              isFavorite ? " bg-red-800 text-white" : " bg-base-200"
+              isFavorite ? "bg-red-800 text-white" : "bg-base-200"
             }`}
-            onClick={() => {
-              if (isFavorite) {
-                dispatch({
-                  type: "remove-from-favorite",
-                  payload: { id: product!.idProducts },
-                });
-              } else {
-                dispatch({
-                  type: "add-to-favorite",
-                  payload: { item: product! },
-                });
-              }
-            }}
+            onClick={handleFavorite}
           >
             <MdOutlineFavoriteBorder />
           </Button>
@@ -79,8 +106,9 @@ export default function ProductDetail() {
           <h2 className="text-2xl md:text-4xl m-2 font-bold text-accent col-span-1 lg:col-span-2">
             {product?.name}
           </h2>
+
           <div className="flex flex-col justify-start items-end lg:items-start m-2 lg:col-span-2 lg:row-start-3">
-            <div className="flex justify-between text-white  p-2 mr-2 bg-secondary rounded-badge w-24">
+            <div className="flex justify-between text-white p-2 mr-2 bg-secondary rounded-badge w-24">
               <Button
                 onClick={() =>
                   dispatch({
@@ -95,21 +123,14 @@ export default function ProductDetail() {
               <Button
                 onClick={() => {
                   const loggedIn = localStorage.getItem("loggedIn") === "true";
+                  if (!loggedIn) return gotoLogin();
 
-                  if (!loggedIn) {
-                    gotoLogin();
-                    return;
-                  }
                   dispatch({
                     type: "increaseQuantity",
                     payload: { id: product!.idProducts },
                   });
 
-                  if (
-                    !state.cart.find(
-                      (item) => item.idProducts === product!.idProducts
-                    )
-                  ) {
+                  if (!productInCart) {
                     dispatch({
                       type: "add-to-cart",
                       payload: { item: product! },
@@ -121,6 +142,7 @@ export default function ProductDetail() {
               </Button>
             </div>
           </div>
+
           <p className="text-lg m-2 col-span-2 col-start-1 row-start-2">
             {product?.description}
           </p>
