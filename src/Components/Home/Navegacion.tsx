@@ -9,6 +9,7 @@ import IconoNav from "../ui/IconoNav";
 import { IoHomeOutline } from "react-icons/io5";
 import { UseTheme } from "../../hook";
 import useNavigation from "../../hook/useNavigation";
+
 export default function Navegacion() {
   const { handleTheme } = UseTheme();
   const { goToCart, gotToHome, goToFavorites, gotoLogin } = useNavigation();
