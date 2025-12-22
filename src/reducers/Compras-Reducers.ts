@@ -8,7 +8,6 @@ export type CartActions =
   | { type: "add-to-favorite"; payload: { item: Product } }
   | { type: "remove-from-favorite"; payload: { id: Product["idProducts"] } }
   | { type: "clearCart" }
-  | { type: "initCart"; payload: { cart: ProductItem[] } }
   | { type: "initFavorite"; payload: { favorite: Product[] } };
 
 export type CartState = {
@@ -137,6 +136,12 @@ export const comprasReducer = (
       favorite: state.favorite.filter(
         (item) => item.idProducts !== action.payload.id
       ),
+    };
+  }
+  if (action.type === "initFavorite") {
+    return {
+      ...state,
+      favorite: action.payload.favorite,
     };
   }
 
