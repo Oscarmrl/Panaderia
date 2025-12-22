@@ -6,6 +6,7 @@ type AuthFormProps = {
   onSubmit: (data: register) => void;
   errorMessage?: string;
   setErrorMessage?: (msg: string) => void;
+  disabled?: boolean; // 👈 Agrega esta línea
 };
 
 export default function AuthForm({
@@ -13,6 +14,7 @@ export default function AuthForm({
   onSubmit,
   errorMessage,
   setErrorMessage,
+  disabled = false, // 👈 Valor por defecto
 }: AuthFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,6 +55,7 @@ export default function AuthForm({
               placeholder="Tu nombre"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              disabled={disabled} // 👈 Agrega disabled
             />
 
             <label className="label font-semibold text-sm md:text-lg">
@@ -64,6 +67,7 @@ export default function AuthForm({
               placeholder="Número de teléfono"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              disabled={disabled} // 👈 Agrega disabled
             />
 
             <label className="label font-semibold text-sm md:text-lg">
@@ -75,6 +79,7 @@ export default function AuthForm({
               placeholder="Dirección"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
+              disabled={disabled} // 👈 Agrega disabled
             />
           </>
         )}
@@ -86,6 +91,7 @@ export default function AuthForm({
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={disabled} // 👈 Agrega disabled
         />
 
         <label className="label font-semibold text-sm md:text-lg">
@@ -97,6 +103,7 @@ export default function AuthForm({
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={disabled} // 👈 Agrega disabled
         />
 
         {errorMessage && (
@@ -108,8 +115,18 @@ export default function AuthForm({
         <button
           className="btn btn-primary btn-md mt-3 w-full"
           onClick={handleSubmit}
+          disabled={disabled} // 👈 Agrega disabled
         >
-          {mode === "login" ? "Entrar" : "Crear cuenta"}
+          {disabled ? ( // 👈 Muestra loading cuando está deshabilitado
+            <>
+              <span className="loading loading-spinner loading-sm"></span>
+              Procesando...
+            </>
+          ) : mode === "login" ? (
+            "Entrar"
+          ) : (
+            "Crear cuenta"
+          )}
         </button>
       </div>
     </div>

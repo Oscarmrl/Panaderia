@@ -1,51 +1,32 @@
 import { useState } from "react";
-import useMutation from "../hook/useMutation";
 import type { register } from "../types";
 import { useNavigation } from "../hook";
 import AuthForm from "../Components/ui/AuthForm";
+import { useCart } from "../hook/useCart";
+import { registerUser } from "../services/authService";
 
 export default function Register() {
   const [mserror, setMserror] = useState("");
-  const { mutate } = useMutation<register>();
-  const { gotToHome } = useNavigation();
+  const [loading, setLoading] = useState(false);
+  const { gotToHome, gotoLogin } = useNavigation();
+  const { dispatch } = useCart();
 
   // Función para manejar el registro
-  const handleRegister = async ({
-    email,
-    password,
-    name,
-    phone,
-    address,
-  }: register) => {
-    if (!email || !password || !name || !phone || !address) {
-      setMserror("Por favor, completa todos los campos.");
-      return;
-    }
+  const handleRegister = async (userData: register) => {
+    setLoading(true);
+    setMserror("");
+
     try {
-      const response = await mutate("http://localhost:3000/register", "POST", {
-        email,
-        password,
-        name,
-        phone,
-        address,
-      });
-      console.log(response);
-      if (response && response.accessToken) {
-        localStorage.setItem("loggedIn", "true");
-        localStorage.setItem("userEmail", email);
-        localStorage.setItem("role", response.role || "user");
-        localStorage.setItem("token", response.accessToken);
-        localStorage.setItem("username", response.username || name);
-        gotToHome();
-      } else {
-        setMserror(response?.message || "No se pudo registrar el usuario.");
-      }
+      await registerUser(userData, dispatch);
+      gotToHome();
     } catch (err) {
       if (err instanceof Error) {
         setMserror(err.message);
       } else {
         setMserror("Error desconocido");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,7 +39,13 @@ export default function Register() {
             onSubmit={handleRegister}
             errorMessage={mserror}
             setErrorMessage={setMserror}
+            disabled={loading}
           />
+          <div className="text-center mt-2">
+            <a onClick={gotoLogin} className="link link-hover font-semibold">
+              ¿Ya tienes cuenta? Inicia sesión
+            </a>
+          </div>
         </div>
       </div>
     </div>

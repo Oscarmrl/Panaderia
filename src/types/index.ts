@@ -1,5 +1,6 @@
 // Tipos de tema
 export type Tema = "light" | "dark";
+
 // Información sobre el producto
 export type Product = {
   idProducts: number;
@@ -20,9 +21,18 @@ export type login = {
   email: string;
   password: string;
 };
+
 // Información de registro
 export type register = login & {
   name: string;
   phone: string;
   address: string;
+};
+
+// 👇 Agrega este tipo
+export type LoginResponse = {
+  accessToken: string;
+  role: string;
+  username: string;
+  message?: string;
 };

@@ -4,6 +4,7 @@ import { IoMdRemove, IoIosArrowBack } from "react-icons/io";
 import { MdDeleteForever, MdOutlineAdd } from "react-icons/md";
 import { FormatCurrency } from "../../helpers";
 import { useCart } from "../../hook/useCart";
+import { useNavigation } from "../../hook";
 
 type ProductListProps = {
   title?: string;
@@ -24,9 +25,17 @@ export default function ProductList({
   removeActionType = "remove-from-cart",
 }: ProductListProps) {
   const { dispatch } = useCart();
+  const { gotoProductDetail } = useNavigation();
+
+  // Función para verificar si un producto tiene cantidad
   function hasQuantity(product: Product | ProductItem): product is ProductItem {
     return (product as ProductItem).quantity !== undefined;
   }
+
+  // Función para navegar al detalle del producto
+  const handleProductClick = (productId: number) => {
+    gotoProductDetail(productId);
+  };
 
   return (
     <div className="m-2 md:m-8">
@@ -46,7 +55,10 @@ export default function ProductList({
         <div className="mt-10 grid grid-cols-1 grid-rows-1 gap-4 place-items-center lg:place-items-end md:m-2">
           {products.map((item, index) => (
             <div key={index} className="flex flex-col w-full h-full sm:p-2">
-              <div className="flex rounded-badge shadow-lg">
+              <div
+                className="flex rounded-badge shadow-lg cursor-pointer hover:shadow-xl transition-shadow"
+                onClick={() => handleProductClick(item.idProducts)}
+              >
                 <img
                   src="/Panaderia/Principal.jpeg"
                   alt={item.name}
@@ -58,8 +70,10 @@ export default function ProductList({
                   </h2>
 
                   <p className="text-center text-sm sm:hidden">
-                    {item.description.slice(0, 45) +
-                      (item.description.length > 40 ? "..." : "")}
+                    {item.description?.slice(0, 45) +
+                      (item.description && item.description.length > 40
+                        ? "..."
+                        : "")}
                   </p>
 
                   <p className="hidden sm:block text-center text-sm sm:text-lg break-words">
@@ -74,12 +88,13 @@ export default function ProductList({
                   {showQuantityControls && hasQuantity(item) && dispatch && (
                     <div className="flex justify-between text-white p-3 sm:p-4 bg-secondary rounded-badge w-20 sm:w-36">
                       <button
-                        onClick={() =>
+                        onClick={(e) => {
+                          e.stopPropagation(); // Evitar que se dispare el click del producto
                           dispatch({
                             type: "decreaseQuantity",
                             payload: { id: item.idProducts },
-                          })
-                        }
+                          });
+                        }}
                       >
                         <IoMdRemove />
                       </button>
@@ -87,12 +102,13 @@ export default function ProductList({
                         {item.quantity}
                       </span>
                       <button
-                        onClick={() =>
+                        onClick={(e) => {
+                          e.stopPropagation(); // Evitar que se dispare el click del producto
                           dispatch({
                             type: "increaseQuantity",
                             payload: { id: item.idProducts },
-                          })
-                        }
+                          });
+                        }}
                       >
                         <MdOutlineAdd />
                       </button>
@@ -102,12 +118,21 @@ export default function ProductList({
                   {showRemoveButton && dispatch && (
                     <div className="flex-1 pleace-items-end flex justify-end">
                       <button
-                        onClick={() =>
-                          dispatch({
-                            type: removeActionType,
-                            payload: { id: item.idProducts },
-                          })
-                        }
+                        onClick={(e) => {
+                          e.stopPropagation(); // Evitar que se dispare el click del producto
+                          if (
+                            removeActionType === "remove-from-favorite" && // Verifica si la acción es eliminar de favoritos
+                            onRemoveFavorite
+                          ) {
+                            onRemoveFavorite(Number(item.idProducts));
+                          } else if (dispatch) {
+                            // Verifica si hay un despachador disponible
+                            dispatch({
+                              type: removeActionType,
+                              payload: { id: item.idProducts },
+                            });
+                          }
+                        }}
                         className="btn btn-circle self-end"
                       >
                         <MdDeleteForever className="text-2xl text-red-600 items-end" />
