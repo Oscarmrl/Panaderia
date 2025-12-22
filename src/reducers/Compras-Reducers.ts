@@ -7,7 +7,8 @@ export type CartActions =
   | { type: "increaseQuantity"; payload: { id: Product["idProducts"] } }
   | { type: "add-to-favorite"; payload: { item: Product } }
   | { type: "remove-from-favorite"; payload: { id: Product["idProducts"] } }
-  | { type: "clearCart" };
+  | { type: "clearCart" }
+  | { type: "initFavorite"; payload: { favorite: Product[] } };
 
 export type CartState = {
   data: Product[];
@@ -135,6 +136,12 @@ export const comprasReducer = (
       favorite: state.favorite.filter(
         (item) => item.idProducts !== action.payload.id
       ),
+    };
+  }
+  if (action.type === "initFavorite") {
+    return {
+      ...state,
+      favorite: action.payload.favorite,
     };
   }
 

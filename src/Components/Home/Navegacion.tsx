@@ -9,6 +9,7 @@ import IconoNav from "../ui/IconoNav";
 import { IoHomeOutline } from "react-icons/io5";
 import { UseTheme } from "../../hook";
 import useNavigation from "../../hook/useNavigation";
+
 export default function Navegacion() {
   const { handleTheme } = UseTheme();
   const { goToCart, gotToHome, goToFavorites, gotoLogin } = useNavigation();
@@ -22,7 +23,7 @@ export default function Navegacion() {
   // Manejar el cierre de sesión
   const handleLogout = async () => {
     try {
-      await mutate("http://localhost:3000/api/logout", "POST");
+      await mutate("/api/logout", "POST");
       localStorage.clear();
       gotToHome();
     } catch (err) {
@@ -31,7 +32,7 @@ export default function Navegacion() {
   };
 
   return (
-    <div className="navbar bg-base">
+    <div className="navbar bg-base-100 sticky top-0 left-0 w-full z-50 shadow-md  md:rounded-2xl ">
       <div className="flex-1">
         <a className="btn btn-ghost text-xl">daisyUI</a>
       </div>

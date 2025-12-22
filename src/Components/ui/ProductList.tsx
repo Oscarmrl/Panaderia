@@ -6,16 +6,19 @@ import { FormatCurrency } from "../../helpers";
 import { useCart } from "../../hook/useCart";
 import { useNavigation } from "../../hook";
 
+// Props para el componente ProductList
 type ProductListProps = {
   title?: string;
   products: ProductItem[] | Product[];
   dispatch?: React.Dispatch<CartActions>;
-  showQuantityControls?: boolean;
-  showRemoveButton?: boolean;
-  onBack?: () => void;
-  removeActionType?: "remove-from-cart" | "remove-from-favorite";
+  showQuantityControls?: boolean; // Muestra los controles de cantidad
+  showRemoveButton?: boolean; // Muestra el botón de eliminar
+  onBack?: () => void; // Función para manejar el botón de volver
+  removeActionType?: "remove-from-cart" | "remove-from-favorite"; // Tipo de acción para eliminar
+  onRemoveFavorite?: (productId: number) => void; // Función para manejar la eliminación de favoritos
 };
 
+// Componente ProductList
 export default function ProductList({
   title = "Productos",
   products,
@@ -23,12 +26,15 @@ export default function ProductList({
   showRemoveButton = true,
   onBack,
   removeActionType = "remove-from-cart",
+  onRemoveFavorite,
 }: ProductListProps) {
+  // Obtener el estado del carrito
   const { dispatch } = useCart();
   const { gotoProductDetail } = useNavigation();
 
   // Función para verificar si un producto tiene cantidad
   function hasQuantity(product: Product | ProductItem): product is ProductItem {
+    // Verifica si el producto tiene una cantidad definida
     return (product as ProductItem).quantity !== undefined;
   }
 
@@ -40,6 +46,7 @@ export default function ProductList({
   return (
     <div className="m-2 md:m-8">
       <div className="relative flex items-center w-full m-1 md:m-5">
+        {/*Botón para volver */}
         {onBack && (
           <button
             onClick={onBack}
@@ -48,9 +55,9 @@ export default function ProductList({
             <IoIosArrowBack />
           </button>
         )}
+        {/*Título de la lista de productos */}
         <h3 className="text-3xl font-bold mx-auto">{title}</h3>
       </div>
-
       {products.length > 0 ? (
         <div className="mt-10 grid grid-cols-1 grid-rows-1 gap-4 place-items-center lg:place-items-end md:m-2">
           {products.map((item, index) => (
@@ -85,6 +92,7 @@ export default function ProductList({
                 </div>
 
                 <div className="flex flex-col w-56 h-full place-items-end flex-1">
+                  {/*Controles de cantidad */}
                   {showQuantityControls && hasQuantity(item) && dispatch && (
                     <div className="flex justify-between text-white p-3 sm:p-4 bg-secondary rounded-badge w-20 sm:w-36">
                       <button
@@ -114,8 +122,8 @@ export default function ProductList({
                       </button>
                     </div>
                   )}
-
-                  {showRemoveButton && dispatch && (
+                  {/* Botón para eliminar */}
+                  {showRemoveButton && (
                     <div className="flex-1 pleace-items-end flex justify-end">
                       <button
                         onClick={(e) => {
