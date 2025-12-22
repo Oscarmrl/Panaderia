@@ -1,11 +1,6 @@
-import useFetch from "../hook/useFetch";
+import { Dispatch } from "react";
 import useMutation from "../hook/useMutation";
-
-// Obtener favoritos de un cliente
-export const useFavorites = (requireAuth: boolean = true) => {
-  const { data, error, loading } = useFetch("/favorites", requireAuth);
-  return { data, error, loading };
-};
+import { CartActions } from "../reducers";
 
 // Agregar un favorito
 export const useAddFavorite = () => {
@@ -24,3 +19,35 @@ export const useRemoveFavorite = () => {
   };
   return { removeFavorite, loading, error, data };
 };
+
+// Función utilitaria para sincronizar favoritos tras login
+export async function fetchAndSyncFavorites(dispatch: Dispatch<CartActions>) {
+  const token = localStorage.getItem("token");
+  const API_URLS = [
+    "https://backendpanaderia-production.up.railway.app",
+    "http://localhost:3000",
+  ];
+
+  for (const baseUrl of API_URLS) {
+    try {
+      const response = await fetch(`${baseUrl}/favorites`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const favorites = await response.json();
+        if (favorites && Array.isArray(favorites)) {
+          localStorage.setItem("favorite", JSON.stringify(favorites));
+          dispatch({ type: "initFavorite", payload: { favorite: favorites } });
+        }
+        return; // Salir del bucle si fue exitoso
+      }
+    } catch (error) {
+      console.error("Error fetching favorites:", error);
+      continue; // Probar siguiente URL
+    }
+  }
+}

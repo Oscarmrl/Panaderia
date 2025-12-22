@@ -8,9 +8,9 @@ const API_URLS = [
 
 // Hook personalizado para mutaciones (POST, PUT, DELETE)
 export default function useMutation<T>() {
+  const [data, setData] = useState<T | null>(null); // Estado de datos
   const [loading, setLoading] = useState(false); // Estado de carga
   const [error, setError] = useState<Error | null>(null); // Estado de error
-  const [data, setData] = useState<T | null>(null); // Estado de datos
 
   const getAuthToken = () => localStorage.getItem("token"); // Obtener token de autenticación
 

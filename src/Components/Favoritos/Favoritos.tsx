@@ -30,7 +30,7 @@ export default function Favoritos() {
       title="Favoritos" // Título de la lista de favoritos
       products={state.favorite} // Productos en favoritos
       dispatch={dispatch} // Dispatch para manejar acciones
-      showQuantityControls={false} // No mostrar controles de cantidad
+      showQuantityControls={true} // No mostrar controles de cantidad
       showRemoveButton={true} // Mostrar botón de eliminar
       onBack={gotToHome} // Función para ir a la página principal
       removeActionType="remove-from-favorite" // Tipo de acción para eliminar favorito
