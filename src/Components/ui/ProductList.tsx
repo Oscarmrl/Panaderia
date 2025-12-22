@@ -30,7 +30,7 @@ export default function ProductList({
 }: ProductListProps) {
   // Obtener el estado del carrito
   const { dispatch } = useCart();
-  const { gotoProductDetail } = useNavigation();
+  const { goToAdd } = useNavigation();
 
   // Función para verificar si un producto tiene cantidad
   function hasQuantity(product: Product | ProductItem): product is ProductItem {
@@ -40,7 +40,7 @@ export default function ProductList({
 
   // Función para navegar al detalle del producto
   const handleProductClick = (productId: number) => {
-    gotoProductDetail(productId);
+    goToAdd(productId.toString());
   };
 
   return (
