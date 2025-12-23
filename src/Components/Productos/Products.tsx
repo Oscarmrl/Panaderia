@@ -54,7 +54,9 @@ export default function Products() {
                 </p>
 
                 <div className="actions">
-                  <span className="price">{FormatCurrency(pro.price)}</span>
+                  <span className="price">
+                    {FormatCurrency(Number(pro.price))}
+                  </span>
                   <button
                     className="button"
                     onClick={() => goToAdd(pro.idProducts.toString())}
