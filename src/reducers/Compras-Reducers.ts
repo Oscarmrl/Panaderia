@@ -11,13 +11,11 @@ export type CartActions =
   | { type: "initFavorite"; payload: { favorite: Product[] } };
 
 export type CartState = {
-  data: Product[];
   cart: ProductItem[];
   favorite: Product[];
 };
 
 export const initialState: CartState = {
-  data: [], // Iniciamos con un array vacío
   cart: [], // Carrito vacío también
   favorite: [],
 };

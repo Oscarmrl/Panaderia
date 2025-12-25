@@ -3,7 +3,7 @@ import {
   initialState,
   CartState,
   CartActions,
-} from "../reducers";
+} from "../reducers/Compras-Reducers";
 import { useReducer, createContext } from "react";
 
 type CartContextProps = {
