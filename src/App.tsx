@@ -21,19 +21,11 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 function App() {
   return (
-    <PayPalScriptProvider
-      options={{
-        clientId:
-          "Ae6J5LA_I8y4mIkMJxceS71Q3Y5_2HzUwFFYftq8vahkiQ6vxbrH4py8xwBBT0WTNXZKsq-0HdKqIqlK",
-      }}
-    >
-      <Router>
-        <MainContent />
-      </Router>
-    </PayPalScriptProvider>
+    <Router>
+      <MainContent />
+    </Router>
   );
 }
 
