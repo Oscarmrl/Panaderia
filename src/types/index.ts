@@ -32,7 +32,8 @@ export type register = login & {
 // 👇 Agrega este tipo
 export type LoginResponse = {
   accessToken: string;
-  role: string;
   username: string;
+  role?: string;
   message?: string;
+  idClient: number; // ✅ AGREGADO
 };

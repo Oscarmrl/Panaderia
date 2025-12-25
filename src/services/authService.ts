@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 import { signInWithPopup, getIdToken } from "firebase/auth";
 import { auth, googleProvider } from "../src/firebaseConfig";
-import { CartActions } from "../reducers";
+import { CartActions } from "../reducers/Compras-Reducers";
 import { fetchAndSyncFavorites } from "./favoriteService";
 import type { login, register, LoginResponse } from "../types";
 
@@ -66,6 +66,10 @@ function saveUserData(response: LoginResponse, email: string): void {
   localStorage.setItem("role", response.role || "customer");
   localStorage.setItem("token", response.accessToken);
   localStorage.setItem("username", response.username);
+
+  if (response.idClient) {
+    localStorage.setItem("idClient", String(response.idClient));
+  }
 }
 
 // Login con email y contraseña
@@ -169,4 +173,5 @@ export function logout(): void {
   localStorage.removeItem("token");
   localStorage.removeItem("username");
   localStorage.removeItem("favorite");
+  localStorage.removeItem("idClient");
 }
