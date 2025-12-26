@@ -1,4 +1,4 @@
-import { CartActions } from "../../reducers";
+import { CartActions } from "../../reducers/Compras-Reducers";
 import { Product, ProductItem } from "../../types";
 import { IoMdRemove, IoIosArrowBack } from "react-icons/io";
 import { MdDeleteForever, MdOutlineAdd } from "react-icons/md";
@@ -44,8 +44,8 @@ export default function ProductList({
   };
 
   return (
-    <div className="m-2 md:m-8">
-      <div className="relative flex items-center w-full m-1 md:m-5">
+    <div className="m-5 md:m-8">
+      <div className="relative flex  items-center w-full m-1 md:m-5">
         {/*Botón para volver */}
         {onBack && (
           <button
@@ -59,9 +59,12 @@ export default function ProductList({
         <h3 className="text-3xl font-bold mx-auto">{title}</h3>
       </div>
       {products.length > 0 ? (
-        <div className="mt-10 grid grid-cols-1 grid-rows-1 gap-4 place-items-center lg:place-items-end md:m-2">
+        <div className="mt-5 grid grid-cols-1 gap-4 place-items-center xs:m-2">
           {products.map((item, index) => (
-            <div key={index} className="flex flex-col w-full h-full sm:p-2">
+            <div
+              key={index}
+              className="flex flex-col lg:flex-wrap w-full h-full sm:p-2"
+            >
               <div
                 className="flex rounded-badge shadow-lg cursor-pointer hover:shadow-xl transition-shadow"
                 onClick={() => handleProductClick(item.idProducts)}
@@ -69,7 +72,7 @@ export default function ProductList({
                 <img
                   src="/Panaderia/Principal.jpeg"
                   alt={item.name}
-                  className="w-28 sm:w-40 sm:h-full md:w-56 object-cover rounded"
+                  className="w-28 sm:w-40 sm:h-full lg:w-56 object-cover rounded"
                 />
                 <div className="flex flex-col justify-center m-1 sm:m-2">
                   <h2 className="name text-center text-lg md:text-2xl text-accent font-bold">
