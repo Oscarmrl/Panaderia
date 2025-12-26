@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom";
 import type { ReactNode } from "react";
 
-interface ProtectedRouteProps {
+type ProtectedRouteProps = {
   children: ReactNode;
-}
+};
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const isLoggedIn = localStorage.getItem("loggedIn") === "true";
