@@ -3,9 +3,13 @@ import { ProductItem } from "../types";
 
 const API = "http://localhost:3000/api/paypal";
 
-export const createPayPalOrder = async (cart: ProductItem[]) => {
+export const createPayPalOrder = async (
+  cart: ProductItem[],
+  idClient: number
+) => {
   const { data } = await axios.post(`${API}/create-order`, {
     cart,
+    idClient,
   });
   return data.id;
 };
