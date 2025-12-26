@@ -9,9 +9,10 @@ import {
   Favoritos,
   Order,
 } from "./Components";
-
+import AdminLayout from "./admin/AdminLayout";
 import Login from "./auth/Login";
 import ProtectedRoute from "./auth/ProtectedRoute";
+import AdminRoute from "./auth/AdminRoute";
 import Register from "./auth/Register";
 
 import {
@@ -72,6 +73,15 @@ function MainContent() {
               <ProductDetail />
               <OtrasOpciones />
             </>
+          }
+        />
+
+        <Route
+          path="/Panaderia/admin"
+          element={
+            <AdminRoute>
+              <AdminLayout />
+            </AdminRoute>
           }
         />
       </Routes>
