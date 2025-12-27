@@ -7,7 +7,7 @@ import { useNavigationContext } from "../../context/useNavigationContext";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { getAuthUser } from "../../auth/authStorage";
 export default function MenuInferior() {
-  const { goToCart, gotToHome, goToFavorites, goToAdminDashboard } =
+  const { goToCart, gotToHome, goToFavorites, goToAdminLayout } =
     useNavigation();
   const { activeTab } = useNavigationContext();
   const { role } = getAuthUser();
@@ -58,7 +58,7 @@ export default function MenuInferior() {
               ? "Menu_active"
               : "flex flex-col items-center justify-center w-20 md:w-40"
           }
-          onClick={goToAdminDashboard}
+          onClick={goToAdminLayout}
         >
           <IconoNav icon={MdAdminPanelSettings} size="w-4 h-4" label="Admin" />
         </button>

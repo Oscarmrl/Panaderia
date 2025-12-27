@@ -21,6 +21,10 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
+import Dashboard from "./admin/Dashboard";
+import EditProducts from "./admin/EditProducts";
+import AddProducts from "./admin/AddProducts";
+import OrdersAdmin from "./admin/OrdersAdmin";
 
 function App() {
   return (
@@ -81,6 +85,41 @@ function MainContent() {
           element={
             <AdminRoute>
               <AdminLayout />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/Panaderia/admin/Dashboard"
+          element={
+            <AdminRoute>
+              <Dashboard />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/Panaderia/admin/Edit_Products"
+          element={
+            <AdminRoute>
+              <EditProducts />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/Panaderia/admin/Add_Products"
+          element={
+            <AdminRoute>
+              <AddProducts />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/Panaderia/admin/Orders"
+          element={
+            <AdminRoute>
+              <OrdersAdmin />
             </AdminRoute>
           }
         />

@@ -34,10 +34,35 @@ export default function useNavigation() {
     },
 
     // Admin
-    goToAdminDashboard: () => {
+    goToAdminLayout: () => {
       if (role === "admin") {
         setActiveTab("admin");
         navigate("/Panaderia/admin");
+      }
+    },
+    goToDashboard: () => {
+      if (role === "admin") {
+        setActiveTab("admin");
+        navigate("/Panaderia/admin/Dashboard");
+      }
+    },
+    goToEditProducts: () => {
+      if (role === "admin") {
+        setActiveTab("admin");
+        navigate("/Panaderia/admin/Edit_Products");
+      }
+    },
+    goToAddProducts: () => {
+      if (role === "admin") {
+        setActiveTab("admin");
+        navigate("/Panaderia/admin/Add_Products");
+      }
+    },
+
+    goToOrders: () => {
+      if (role === "admin") {
+        setActiveTab("admin");
+        navigate("/Panaderia/admin/Orders");
       }
     },
   };
