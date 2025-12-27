@@ -11,7 +11,7 @@ export default function Order() {
   const { state, dispatch } = useCart();
 
   const total = state.cart.reduce(
-    (sum: number, item: ProductItem) => sum + item.price * item.quantity,
+    (sum: number, item: ProductItem) => sum + item.price_hnl * item.quantity,
     0
   );
 
@@ -55,7 +55,7 @@ export default function Order() {
                 className="flex justify-between text-lg md:text-xl font-semibold"
               >
                 <span>{item.name}</span>
-                <span>{FormatCurrency(item.price * item.quantity)}</span>
+                <span>{FormatCurrency(item.price_hnl * item.quantity)}</span>
               </li>
             ))}
           </ul>
@@ -115,7 +115,7 @@ export default function Order() {
                         {item.name} × {item.quantity}
                       </span>
                       <span className="font-semibold">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        {FormatCurrency(item.price_hnl * item.quantity)}
                       </span>
                     </li>
                   ))}

@@ -153,7 +153,9 @@ export default function ProductDetail() {
             <div className="col-start-1 flex flex-col justify-center">
               <h3 className="text-sm">Sub total</h3>
               <span className="font-bold text-2xl">
-                {FormatCurrency(productInCart.quantity * productInCart.price)}
+                {FormatCurrency(
+                  productInCart.quantity * productInCart.price_hnl
+                )}
               </span>
             </div>
             <button

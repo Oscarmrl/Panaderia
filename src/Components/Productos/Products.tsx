@@ -55,7 +55,7 @@ export default function Products() {
 
                 <div className="actions">
                   <span className="price">
-                    {FormatCurrency(Number(pro.price))}
+                    {FormatCurrency(Number(pro.price_hnl))}
                   </span>
                   <button
                     className="button"
