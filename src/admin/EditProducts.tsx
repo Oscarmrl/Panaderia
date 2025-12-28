@@ -15,9 +15,8 @@ export default function EditProducts() {
     try {
       await deleteProduct(id);
       refetchProducts();
-      alert("Producto eliminado correctamente");
-    } catch (error: any) {
-      alert(error.response?.data?.message || error.message);
+    } catch (error) {
+      console.error("Error al eliminar el producto:", error);
     }
   };
 
