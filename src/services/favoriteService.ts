@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import useMutation from "../hook/useMutation";
-import { CartActions } from "../reducers";
+import { CartActions } from "../reducers/Compras-Reducers";
 
 // Agregar un favorito
 export const useAddFavorite = () => {

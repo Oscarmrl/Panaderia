@@ -68,7 +68,7 @@ export default function Products() {
             </div>
           ))
         ) : (
-          <p className="text-center">No hay productos disponibles</p>
+          <p className="text-center mt-12">No hay productos disponibles</p>
         )}
       </div>
 

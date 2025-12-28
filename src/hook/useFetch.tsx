@@ -1,41 +1,47 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
-// Lista de URLs de backend para intentar
 const API_URLS = [
   "https://backendpanaderia-production.up.railway.app",
   "http://localhost:3000",
 ];
-// Función para obtener el token
+
 const getAuthToken = () => {
-  return localStorage.getItem("token"); // Asegúrate que tu login guarde aquí el accessToken
+  return localStorage.getItem("token");
 };
 
-// Hook personalizado para fetch (GET)
 export default function useFetch<T>(
-  path: string, // Ruta del endpoint
-  requireAuth: boolean = false // Indica si se requiere autenticación
+  path: string,
+  requireAuth: boolean = false
 ) {
-  const [data, setData] = useState<T | null>(null); // Estado de datos
-  const [loading, setLoading] = useState(true); // Estado de carga
-  const [error, setError] = useState<Error | null>(null); // Estado de error
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
-  // Efecto para realizar el fetch al montar el componente o cambiar la ruta
+  // 🔥 NUEVO: trigger para forzar re-fetch
+  const [trigger, setTrigger] = useState(0);
+
+  // 🔥 NUEVO: función de refresh
+  const refetch = useCallback(() => {
+    setTrigger((prev) => prev + 1);
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
-      const token = getAuthToken(); // Obtener token de autenticación
+      setLoading(true);
+      setError(null);
 
-      // Si requiere autenticación y no hay token
+      const token = getAuthToken();
+
       if (requireAuth && !token) {
         setError(new Error("Token de autenticación requerido"));
         setLoading(false);
         return;
       }
-      // Intentar cada URL en la lista hasta que una funcione
+
       for (const baseUrl of API_URLS) {
         try {
-          // Realizar la solicitud fetch
           const response = await fetch(`${baseUrl}${path}`, {
-            headers: token // Si hay token, incluir Authorization
+            headers: token
               ? {
                   "Content-Type": "application/json",
                   Authorization: `Bearer ${token}`,
@@ -53,16 +59,17 @@ export default function useFetch<T>(
           setData(jsonData);
           setLoading(false);
           return;
-        } catch (error) {
-          console.log(`Error con ${baseUrl}`, error);
+        } catch (err) {
+          console.log(`Error con ${baseUrl}`, err);
         }
       }
+
       setError(new Error("Ningun servidor respondio"));
       setLoading(false);
     };
 
     fetchData();
-  }, [path, requireAuth]); // Re-ejecutar si cambia la ruta o el requireAuth
+  }, [path, requireAuth, trigger]); // 🔥 trigger agregado
 
-  return { data, error, loading }; // Retornar datos, error y estado de carga
+  return { data, error, loading, refetch };
 }

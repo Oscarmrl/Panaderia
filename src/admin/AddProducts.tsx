@@ -1,3 +1,11 @@
+import { useNavigation } from "../hook";
+import PageHeader from "../Components/ui/PageHeader";
+
 export default function AddProducts() {
-  return <div>AddProducts</div>;
+  const { goToAdminLayout } = useNavigation();
+  return (
+    <div>
+      <PageHeader title="Añadir Producto" onBack={goToAdminLayout} />
+    </div>
+  );
 }
