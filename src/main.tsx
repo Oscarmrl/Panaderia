@@ -10,6 +10,7 @@ import App from "./App.tsx";
 import { NavigationProvider } from "./context/NavegationContext.tsx";
 import { CartProvider } from "./context/CartContext.tsx";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { Toaster } from "react-hot-toast";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -23,6 +24,7 @@ createRoot(document.getElementById("root")!).render(
     >
       <CartProvider>
         <NavigationProvider>
+          <Toaster position="top-center" />
           <App />
         </NavigationProvider>
       </CartProvider>
