@@ -12,6 +12,15 @@ export type Product = {
   stock: number;
   image: string;
 };
+//orden de productos
+export type Order = {
+  idOrders: number;
+  total: number;
+  order_status: string;
+  order_date: string;
+  client_name: string;
+  client_email: string;
+};
 
 // Item de producto
 export type ProductItem = Product & {
