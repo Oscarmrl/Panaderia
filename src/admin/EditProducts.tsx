@@ -4,19 +4,33 @@ import PageHeader from "../Components/ui/PageHeader";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { FormatCurrency } from "../helpers";
 import { deleteProduct } from "../services/product";
+import EditProductModal from "../admin/EditProductModal";
+import { Product } from "../types";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function EditProducts() {
   const { goToAdminLayout } = useNavigation();
   const { products, loading, error, refetchProducts } = useProduct();
 
-  const handleDelete = async (id: number) => {
-    if (!window.confirm("¿Eliminar este producto?")) return;
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [openModal, setOpenModal] = useState(false);
+  const handleEdit = (product: Product) => {
+    setSelectedProduct(product);
+    setOpenModal(true);
+  };
 
+  const handleDelete = async (id: number) => {
     try {
       await deleteProduct(id);
+      toast.success("Producto eliminado exitosamente");
       refetchProducts();
-    } catch (error) {
-      console.error("Error al eliminar el producto:", error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Error inesperado al eliminar el producto");
+      }
     }
   };
 
@@ -86,7 +100,10 @@ export default function EditProducts() {
 
                   <div className="flex gap-2">
                     <div className="tooltip" data-tip="Editar producto">
-                      <button className="btn btn-sm w-16 btn-secondary">
+                      <button
+                        onClick={() => handleEdit(product)}
+                        className="btn btn-sm w-16 btn-secondary"
+                      >
                         <FiEdit />
                       </button>
                     </div>
@@ -112,6 +129,13 @@ export default function EditProducts() {
           </p>
         )}
       </div>
+      {openModal && selectedProduct && (
+        <EditProductModal
+          product={selectedProduct}
+          onClose={() => setOpenModal(false)}
+          onSuccess={refetchProducts}
+        />
+      )}
     </>
   );
 }
