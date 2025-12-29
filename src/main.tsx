@@ -16,7 +16,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <PayPalScriptProvider
       options={{
-        "client-id":
+        clientId:
           "AVUDDW7nuTa9sF0SAQtF6CippWVYd6NK2lSxhUY1dOIokfgjZe79HE3DwS-AGIdeN3OcIv1OdfJnXQjY",
         currency: "USD",
         intent: "capture",
