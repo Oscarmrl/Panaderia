@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { FormatCurrency } from "../helpers";
 import { PaginatedOrders } from "../types";
 import Pagination from "./Pagination";
+import { useCallback } from "react";
 
 // Tipo de respuesta paginada
 
@@ -20,12 +21,7 @@ export default function OrdersAdmin() {
   const [totalPages, setTotalPages] = useState(1);
   const limit = 10; // Órdenes por página
 
-  // Fetch inicial y cada vez que cambie la página
-  useEffect(() => {
-    fetchOrders();
-  }, [page, limit]);
-
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     try {
       setLoading(true);
       const response: PaginatedOrders = await getAllOrders(page, limit);
@@ -40,7 +36,11 @@ export default function OrdersAdmin() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, limit]);
+
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
 
   const handleUpdateStatus = async (idOrders: number, newStatus: string) => {
     try {
