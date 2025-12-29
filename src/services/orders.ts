@@ -1,18 +1,13 @@
 import axios from "axios";
-import { Order } from "../types";
+import { PaginatedOrders } from "../types";
 
 const API_URL = "http://localhost:3000/orders";
 
-export interface OrderStats {
-  total_orders: number;
-  pending_orders: number;
-  completed_orders: number;
-  cancelled_orders: number;
-  total_revenue: number;
-}
-
 // Obtener todas las órdenes (admin)
-export const getAllOrders = async (): Promise<Order[]> => {
+export const getAllOrders = async (
+  page = 1,
+  limit = 10
+): Promise<PaginatedOrders> => {
   const token = localStorage.getItem("token");
 
   if (!token) {
@@ -23,6 +18,10 @@ export const getAllOrders = async (): Promise<Order[]> => {
     const response = await axios.get(`${API_URL}/all`, {
       headers: {
         Authorization: `Bearer ${token}`,
+      },
+      params: {
+        page,
+        limit,
       },
       timeout: 10000,
     });

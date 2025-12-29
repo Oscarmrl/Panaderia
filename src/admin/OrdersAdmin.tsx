@@ -5,21 +5,32 @@ import { getAllOrders, updateOrderStatus } from "../services/orders";
 import { Order } from "../types";
 import toast from "react-hot-toast";
 import { FormatCurrency } from "../helpers";
+import { PaginatedOrders } from "../types";
+import Pagination from "./Pagination";
+
+// Tipo de respuesta paginada
 
 export default function OrdersAdmin() {
   const { goToAdminLayout } = useNavigation();
+
+  // Estados
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 10; // Órdenes por página
 
+  // Fetch inicial y cada vez que cambie la página
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [page, limit]);
 
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const data = await getAllOrders();
-      setOrders(data);
+      const response: PaginatedOrders = await getAllOrders(page, limit);
+      setOrders(response.data);
+      setTotalPages(response.totalPages);
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -103,7 +114,7 @@ export default function OrdersAdmin() {
                               day: "numeric",
                               hour: "2-digit",
                               minute: "2-digit",
-                              hour12: true, // AM / PM
+                              hour12: true,
                             }
                           )}
                         </p>
@@ -245,7 +256,7 @@ export default function OrdersAdmin() {
                             day: "numeric",
                             hour: "2-digit",
                             minute: "2-digit",
-                            hour12: true, // AM / PM
+                            hour12: true,
                           }
                         )}
                       </td>
@@ -276,6 +287,13 @@ export default function OrdersAdmin() {
                 </tbody>
               </table>
             </div>
+
+            {/* Paginación */}
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              onPageChange={setPage}
+            />
           </>
         )}
       </div>

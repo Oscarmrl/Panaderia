@@ -12,6 +12,15 @@ export type Product = {
   stock: number;
   image: string;
 };
+
+export type PaginatedOrders = {
+  data: Order[];
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+};
+
 //orden de productos
 export type Order = {
   idOrders: number;
