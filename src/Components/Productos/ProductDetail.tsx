@@ -79,19 +79,19 @@ export default function ProductDetail() {
         <div className="relative">
           <img
             className="w-full h-auto object-cover rounded-lg"
-            src="/Panaderia/Principal.jpeg"
+            src={product?.image ? product?.image : "/Panaderia/Principal.jpeg"}
             alt="Product Image"
           />
 
           <Button
-            className="btn btn-circle w-12 absolute left-4 inset-y-1/2 top-9"
+            className="btn btn-circle hover:bg-accent  w-12 absolute left-4 inset-y-1/2 top-9"
             onClick={gotToHome}
           >
             <IoIosArrowBack />
           </Button>
 
           <Button
-            className={`btn-circle w-12 h-12 flex items-center justify-center absolute transition-colors duration-400 ease-in-out right-4 inset-y-1/2 top-9 ${
+            className={`btn-circle w-12 h-12 flex items-center hover:bg-red-700 hover:text-white justify-center absolute transition-colors duration-400 ease-in-out right-4 inset-y-1/2 top-9 ${
               isFavorite ? "bg-red-800 text-white" : "bg-base-200"
             }`}
             onClick={handleFavorite}
@@ -103,7 +103,7 @@ export default function ProductDetail() {
 
       <div className="w-full lg:w-2/3 lg:mt-10">
         <div className="w-full grid grid-cols-2">
-          <h2 className="text-2xl md:text-4xl m-2 font-bold text-accent col-span-1 lg:col-span-2">
+          <h2 className="text-2xl md:text-4xl m-2 font-bold  col-span-1 lg:col-span-2">
             {product?.name}
           </h2>
 

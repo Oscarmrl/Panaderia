@@ -57,7 +57,7 @@ export default function AddProducts() {
 
       toast.success("Producto creado con imagen");
       goToAdminLayout();
-    } catch (error) {  
+    } catch (error) {
       toast.error("Error al subir la imagen", error);
     } finally {
       setLoading(false);
@@ -146,9 +146,7 @@ export default function AddProducts() {
               {/* Imagen (URL) */}
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text font-semibold">
-                    Imagen (URL opcional)
-                  </span>
+                  <span className="label-text font-semibold">Imagen</span>
                 </label>
                 <input
                   type="file"

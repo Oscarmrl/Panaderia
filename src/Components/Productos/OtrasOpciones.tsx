@@ -15,7 +15,7 @@ export default function OtrasOpciones() {
   if (!products || !currentProduct) return null;
 
   return (
-    <div className="m-5 md:m-10">
+    <div className="m-5 mb-16 md:m-10">
       <h3 className="text-2xl text-accent font-bold mb-4">
         También te podría interesar:
       </h3>
@@ -29,7 +29,9 @@ export default function OtrasOpciones() {
               className="rounded-badge bg-base-100 border-2  p-4 hover:shadow-2xl transition-shadow duration-300"
             >
               <img
-                src="/Panaderia/Principal.jpeg"
+                src={
+                  product.image ? product.image : "/Panaderia/Principal.jpeg"
+                }
                 alt={product.name}
                 className="w-full h-40 object-cover rounded"
               />

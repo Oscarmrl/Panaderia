@@ -60,7 +60,7 @@ export default function EditProducts() {
     <>
       <PageHeader title="Editar Productos" onBack={goToAdminLayout} />
 
-      <div className="p-6 mb-10 md:p-10">
+      <div className="p-6 mb-20 md:p-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
             <div
