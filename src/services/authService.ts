@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import { signInWithPopup, getIdToken } from "firebase/auth";
-import { auth, googleProvider } from "../src/firebaseConfig";
+import { auth, googleProvider } from "../firebaseConfig";
 import { CartActions } from "../reducers/Compras-Reducers";
 import { fetchAndSyncFavorites } from "./favoriteService";
 import type { login, register, LoginResponse } from "../types";

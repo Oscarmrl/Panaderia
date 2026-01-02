@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { updateProduct } from "../services/product";
+import { uploadImage } from "../services/uploadImage";
+import { deleteImageByUrl } from "../services/deleteImage";
 import { Product } from "../types";
 import toast from "react-hot-toast";
 
@@ -19,8 +21,11 @@ export default function EditProductModal({
     description: "",
     price: 0,
     stock: 0,
+    image: "",
   });
 
+  const [newImage, setNewImage] = useState<File | null>(null);
+  const [removeImage, setRemoveImage] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -30,6 +35,7 @@ export default function EditProductModal({
         description: product.description,
         price: product.price_hnl,
         stock: product.stock,
+        image: product.image || "",
       });
     }
   }, [product]);
@@ -44,22 +50,39 @@ export default function EditProductModal({
   const handleSubmit = async () => {
     try {
       setLoading(true);
+
+      let imageUrl = form.image;
+
+      // 1. Eliminar imagen existente
+      if (removeImage && form.image) {
+        await deleteImageByUrl(form.image);
+        imageUrl = "";
+      }
+
+      // 2. Subir nueva imagen
+      if (newImage) {
+        if (form.image) {
+          await deleteImageByUrl(form.image);
+        }
+        imageUrl = await uploadImage(newImage);
+      }
+
+      // 3. Actualizar producto
       await updateProduct(product.idProducts, {
         name: form.name,
         description: form.description,
         price: Number(form.price),
         stock: Number(form.stock),
+        image: imageUrl,
       });
-      toast.success("Producto actualizado exitosamente");
 
+      toast.success("Producto actualizado exitosamente");
       onSuccess();
       onClose();
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("Error inesperado al actualizar el producto");
-      }
+      toast.error(
+        error instanceof Error ? error.message : "Error al actualizar producto"
+      );
     } finally {
       setLoading(false);
     }
@@ -69,57 +92,87 @@ export default function EditProductModal({
     <dialog className="modal modal-open">
       <div className="modal-box">
         <h3 className="font-bold text-lg mb-4 text-center">Editar producto</h3>
-        <label htmlFor="name" className="label">
-          <span className="label-text font-semibold">Nombre</span>
+
+        {/* Imagen actual */}
+        {!removeImage && (
+          <div className="mb-4">
+            <img
+              src={form.image || "/Panaderia/Principal.jpeg"}
+              alt="Producto"
+              className="h-40 w-full object-cover rounded"
+              onError={(e) => {
+                e.currentTarget.src = "/Panaderia/Principal.jpeg";
+              }}
+            />
+          </div>
+        )}
+
+        {/* Nueva imagen */}
+        <label className="label">
+          <span className="label-text font-semibold">
+            Cambiar imagen (opcional)
+          </span>
         </label>
 
         <input
-          id="name"
+          type="file"
+          accept="image/*"
+          className="file-input file-input-bordered w-full mb-4"
+          onChange={(e) => {
+            if (e.target.files && e.target.files[0]) {
+              setNewImage(e.target.files[0]);
+              setRemoveImage(false);
+            }
+          }}
+        />
+
+        {/* Nombre */}
+        <label className="label">
+          <span className="label-text font-semibold">Nombre</span>
+        </label>
+        <input
           name="name"
           value={form.name}
           onChange={handleChange}
-          className="input input-bordered w-full"
-          placeholder="Nombre"
+          className="input input-bordered w-full mb-3"
         />
 
-        <label htmlFor="description" className="label">
-          <span className="label-text font-semibold">Descripcion</span>
+        {/* Descripción */}
+        <label className="label">
+          <span className="label-text font-semibold">Descripción</span>
         </label>
         <textarea
-          id="description"
           name="description"
           value={form.description}
           onChange={handleChange}
           className="textarea textarea-bordered w-full mb-3"
-          placeholder="Descripción"
         />
 
-        <label htmlFor="price" className="label">
+        {/* Precio */}
+        <label className="label">
           <span className="label-text font-semibold">Precio</span>
         </label>
         <input
-          id="price"
           type="number"
           name="price"
           value={form.price}
           onChange={handleChange}
           className="input input-bordered w-full mb-3"
-          placeholder="Precio"
         />
 
-        <label htmlFor="stock" className="label">
+        {/* Stock */}
+        <label className="label">
           <span className="label-text font-semibold">Stock</span>
         </label>
         <input
-          id="stock"
           type="number"
           name="stock"
           value={form.stock}
           onChange={handleChange}
           className="input input-bordered w-full mb-4"
-          placeholder="Stock"
         />
 
+        {/* Acciones */}
         <div className="modal-action">
           <button className="btn" onClick={onClose}>
             Cancelar
