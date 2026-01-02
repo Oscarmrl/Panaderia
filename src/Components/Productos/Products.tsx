@@ -43,7 +43,11 @@ export default function Products() {
         {products?.length > 0 ? (
           selectedProducts.map((pro, index) => (
             <div key={index} className="Product">
-              <img className="img" src="/Panaderia/Principal.jpeg" alt="" />
+              <img
+                className="img"
+                src={pro.image ? pro.image : "/Panaderia/Principal.jpeg"}
+                alt={pro.name}
+              />
 
               <div className="flex flex-col flex-grow sm:p-2 md:p-6">
                 <h3 className="name">{pro.name}</h3>
