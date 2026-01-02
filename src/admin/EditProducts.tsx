@@ -8,6 +8,7 @@ import EditProductModal from "../admin/EditProductModal";
 import { Product } from "../types";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { deleteImageByUrl } from "../services/deleteImage";
 
 export default function EditProducts() {
   const { goToAdminLayout } = useNavigation();
@@ -20,9 +21,16 @@ export default function EditProducts() {
     setOpenModal(true);
   };
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (product: Product) => {
     try {
-      await deleteProduct(id);
+      // 1. Eliminar imagen de Firebase
+      if (product.image) {
+        await deleteImageByUrl(product.image);
+      }
+
+      // 2. Eliminar producto en BD
+      await deleteProduct(product.idProducts);
+
       toast.success("Producto eliminado exitosamente");
       refetchProducts();
     } catch (error: unknown) {
@@ -61,7 +69,8 @@ export default function EditProducts() {
             >
               <figure className="relative">
                 <img
-                  src="/Panaderia/Principal.jpeg"
+                  // src="/Panaderia/Principal.jpeg"
+                  src={`${product.image}`}
                   alt={product.name}
                   className="h-48 w-full object-cover"
                 />
@@ -110,7 +119,7 @@ export default function EditProducts() {
 
                     <div className="tooltip" data-tip="Eliminar producto">
                       <button
-                        onClick={() => handleDelete(product.idProducts)}
+                        onClick={() => handleDelete(product)}
                         className="btn btn-sm w-16 bg-red-600 text-white hover:bg-red-700"
                       >
                         <FiTrash2 />
