@@ -12,11 +12,11 @@
 }
 
 .Product .name {
-  @apply text-sm sm:text-lg md:text-2xl font-bold  mt-2  text-accent;
+  @apply text-sm sm:text-lg md:text-2xl font-bold text-start  m-2  text-accent;
 }
 
 .Product .description {
-  @apply text-sm sm:text-lg text-primary m-2 flex-grow;
+  @apply text-sm sm:text-lg text-primary m-2 flex-grow text-start;
 }
 .Product .actions {
   @apply mt-auto flex items-center justify-between m-2;

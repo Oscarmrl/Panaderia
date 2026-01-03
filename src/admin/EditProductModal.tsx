@@ -33,7 +33,7 @@ export default function EditProductModal({
       setForm({
         name: product.name,
         description: product.description,
-        price: product.price_hnl,
+        price: product.price_usd,
         stock: product.stock,
         image: product.image || "",
       });
@@ -150,7 +150,7 @@ export default function EditProductModal({
 
         {/* Precio */}
         <label className="label">
-          <span className="label-text font-semibold">Precio</span>
+          <span className="label-text font-semibold">Precio (USD)</span>
         </label>
         <input
           type="number"

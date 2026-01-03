@@ -42,7 +42,11 @@ export default function Products() {
       <div className="grid grid-cols-2 m-1 md:m-4  text-center gap-2 md:gap-4 md:grid-cols-3">
         {products?.length > 0 ? (
           selectedProducts.map((pro, index) => (
-            <div key={index} className="Product">
+            <div
+              key={index}
+              onClick={() => goToAdd(pro.idProducts.toString())}
+              className="Product cursor-pointer"
+            >
               <img
                 className="img"
                 src={pro.image ? pro.image : "/Panaderia/Principal.jpeg"}
@@ -58,13 +62,10 @@ export default function Products() {
                 </p>
 
                 <div className="actions">
-                  <span className="price">
+                  <span className="price badge">
                     {FormatCurrency(Number(pro.price_hnl))}
                   </span>
-                  <button
-                    className="button"
-                    onClick={() => goToAdd(pro.idProducts.toString())}
-                  >
+                  <button className="button">
                     <IconoNav icon={IoMdAdd} size="w-4 h-4" label="" />
                   </button>
                 </div>

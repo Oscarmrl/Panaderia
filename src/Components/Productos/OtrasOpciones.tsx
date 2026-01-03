@@ -26,7 +26,10 @@ export default function OtrasOpciones() {
           .map((product) => (
             <div
               key={product.idProducts}
-              className="rounded-badge bg-base-100 border-2  p-4 hover:shadow-2xl transition-shadow duration-300"
+              onClick={() => {
+                goToAdd(product.idProducts.toString());
+              }}
+              className="cursor-pointer rounded-badge bg-base-100 border-2  p-4 hover:shadow-2xl transition-shadow duration-300"
             >
               <img
                 src={
