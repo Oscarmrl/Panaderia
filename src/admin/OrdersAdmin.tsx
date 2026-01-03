@@ -1,25 +1,31 @@
 import { useNavigation } from "../hook";
 import PageHeader from "../Components/ui/PageHeader";
-import { useState, useEffect } from "react";
-import { getAllOrders, updateOrderStatus } from "../services/orders";
-import { Order } from "../types";
+import { useState, useEffect, useCallback } from "react";
+import {
+  getAllOrders,
+  updateOrderStatus,
+  getOrderDetails,
+} from "../services/orders";
+import { Order, OrderDetail, PaginatedOrders } from "../types";
 import toast from "react-hot-toast";
-import { FormatCurrency } from "../helpers";
-import { PaginatedOrders } from "../types";
 import Pagination from "./Pagination";
-import { useCallback } from "react";
-
-// Tipo de respuesta paginada
+import OrderDetailsModal from "./OrderDetailsModal";
+import { USDToHNL } from "../helpers/currency";
 
 export default function OrdersAdmin() {
   const { goToAdminLayout } = useNavigation();
 
-  // Estados
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const limit = 10; // Órdenes por página
+
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null);
+  const [orderDetails, setOrderDetails] = useState<OrderDetail[]>([]);
+  const [loadingDetails, setLoadingDetails] = useState(false);
+
+  const limit = 10;
 
   const fetchOrders = useCallback(async () => {
     try {
@@ -28,11 +34,8 @@ export default function OrdersAdmin() {
       setOrders(response.data);
       setTotalPages(response.totalPages);
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("Error al cargar las órdenes");
-      }
+      if (error instanceof Error) toast.error(error.message);
+      else toast.error("Error al cargar las órdenes");
     } finally {
       setLoading(false);
     }
@@ -48,11 +51,25 @@ export default function OrdersAdmin() {
       toast.success("Estado actualizado correctamente");
       fetchOrders();
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("Error al actualizar el estado");
-      }
+      if (error instanceof Error) toast.error(error.message);
+      else toast.error("Error al actualizar el estado");
+    }
+  };
+
+  const handleShowDetails = async (idOrders: number) => {
+    setSelectedOrderId(idOrders);
+    setShowDetailsModal(true);
+    setLoadingDetails(true);
+
+    try {
+      const details = await getOrderDetails(idOrders);
+      setOrderDetails(details);
+    } catch (error: unknown) {
+      if (error instanceof Error) toast.error(error.message);
+      else toast.error("Error al cargar los detalles de la orden");
+      setShowDetailsModal(false);
+    } finally {
+      setLoadingDetails(false);
     }
   };
 
@@ -83,7 +100,6 @@ export default function OrdersAdmin() {
   return (
     <div>
       <PageHeader title="Órdenes de clientes" onBack={goToAdminLayout} />
-
       <div className="p-4 md:p-6 lg:p-10 mb-20">
         {orders.length === 0 ? (
           <p className="text-center mt-12 text-base-content opacity-60">
@@ -91,7 +107,7 @@ export default function OrdersAdmin() {
           </p>
         ) : (
           <>
-            {/* Vista móvil: Cards */}
+            {/* Cards móvil */}
             <div className="grid grid-cols-1 gap-4 md:hidden">
               {orders.map((order) => (
                 <div
@@ -99,8 +115,7 @@ export default function OrdersAdmin() {
                   className="card bg-base-100 shadow-xl border border-base-300"
                 >
                   <div className="card-body p-4">
-                    {/* Header de la card */}
-                    <div className="flex justify-between items-start ">
+                    <div className="flex justify-between items-start">
                       <div>
                         <h3 className="font-bold text-lg">
                           Orden #{order.idOrders}
@@ -120,17 +135,15 @@ export default function OrdersAdmin() {
                         </p>
                       </div>
                       <span
-                        className={`badge ${getStatusColor(
-                          order.order_status
-                        )} badge-lg`}
+                        className={`badge ${getStatusColor(order.order_status)} badge-lg`}
                       >
                         {order.order_status}
                       </span>
                     </div>
 
-                    {/* Información del cliente */}
                     <div className="divider my-2"></div>
                     <div className="space-y-2">
+                      {/* Nombre */}
                       <div className="flex items-center gap-2">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -149,6 +162,7 @@ export default function OrdersAdmin() {
                         <span className="font-medium">{order.client_name}</span>
                       </div>
 
+                      {/* Email */}
                       <div className="flex items-center gap-2">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -169,6 +183,7 @@ export default function OrdersAdmin() {
                         </span>
                       </div>
 
+                      {/* Teléfono */}
                       <div className="flex items-center gap-2">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -181,25 +196,40 @@ export default function OrdersAdmin() {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth={2}
+                            d="M2.25 6.75c0 7.87 6.38 14.25 14.25 14.25.62 0 1.22-.05 1.82-.14a2.25 2.25 0 001.93-1.6l.75-3a2.25 2.25 0 00-1.1-2.6l-3.1-1.55a2.25 2.25 0 00-2.74.57l-.98 1.2a11.1 11.1 0 01-5.24-5.24l1.2-.98a2.25 2.25 0 00.57-2.74L7.6 3.4a2.25 2.25 0 00-2.6-1.1l-3 .75a2.25 2.25 0 00-1.6 1.93c-.09.6-.14 1.2-.14 1.82z"
+                          />
+                        </svg>
+                        <span className="text-sm opacity-80">
+                          {order.client_phone}
+                        </span>
+                      </div>
+
+                      {/* Total */}
+                      <div className="flex items-center gap-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6 text-primary"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
                             d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                           />
                         </svg>
                         <span className="text-lg font-bold text-primary">
-                          {FormatCurrency(order.total)}
+                          {USDToHNL(order.total)}
                         </span>
                       </div>
                     </div>
 
-                    {/* Selector de estado */}
                     <div className="divider my-2"></div>
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text font-semibold">
-                          Cambiar estado:
-                        </span>
-                      </label>
+                    <div className="flex justify-between items-center gap-2">
                       <select
-                        className="select select-bordered  w-full"
+                        className="select select-bordered w-full"
                         value={order.order_status}
                         onChange={(e) =>
                           handleUpdateStatus(order.idOrders, e.target.value)
@@ -209,13 +239,19 @@ export default function OrdersAdmin() {
                         <option value="completado">Completado</option>
                         <option value="cancelado">Cancelado</option>
                       </select>
+                      <button
+                        className="btn btn-sm btn-outline"
+                        onClick={() => handleShowDetails(order.idOrders)}
+                      >
+                        Ver detalles
+                      </button>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* Vista tablet y desktop: Tabla */}
+            {/* Tabla desktop */}
             <div className="hidden md:block overflow-x-auto">
               <table className="table table-zebra w-full">
                 <thead>
@@ -223,6 +259,7 @@ export default function OrdersAdmin() {
                     <th className="text-center">ID</th>
                     <th>Cliente</th>
                     <th className="hidden lg:table-cell">Email</th>
+                    <th className="hidden lg:table-cell">Teléfono</th>
                     <th className="text-right">Total</th>
                     <th className="hidden xl:table-cell">Fecha</th>
                     <th className="text-center">Estado</th>
@@ -235,17 +272,15 @@ export default function OrdersAdmin() {
                       <td className="font-semibold text-center">
                         #{order.idOrders}
                       </td>
-                      <td>
-                        <div className="font-medium">{order.client_name}</div>
-                        <div className="text-sm opacity-60 lg:hidden">
-                          {order.client_email}
-                        </div>
-                      </td>
+                      <td>{order.client_name}</td>
                       <td className="hidden lg:table-cell text-sm">
                         {order.client_email}
                       </td>
+                      <td className="hidden lg:table-cell text-sm">
+                        {order.client_phone}
+                      </td>
                       <td className="font-bold text-right text-primary">
-                        {FormatCurrency(order.total)}
+                        {USDToHNL(order.total)}
                       </td>
                       <td className="hidden lg:table-cell">
                         {new Date(order.order_date).toLocaleDateString(
@@ -262,14 +297,12 @@ export default function OrdersAdmin() {
                       </td>
                       <td className="text-center">
                         <span
-                          className={`badge ${getStatusColor(
-                            order.order_status
-                          )}`}
+                          className={`badge ${getStatusColor(order.order_status)}`}
                         >
                           {order.order_status}
                         </span>
                       </td>
-                      <td className="text-center">
+                      <td className="text-center flex justify-center gap-2">
                         <select
                           className="select select-bordered select-sm max-w-xs"
                           value={order.order_status}
@@ -281,6 +314,12 @@ export default function OrdersAdmin() {
                           <option value="completado">Completado</option>
                           <option value="cancelado">Cancelado</option>
                         </select>
+                        <button
+                          className="btn btn-sm btn-outline"
+                          onClick={() => handleShowDetails(order.idOrders)}
+                        >
+                          Ver detalles
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -288,7 +327,6 @@ export default function OrdersAdmin() {
               </table>
             </div>
 
-            {/* Paginación */}
             <Pagination
               page={page}
               totalPages={totalPages}
@@ -297,6 +335,16 @@ export default function OrdersAdmin() {
           </>
         )}
       </div>
+
+      {/* Modal de detalles */}
+      {showDetailsModal && selectedOrderId && (
+        <OrderDetailsModal
+          orderId={selectedOrderId}
+          orderDetails={orderDetails}
+          loading={loadingDetails}
+          onClose={() => setShowDetailsModal(false)}
+        />
+      )}
     </div>
   );
 }

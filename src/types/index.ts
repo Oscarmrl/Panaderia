@@ -29,6 +29,7 @@ export type Order = {
   order_date: string;
   client_name: string;
   client_email: string;
+  client_phone: string;
 };
 
 // Item de producto
@@ -56,4 +57,12 @@ export type LoginResponse = {
   role?: string;
   message?: string;
   idClient: number; // ✅ AGREGADO
+};
+export type OrderDetail = {
+  idOrder_Details: number;
+  amount: number;
+  subtotal: number;
+  name: string;
+  price: number;
+  image?: string;
 };

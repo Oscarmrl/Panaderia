@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PaginatedOrders } from "../types";
+import { PaginatedOrders, OrderDetail } from "../types";
 
 const API_URL = "http://localhost:3000/orders";
 
@@ -19,10 +19,7 @@ export const getAllOrders = async (
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      params: {
-        page,
-        limit,
-      },
+      params: { page, limit },
       timeout: 10000,
     });
 
@@ -32,12 +29,10 @@ export const getAllOrders = async (
       if (err.response?.status === 401 || err.response?.status === 403) {
         throw new Error("No tienes permisos para ver las órdenes");
       }
-
       throw new Error(
         err.response?.data?.message || "Error al obtener las órdenes"
       );
     }
-
     throw new Error("Error inesperado");
   }
 };
@@ -75,6 +70,36 @@ export const updateOrderStatus = async (
 
       throw new Error(
         err.response?.data?.message || "Error al actualizar el estado"
+      );
+    }
+
+    throw new Error("Error inesperado");
+  }
+};
+
+// Obtener detalle de una orden por ID
+export const getOrderDetails = async (
+  idOrders: number
+): Promise<OrderDetail[]> => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    throw new Error("No autenticado");
+  }
+
+  try {
+    const response = await axios.get(`${API_URL}/details/${idOrders}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      timeout: 10000,
+    });
+
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      throw new Error(
+        err.response?.data?.message || "Error al obtener el detalle de la orden"
       );
     }
 
