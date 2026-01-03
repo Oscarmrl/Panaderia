@@ -57,8 +57,12 @@ export default function AddProducts() {
 
       toast.success("Producto creado con imagen");
       goToAdminLayout();
-    } catch (error) {
-      toast.error("Error al subir la imagen", error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Error inesperado al crear el producto");
+      }
     } finally {
       setLoading(false);
     }

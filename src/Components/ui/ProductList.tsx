@@ -70,7 +70,7 @@ export default function ProductList({
                 onClick={() => handleProductClick(item.idProducts)}
               >
                 <img
-                  src="/Panaderia/Principal.jpeg"
+                  src={item.image ? item.image : "/Panaderia/Principal.jpeg"}
                   alt={item.name}
                   className="w-28 sm:w-40 sm:h-full lg:w-56 object-cover rounded"
                 />
