@@ -150,7 +150,7 @@ export default function Order() {
                 onApprove={async (data) => {
                   setIsProcessing(true);
                   try {
-                    const response = await capturePayPalOrder(
+                    await capturePayPalOrder(
                       data.orderID,
                       state.cart,
                       idClient
