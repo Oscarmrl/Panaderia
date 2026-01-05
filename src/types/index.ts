@@ -66,3 +66,22 @@ export type OrderDetail = {
   price: number;
   image?: string;
 };
+
+export type DashboardSummary = {
+  totalSales_usd: number;
+  totalSales_hnl: number;
+  totalOrders: number;
+  pendingOrders: number;
+  lowStock: number;
+};
+
+export type SalesByDay = {
+  date: string;
+  total_usd: number;
+  total_hnl: number;
+};
+
+export type TopProduct = {
+  name: string;
+  quantity: number;
+};
