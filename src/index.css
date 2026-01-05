@@ -4,7 +4,7 @@
 
 /* Estilo de las tarjetas */
 .Product {
-  @apply flex flex-col w-full h-full bg-base-100 rounded-2xl shadow-lg overflow-hidden;
+  @apply flex flex-col w-full border-2 border-base-300 h-full bg-base-100 rounded-2xl shadow-lg overflow-hidden;
 }
 
 .Product .img {

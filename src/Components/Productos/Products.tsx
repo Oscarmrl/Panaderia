@@ -73,13 +73,15 @@ export default function Products() {
             </div>
           ))
         ) : (
-          <p className="text-center mt-12">No hay productos disponibles</p>
+          <p className="text-center mt-12 justify-center w-full col-span-3 text-xl">
+            No hay productos disponibles
+          </p>
         )}
       </div>
 
       <div className="flex justify-center mt-4 space-x-2">
         <button
-          className="btn btn-circle"
+          className="btn btn-circle btn-outline"
           onClick={handlePrevPages}
           disabled={currentPage === 1}
         >
@@ -89,7 +91,7 @@ export default function Products() {
           Página {currentPage} de {totalPages}
         </span>
         <button
-          className="btn btn-circle"
+          className="btn btn-circle btn-outline"
           onClick={handleNextPages}
           disabled={currentPage === totalPages}
         >

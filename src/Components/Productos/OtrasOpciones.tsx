@@ -29,7 +29,7 @@ export default function OtrasOpciones() {
               onClick={() => {
                 goToAdd(product.idProducts.toString());
               }}
-              className="cursor-pointer rounded-badge bg-base-100 border-2  p-4 hover:shadow-2xl transition-shadow duration-300"
+              className="cursor-pointer rounded-badge bg-base-100 border-2 border-base-300  p-4 hover:shadow-2xl transition-shadow duration-300"
             >
               <img
                 src={

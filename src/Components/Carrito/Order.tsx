@@ -4,6 +4,7 @@ import { useCart } from "../../hook/useCart";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { createPayPalOrder, capturePayPalOrder } from "../../services/paypal";
 import { ProductItem } from "../../types";
+import toast from "react-hot-toast";
 
 export default function Order() {
   const [showModal, setShowModal] = useState(false);
@@ -155,9 +156,8 @@ export default function Order() {
                       idClient
                     );
 
-                    alert(
-                      `¡Pago realizado con éxito!\nOrden #${response.orderId}`
-                    );
+                    toast.success(`¡Pago realizado con éxito!`);
+
                     dispatch({ type: "clearCart" });
                     setShowModal(false);
                   } catch (error) {
@@ -166,9 +166,9 @@ export default function Order() {
                     setIsProcessing(false);
                   }
                 }}
-                onCancel={() => alert("Pago cancelado")}
+                onCancel={() => toast.error("Pago cancelado")}
                 onError={() => {
-                  alert("Error en el pago. Intente nuevamente.");
+                  toast.error("Error en el pago. Intente nuevamente.");
                   setIsProcessing(false);
                 }}
               />
