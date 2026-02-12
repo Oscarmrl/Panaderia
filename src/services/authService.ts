@@ -5,7 +5,6 @@ import { CartActions } from "../reducers/Compras-Reducers";
 import { fetchAndSyncFavorites } from "./favoriteService";
 import type { login, register, LoginResponse } from "../types";
 
-// URLs del backend
 const API_URLS = [
   "https://backendpanaderia-production.up.railway.app",
   "http://localhost:3000",
@@ -19,7 +18,7 @@ async function refreshAccessToken(): Promise<string | null> {
     try {
       const response = await fetch(`${baseUrl}/refresh-token`, {
         method: "POST",
-        credentials: "include", // cookie httpOnly
+        credentials: "include",
       });
 
       if (!response.ok) continue;
@@ -43,32 +42,35 @@ async function refreshAccessToken(): Promise<string | null> {
 ================================ */
 async function fetchWithFallback(
   endpoint: string,
-  options: RequestInit
+  options: RequestInit,
 ): Promise<LoginResponse> {
   let lastError: Error | null = null;
+
+  const isAuthRoute = endpoint === "/login" || endpoint === "/register";
 
   for (const baseUrl of API_URLS) {
     try {
       const token = localStorage.getItem("token");
 
+      const headers = {
+        ...(options.headers || {}),
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      };
+
       const response = await fetch(`${baseUrl}${endpoint}`, {
         ...options,
         credentials: "include",
-        headers: {
-          ...(options.headers || {}),
-          Authorization: token ? `Bearer ${token}` : "",
-        },
+        headers,
       });
 
-      // Access token expirado
-      if (response.status === 401) {
+      // ❗ Solo refrescar si NO es login/register
+      if (response.status === 401 && !isAuthRoute) {
         const newToken = await refreshAccessToken();
 
         if (!newToken) {
           throw new Error("Sesión expirada");
         }
 
-        // Reintento con nuevo token
         const retryResponse = await fetch(`${baseUrl}${endpoint}`, {
           ...options,
           credentials: "include",
@@ -121,7 +123,7 @@ function saveUserData(response: LoginResponse, email: string): void {
 ================================ */
 export async function loginWithCredentials(
   credentials: login,
-  dispatch: Dispatch<CartActions>
+  dispatch: Dispatch<CartActions>,
 ): Promise<LoginResponse> {
   const { email, password } = credentials;
 
@@ -131,9 +133,7 @@ export async function loginWithCredentials(
 
   const response = await fetchWithFallback("/login", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
 
@@ -146,18 +146,15 @@ export async function loginWithCredentials(
    LOGIN GOOGLE
 ================================ */
 export async function loginWithGoogle(
-  dispatch: Dispatch<CartActions>
+  dispatch: Dispatch<CartActions>,
 ): Promise<LoginResponse> {
   const result = await signInWithPopup(auth, googleProvider);
   const user = result.user;
-
   const googleToken = await getIdToken(user);
 
   const response = await fetchWithFallback("/login", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ googleToken }),
   });
 
@@ -171,7 +168,7 @@ export async function loginWithGoogle(
 ================================ */
 export async function registerUser(
   userData: register,
-  dispatch: Dispatch<CartActions>
+  dispatch: Dispatch<CartActions>,
 ): Promise<LoginResponse> {
   const { email, password, name, phone, address } = userData;
 
@@ -181,9 +178,7 @@ export async function registerUser(
 
   const response = await fetchWithFallback("/register", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password, name, phone, address }),
   });
 
