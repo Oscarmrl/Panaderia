@@ -8,7 +8,7 @@ import { loginWithCredentials, loginWithGoogle } from "../services/authService";
 export default function Login() {
   const [mserror, setMserror] = useState("");
   const [loading, setLoading] = useState(false);
-  const { gotToHome, gotoRegister } = useNavigation();
+  const { gotToHome, gotoRegister, gotoProfile } = useNavigation();
   const { dispatch } = useCart();
 
   // Login con email y contraseña
@@ -18,6 +18,12 @@ export default function Login() {
 
     try {
       await loginWithCredentials(credentials, dispatch);
+      // Verificar si el perfil está completo (teléfono proporcionado)
+      const profileComplete = localStorage.getItem("profileComplete") === "true";
+      if (!profileComplete) {
+        gotoProfile();
+        return;
+      }
       gotToHome();
     } catch (err) {
       if (err instanceof Error) {
@@ -37,6 +43,12 @@ export default function Login() {
 
     try {
       await loginWithGoogle(dispatch);
+      // Verificar si el perfil está completo (teléfono proporcionado)
+      const profileComplete = localStorage.getItem("profileComplete") === "true";
+      if (!profileComplete) {
+        gotoProfile();
+        return;
+      }
       gotToHome();
     } catch (err) {
       if (err instanceof Error) {

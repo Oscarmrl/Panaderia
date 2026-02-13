@@ -2,8 +2,8 @@ import { useState } from "react";
 
 // Lista de URLs de backend para intentar
 const API_URLS = [
-  "https://backendpanaderia-production.up.railway.app",
   "http://localhost:3000",
+  "https://backendpanaderia-production.up.railway.app",
 ];
 
 // Hook personalizado para mutaciones (POST, PUT, DELETE)

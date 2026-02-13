@@ -32,6 +32,9 @@ export default function useNavigation() {
     gotoRegister: () => {
       navigate("/Panaderia/register");
     },
+    gotoProfile: () => {
+      navigate("/Panaderia/profile");
+    },
 
     // Admin
     goToAdminLayout: () => {

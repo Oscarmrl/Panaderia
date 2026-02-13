@@ -14,6 +14,7 @@ import Login from "./auth/Login";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import AdminRoute from "./auth/AdminRoute";
 import Register from "./auth/Register";
+import Profile from "./auth/Profile";
 
 import {
   BrowserRouter as Router,
@@ -69,6 +70,14 @@ function MainContent() {
 
         <Route path="/Panaderia/login" element={<Login />} />
         <Route path="/Panaderia/register" element={<Register />} />
+        <Route
+          path="/Panaderia/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/Panaderia/product/:id"

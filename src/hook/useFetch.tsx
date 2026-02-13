@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 
 const API_URLS = [
-  "https://backendpanaderia-production.up.railway.app",
   "http://localhost:3000",
+  "https://backendpanaderia-production.up.railway.app",
 ];
 
 const getAuthToken = () => {

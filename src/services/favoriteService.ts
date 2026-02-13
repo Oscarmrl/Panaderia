@@ -24,8 +24,8 @@ export const useRemoveFavorite = () => {
 export async function fetchAndSyncFavorites(dispatch: Dispatch<CartActions>) {
   const token = localStorage.getItem("token");
   const API_URLS = [
-    "https://backendpanaderia-production.up.railway.app",
     "http://localhost:3000",
+    "https://backendpanaderia-production.up.railway.app",
   ];
 
   for (const baseUrl of API_URLS) {

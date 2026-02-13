@@ -8,7 +8,7 @@ import { registerUser } from "../services/authService";
 export default function Register() {
   const [mserror, setMserror] = useState("");
   const [loading, setLoading] = useState(false);
-  const { gotToHome, gotoLogin } = useNavigation();
+  const { gotToHome, gotoLogin, gotoProfile } = useNavigation();
   const { dispatch } = useCart();
 
   // Función para manejar el registro
@@ -18,6 +18,13 @@ export default function Register() {
 
     try {
       await registerUser(userData, dispatch);
+      // En registro normal, el perfil siempre está completo (tiene teléfono)
+      // Pero verificamos por si acaso
+      const profileComplete = localStorage.getItem("profileComplete") === "true";
+      if (!profileComplete) {
+        gotoProfile();
+        return;
+      }
       gotToHome();
     } catch (err) {
       if (err instanceof Error) {

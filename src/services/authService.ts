@@ -6,8 +6,8 @@ import { fetchAndSyncFavorites } from "./favoriteService";
 import type { login, register, LoginResponse } from "../types";
 
 const API_URLS = [
-  "https://backendpanaderia-production.up.railway.app",
   "http://localhost:3000",
+  "https://backendpanaderia-production.up.railway.app",
 ];
 
 /* ===============================
@@ -40,7 +40,7 @@ async function refreshAccessToken(): Promise<string | null> {
 /* ===============================
    FETCH WITH FALLBACK + REFRESH
 ================================ */
-async function fetchWithFallback(
+export async function fetchWithFallback(
   endpoint: string,
   options: RequestInit,
 ): Promise<LoginResponse> {
@@ -116,6 +116,13 @@ function saveUserData(response: LoginResponse, email: string): void {
   if (response.idClient) {
     localStorage.setItem("idClient", String(response.idClient));
   }
+  
+  // Guardar si el perfil está completo (teléfono proporcionado)
+  // Si no está en la respuesta, asumimos true para compatibilidad
+  const profileComplete = response.profileComplete !== undefined 
+    ? response.profileComplete 
+    : true;
+  localStorage.setItem("profileComplete", profileComplete ? "true" : "false");
 }
 
 /* ===============================

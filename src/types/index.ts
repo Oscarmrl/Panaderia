@@ -57,7 +57,17 @@ export type LoginResponse = {
   role?: string;
   message?: string;
   idClient: number; // ✅ AGREGADO
+  profileComplete?: boolean; // Nuevo campo: indica si el perfil tiene teléfono
 };
+
+export type ClientProfile = {
+  idClient: number;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+};
+
 export type OrderDetail = {
   idOrder_Details: number;
   amount: number;
