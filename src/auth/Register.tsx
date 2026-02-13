@@ -18,6 +18,12 @@ export default function Register() {
 
     try {
       await registerUser(userData, dispatch);
+      // Si es admin, redirigir directamente al home (aunque registro es para customers)
+      const role = localStorage.getItem("role");
+      if (role === "admin") {
+        gotToHome();
+        return;
+      }
       // En registro normal, el perfil siempre está completo (tiene teléfono)
       // Pero verificamos por si acaso
       const profileComplete = localStorage.getItem("profileComplete") === "true";

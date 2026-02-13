@@ -12,11 +12,18 @@ export default function Profile() {
     phone: "",
     address: "",
   });
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const idClient = parseInt(localStorage.getItem("idClient") || "0");
 
   useEffect(() => {
+    // Si es admin, redirigir al home (el admin no tiene perfil de cliente)
+    const role = localStorage.getItem("role");
+    if (role === "admin") {
+      navigate("/Panaderia");
+      return;
+    }
+
     if (!idClient || idClient === 0) {
       console.log("idClient no válido, redirigiendo a home");
       toast.error("Debes iniciar sesión para ver tu perfil");
@@ -37,21 +44,19 @@ export default function Profile() {
         if (!isMounted) return;
 
         setProfile({
-          name: data.name,
-          email: data.email,
+          name: data.name || "",
+          email: data.email || "",
           phone: data.phone || "",
           address: data.address || "",
         });
+
         console.log("Perfil cargado:", data);
       } catch (error) {
         console.error("Error cargando perfil:", error);
         if (!isMounted) return;
         toast.error("No se pudo cargar el perfil");
-        // Si el endpoint no existe, podemos mostrar un formulario vacío
       } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
+        if (isMounted) setLoading(false);
       }
     };
 
@@ -64,6 +69,7 @@ export default function Profile() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!profile.phone.trim()) {
       toast.error("El teléfono es obligatorio");
       return;
@@ -76,9 +82,16 @@ export default function Profile() {
         address: profile.address,
         name: profile.name,
       });
-      // Marcar perfil como completo ahora que tiene teléfono
+
+      // marcar perfil completo
       localStorage.setItem("profileComplete", "true");
+
       toast.success("Perfil actualizado");
+
+      // redirigir automáticamente al inicio
+      setTimeout(() => {
+        navigate("/Panaderia");
+      }, 1200);
     } catch (error) {
       console.error(error);
       toast.error("Error al actualizar el perfil");
@@ -101,10 +114,11 @@ export default function Profile() {
   }
 
   return (
-    <div className="hero bg-base-200 min-h-screen">
-      <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-2xl">
+    <div className="hero bg-base-200 min-h-screen flex items-center justify-center">
+      <div className="card bg-base-100 w-full max-w-md shadow-2xl">
         <div className="card-body">
           <h1 className="text-3xl font-bold text-center mb-6">Mi Perfil</h1>
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="form-control">
               <label className="label font-semibold">Nombre</label>
@@ -117,6 +131,7 @@ export default function Profile() {
                 placeholder="Tu nombre"
               />
             </div>
+
             <div className="form-control">
               <label className="label font-semibold">Correo electrónico</label>
               <input
@@ -131,6 +146,7 @@ export default function Profile() {
                 El correo no se puede modificar
               </span>
             </div>
+
             <div className="form-control">
               <label className="label font-semibold">
                 Teléfono <span className="text-red-500">*</span>
@@ -148,6 +164,7 @@ export default function Profile() {
                 Necesario para confirmar tus pedidos
               </span>
             </div>
+
             <div className="form-control">
               <label className="label font-semibold">Dirección</label>
               <input
@@ -159,11 +176,12 @@ export default function Profile() {
                 placeholder="Dirección de entrega"
               />
             </div>
+
             <div className="form-control mt-6">
               <button
                 type="submit"
                 className="btn btn-primary"
-                disabled={saving}
+                disabled={saving || loading}
               >
                 {saving ? (
                   <>
@@ -173,15 +191,6 @@ export default function Profile() {
                 ) : (
                   "Guardar cambios"
                 )}
-              </button>
-            </div>
-            <div className="text-center">
-              <button
-                type="button"
-                className="btn btn-ghost"
-                onClick={() => navigate("/Panaderia")}
-              >
-                Volver al inicio
               </button>
             </div>
           </form>
