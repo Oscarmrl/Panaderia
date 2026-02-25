@@ -1,8 +1,7 @@
 import { FormatCurrency } from "../../helpers";
 import { useState } from "react";
 import { useCart } from "../../hook/useCart";
-import { PayPalButtons } from "@paypal/react-paypal-js";
-import { createPayPalOrder, capturePayPalOrder } from "../../services/paypal";
+import { createOrder } from "../../services/orders";
 import { ProductItem } from "../../types";
 import toast from "react-hot-toast";
 
@@ -12,8 +11,8 @@ export default function Order() {
   const { state, dispatch } = useCart();
 
   const total = state.cart.reduce(
-    (sum: number, item: ProductItem) => sum + item.price_hnl * item.quantity,
-    0
+    (sum: number, item: ProductItem) => sum + item.price * item.quantity,
+    0,
   );
 
   const totalFormatted = FormatCurrency(total);
@@ -56,7 +55,7 @@ export default function Order() {
                 className="flex justify-between text-lg md:text-xl font-semibold"
               >
                 <span>{item.name}</span>
-                <span>{FormatCurrency(item.price_hnl * item.quantity)}</span>
+                <span>{FormatCurrency(item.price * item.quantity)}</span>
               </li>
             ))}
           </ul>
@@ -91,7 +90,7 @@ export default function Order() {
               {/* Header */}
               <div className="flex items-center justify-between mb-5 border-b pb-3">
                 <h2 className="text-lg md:text-2xl font-bold text-accent">
-                  Método de pago
+                  Confirmar orden
                 </h2>
 
                 <button
@@ -116,7 +115,7 @@ export default function Order() {
                         {item.name} × {item.quantity}
                       </span>
                       <span className="font-semibold">
-                        {FormatCurrency(item.price_hnl * item.quantity)}
+                        {FormatCurrency(item.price * item.quantity)}
                       </span>
                     </li>
                   ))}
@@ -134,44 +133,32 @@ export default function Order() {
               {isProcessing && (
                 <div className="flex flex-col items-center gap-2 my-4">
                   <span className="loading loading-spinner loading-lg text-primary"></span>
-                  <p className="text-sm font-medium">Procesando pago...</p>
+                  <p className="text-sm font-medium">Procesando orden...</p>
                 </div>
               )}
 
-              <div className="divider my-4">Pagar con</div>
+              <div className="divider my-4">Confirmar orden</div>
 
-              <PayPalButtons
-                style={{ layout: "vertical" }}
+              <button
+                className="btn btn-primary w-full"
                 disabled={isProcessing}
-                createOrder={async () => {
-                  const orderID = await createPayPalOrder(state.cart, idClient);
-                  return orderID;
-                }}
-                onApprove={async (data) => {
+                onClick={async () => {
                   setIsProcessing(true);
                   try {
-                    await capturePayPalOrder(
-                      data.orderID,
-                      state.cart,
-                      idClient
-                    );
-
-                    toast.success(`¡Pago realizado con éxito!`);
-
+                    const result = await createOrder(state.cart);
+                    toast.success(`¡Orden creada con éxito!`);
                     dispatch({ type: "clearCart" });
                     setShowModal(false);
-                  } catch (error) {
+                  } catch (error: any) {
                     console.error(error);
+                    toast.error(error.message || "Error al crear la orden");
                   } finally {
                     setIsProcessing(false);
                   }
                 }}
-                onCancel={() => toast.error("Pago cancelado")}
-                onError={() => {
-                  toast.error("Error en el pago. Intente nuevamente.");
-                  setIsProcessing(false);
-                }}
-              />
+              >
+                {isProcessing ? "Procesando..." : "Confirmar orden"}
+              </button>
             </div>
           </div>
         )}

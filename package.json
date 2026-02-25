@@ -16,7 +16,6 @@
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
     "@fontsource/roboto": "^5.1.0",
-    "@paypal/react-paypal-js": "^8.9.2",
     "axios": "^1.13.2",
     "firebase": "^12.1.0",
     "react": "^18.3.1",
