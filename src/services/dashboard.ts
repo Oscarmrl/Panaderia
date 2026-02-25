@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { DashboardSummary, SalesByDay, TopProduct } from "../types";
+import type { DashboardSummary, SalesByDayResponse, MonthlySales, TopProduct } from "../types";
 
 const API_URL = "http://localhost:3000";
 
@@ -43,11 +43,12 @@ export const getDashboardSummary = async (): Promise<DashboardSummary> => {
   }
 };
 
-// 📈 Ventas por día
-export const getSalesByDay = async (): Promise<SalesByDay[]> => {
+// 📈 Ventas por día (con paginación)
+export const getSalesByDay = async (page = 1, limit = 7): Promise<SalesByDayResponse> => {
   try {
     const response = await axios.get(`${API_URL}/sales-by-day`, {
       headers: getAuthHeaders(),
+      params: { page, limit },
       timeout: 10000,
     });
 
@@ -76,6 +77,26 @@ export const getTopProducts = async (): Promise<TopProduct[]> => {
     if (axios.isAxiosError(err)) {
       throw new Error(
         err.response?.data?.message || "Error al obtener productos más vendidos"
+      );
+    }
+
+    throw new Error("Error inesperado");
+  }
+};
+
+// 📅 Ventas mensuales
+export const getMonthlySales = async (): Promise<MonthlySales[]> => {
+  try {
+    const response = await axios.get(`${API_URL}/monthly-sales`, {
+      headers: getAuthHeaders(),
+      timeout: 10000,
+    });
+
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      throw new Error(
+        err.response?.data?.message || "Error al obtener ventas mensuales"
       );
     }
 
