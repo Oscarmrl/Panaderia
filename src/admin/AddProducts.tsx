@@ -116,7 +116,7 @@ export default function AddProducts() {
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text font-semibold">
-                      Precio (USD)
+                       Precio (HNL)
                     </span>
                   </label>
                   <input

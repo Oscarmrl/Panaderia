@@ -91,6 +91,25 @@ export type SalesByDay = {
   total_hnl: number;
 };
 
+export type SalesByDayResponse = {
+  data: SalesByDay[];
+  pagination: {
+    page: number;
+    limit: number;
+    totalDays: number;
+    totalPages: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  };
+};
+
+export type MonthlySales = {
+  month: string;
+  total_usd: number;
+  total_hnl: number;
+  orderCount: number;
+};
+
 export type TopProduct = {
   name: string;
   quantity: number;

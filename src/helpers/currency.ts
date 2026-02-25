@@ -1,11 +1,8 @@
-const LEMPIRA_RATE = 27.5; // tasa fija USD → HNL
-
-export const USDToHNL = (
-  amountUSD: number,
+// Formatea cantidades en Lempiras (HNL)
+export const FormatHNL = (
+  amountHNL: number,
   formatted = true
 ): string | number => {
-  const amountHNL = amountUSD * LEMPIRA_RATE;
-
   if (formatted) {
     return new Intl.NumberFormat("es-HN", {
       style: "currency",
@@ -15,3 +12,6 @@ export const USDToHNL = (
 
   return amountHNL;
 };
+
+// Alias para compatibilidad (eliminar eventualmente)
+export const USDToHNL = FormatHNL;

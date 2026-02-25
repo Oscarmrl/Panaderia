@@ -90,7 +90,7 @@ export default function ProductList({
                     {item.description}
                   </p>
                   <span className="font-bold ml-4 md:ml-8 2xl">
-                    {FormatCurrency(item.price_hnl)}
+                     {FormatCurrency(item.price)}
                   </span>
                 </div>
 

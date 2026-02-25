@@ -63,7 +63,7 @@ export default function Products() {
 
                 <div className="actions">
                   <span className="price badge">
-                    {FormatCurrency(Number(pro.price_hnl))}
+                     {FormatCurrency(Number(pro.price))}
                   </span>
                   <button className="button">
                     <IconoNav icon={IoMdAdd} size="w-4 h-4" label="" />

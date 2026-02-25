@@ -97,7 +97,7 @@ export default function EditProducts() {
                 {/* Precio */}
                 <div className="mt-2">
                   <span className="badge   font-semibold md:text-lg">
-                    {FormatCurrency(product.price_hnl)}
+                     {FormatCurrency(product.price)}
                   </span>
                 </div>
 

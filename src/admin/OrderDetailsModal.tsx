@@ -1,4 +1,4 @@
-import { USDToHNL } from "../helpers/currency";
+import { FormatCurrency } from "../helpers";
 
 import { OrderDetail } from "../types";
 
@@ -60,7 +60,7 @@ export default function OrderDetailsModal({
                     {item.amount}
                   </div>
                   <div className="flex gap-2">
-                    <span className="font-bold">{USDToHNL(item.subtotal)}</span>
+                     <span className="font-bold">{FormatCurrency(item.subtotal)}</span>
                   </div>
                 </li>
               ))}
@@ -68,7 +68,7 @@ export default function OrderDetailsModal({
 
             <div className="divider my-2"></div>
             <div className="text-right font-bold text-xl">
-              Total: {USDToHNL(total)}
+               Total: {FormatCurrency(total)}
             </div>
           </>
         )}

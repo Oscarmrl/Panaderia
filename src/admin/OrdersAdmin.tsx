@@ -10,7 +10,7 @@ import { Order, OrderDetail, PaginatedOrders } from "../types";
 import toast from "react-hot-toast";
 import Pagination from "./Pagination";
 import OrderDetailsModal from "./OrderDetailsModal";
-import { USDToHNL } from "../helpers/currency";
+import { FormatCurrency } from "../helpers";
 
 export default function OrdersAdmin() {
   const { goToAdminLayout } = useNavigation();
@@ -221,7 +221,7 @@ export default function OrdersAdmin() {
                           />
                         </svg>
                         <span className="text-lg font-bold text-primary">
-                          {USDToHNL(order.total)}
+                           {FormatCurrency(order.total)}
                         </span>
                       </div>
                     </div>
@@ -280,7 +280,7 @@ export default function OrdersAdmin() {
                         {order.client_phone}
                       </td>
                       <td className="font-bold text-right text-primary">
-                        {USDToHNL(order.total)}
+                         {FormatCurrency(order.total)}
                       </td>
                       <td className="hidden lg:table-cell">
                         {new Date(order.order_date).toLocaleDateString(

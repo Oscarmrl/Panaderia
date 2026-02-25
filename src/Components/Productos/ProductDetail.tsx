@@ -154,7 +154,7 @@ export default function ProductDetail() {
               <h3 className="text-sm">Sub total</h3>
               <span className="font-bold text-2xl">
                 {FormatCurrency(
-                  productInCart.quantity * productInCart.price_hnl
+                   productInCart.quantity * productInCart.price
                 )}
               </span>
             </div>
