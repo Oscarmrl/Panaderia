@@ -145,11 +145,12 @@ export default function Order() {
                 onClick={async () => {
                   setIsProcessing(true);
                   try {
-                    const result = await createOrder(state.cart);
+                    await createOrder(state.cart);
                     toast.success(`¡Orden creada con éxito!`);
                     dispatch({ type: "clearCart" });
                     setShowModal(false);
                   } catch (error: any) {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     console.error(error);
                     toast.error(error.message || "Error al crear la orden");
                   } finally {

@@ -2,33 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Estilo de las tarjetas */
-.Product {
-  @apply flex flex-col w-full border-2 border-base-300 h-full bg-base-100 rounded-2xl shadow-lg overflow-hidden;
-}
-
-.Product .img {
-  @apply w-full h-28 sm:h-40 md:h-56 object-cover;
-}
-
-.Product .name {
-  @apply text-sm sm:text-lg md:text-2xl font-bold text-start  m-2  text-accent;
-}
-
-.Product .description {
-  @apply text-sm sm:text-lg text-primary m-2 flex-grow text-start;
-}
-.Product .actions {
-  @apply mt-auto flex items-center justify-between m-2;
-}
-.Product .price {
-  @apply text-sm  md:text-xl font-semibold;
-}
-
-.Product button {
-  @apply w-10  h-10 py-1 text-xs sm:text-sm bg-accent text-white font-medium rounded-full hover:bg-neutral transition duration-300;
-}
-
 .Menu_active {
   @apply w-20 md:w-40 flex flex-col items-center justify-center bg-secondary text-white px-6 py-3 font-semibold shadow-lg rounded-[50%_50%_0%_0%] transition-all duration-300;
 }
