@@ -12,7 +12,7 @@ export default function useMutation<T>() {
   const [loading, setLoading] = useState(false); // Estado de carga
   const [error, setError] = useState<Error | null>(null); // Estado de error
 
-  const getAuthToken = () => localStorage.getItem("token"); // Obtener token de autenticación
+  const getAuthToken = () => sessionStorage.getItem("token"); // Obtener token de autenticación
 
   const mutate = async (
     path: string, // Ruta del endpoint

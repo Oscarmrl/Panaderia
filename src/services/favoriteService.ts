@@ -22,7 +22,7 @@ export const useRemoveFavorite = () => {
 
 // Función utilitaria para sincronizar favoritos tras login
 export async function fetchAndSyncFavorites(dispatch: Dispatch<CartActions>) {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const API_URLS = [
     "http://localhost:3000",
     "https://backendpanaderia-production.up.railway.app",
@@ -40,7 +40,7 @@ export async function fetchAndSyncFavorites(dispatch: Dispatch<CartActions>) {
       if (response.ok) {
         const favorites = await response.json();
         if (favorites && Array.isArray(favorites)) {
-          localStorage.setItem("favorite", JSON.stringify(favorites));
+          sessionStorage.setItem("favorite", JSON.stringify(favorites));
           dispatch({ type: "initFavorite", payload: { favorite: favorites } });
         }
         return; // Salir del bucle si fue exitoso

@@ -1,10 +1,10 @@
 export const getAuthUser = () => {
   return {
-    isLoggedIn: localStorage.getItem("loggedIn") === "true",
-    role: localStorage.getItem("role"),
-    token: localStorage.getItem("token"),
-    idClient: localStorage.getItem("idClient"),
-    username: localStorage.getItem("username"),
-    email: localStorage.getItem("userEmail"),
+    isLoggedIn: sessionStorage.getItem("loggedIn") === "true",
+    role: sessionStorage.getItem("role"),
+    token: sessionStorage.getItem("token"),
+    idClient: sessionStorage.getItem("idClient"),
+    username: sessionStorage.getItem("username"),
+    email: sessionStorage.getItem("userEmail"),
   };
 };

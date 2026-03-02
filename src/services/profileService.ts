@@ -7,7 +7,7 @@ const API_URLS = [
 ];
 
 export async function getProfile(idClient: number): Promise<ClientProfile> {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   if (!token) {
     throw new Error("No autenticado");
   }
@@ -60,7 +60,7 @@ export async function updateProfile(
   idClient: number,
   data: Partial<ClientProfile>,
 ): Promise<{ message: string }> {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   if (!token) {
     throw new Error("No autenticado");
   }

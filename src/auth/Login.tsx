@@ -19,13 +19,13 @@ export default function Login() {
     try {
       await loginWithCredentials(credentials, dispatch);
       // Si es admin, redirigir directamente al home
-      const role = localStorage.getItem("role");
+      const role = sessionStorage.getItem("role");
       if (role === "admin") {
         gotToHome();
         return;
       }
       // Verificar si el perfil está completo (teléfono proporcionado)
-      const profileComplete = localStorage.getItem("profileComplete") === "true";
+      const profileComplete = sessionStorage.getItem("profileComplete") === "true";
       if (!profileComplete) {
         gotoProfile();
         return;
@@ -50,13 +50,13 @@ export default function Login() {
     try {
       await loginWithGoogle(dispatch);
       // Si es admin, redirigir directamente al home
-      const role = localStorage.getItem("role");
+      const role = sessionStorage.getItem("role");
       if (role === "admin") {
         gotToHome();
         return;
       }
       // Verificar si el perfil está completo (teléfono proporcionado)
-      const profileComplete = localStorage.getItem("profileComplete") === "true";
+      const profileComplete = sessionStorage.getItem("profileComplete") === "true";
       if (!profileComplete) {
         gotoProfile();
         return;

@@ -6,7 +6,7 @@ const API_URLS = [
 ];
 
 const getAuthToken = () => {
-  return localStorage.getItem("token");
+  return sessionStorage.getItem("token");
 };
 
 export default function useFetch<T>(

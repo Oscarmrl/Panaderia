@@ -14,11 +14,11 @@ export default function Profile() {
   });
 
   const navigate = useNavigate();
-  const idClient = parseInt(localStorage.getItem("idClient") || "0");
+  const idClient = parseInt(sessionStorage.getItem("idClient") || "0");
 
   useEffect(() => {
     // Si es admin, redirigir al home (el admin no tiene perfil de cliente)
-    const role = localStorage.getItem("role");
+    const role = sessionStorage.getItem("role");
     if (role === "admin") {
       navigate("/Panaderia");
       return;
@@ -84,7 +84,7 @@ export default function Profile() {
       });
 
       // marcar perfil completo
-      localStorage.setItem("profileComplete", "true");
+      sessionStorage.setItem("profileComplete", "true");
 
       toast.success("Perfil actualizado");
 

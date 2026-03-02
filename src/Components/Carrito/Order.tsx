@@ -17,7 +17,7 @@ export default function Order() {
 
   const totalFormatted = FormatCurrency(total);
 
-  const idClient = parseInt(localStorage.getItem("idClient") || "0");
+  const idClient = parseInt(sessionStorage.getItem("idClient") || "0");
 
   if (!idClient || idClient === 0) {
     return (

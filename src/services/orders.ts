@@ -28,7 +28,7 @@ async function tryAxiosRequest<T>(
 export const createOrder = async (
   cart: ProductItem[]
 ): Promise<{ message: string; idOrders: number }> => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   if (!token) {
     throw new Error("No autenticado");
@@ -71,7 +71,7 @@ export const getAllOrders = async (
   page = 1,
   limit = 10
 ): Promise<PaginatedOrders> => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   if (!token) {
     throw new Error("No autenticado");
@@ -107,7 +107,7 @@ export const updateOrderStatus = async (
   idOrders: number,
   order_status: string
 ): Promise<{ message: string }> => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   if (!token) {
     throw new Error("No autenticado");
@@ -148,7 +148,7 @@ export const updateOrderStatus = async (
 export const getOrderDetails = async (
   idOrders: number
 ): Promise<OrderDetail[]> => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   if (!token) {
     throw new Error("No autenticado");

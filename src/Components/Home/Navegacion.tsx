@@ -18,8 +18,8 @@ export default function Navegacion() {
   const { mutate } = useMutation();
 
   const isLoggedIn = () => {
-    const token = localStorage.getItem("token");
-    const loggedIn = localStorage.getItem("loggedIn");
+    const token = sessionStorage.getItem("token");
+    const loggedIn = sessionStorage.getItem("loggedIn");
     return loggedIn === "true" && token !== null;
   };
 
@@ -29,6 +29,7 @@ export default function Navegacion() {
   const handleLogout = async () => {
     try {
       await mutate("/api/logout", "POST");
+      sessionStorage.clear();
       localStorage.clear();
       gotToHome();
     } catch (err) {

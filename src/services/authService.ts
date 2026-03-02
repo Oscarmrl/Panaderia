@@ -26,7 +26,7 @@ async function refreshAccessToken(): Promise<string | null> {
       const data = await response.json();
 
       if (data.accessToken) {
-        localStorage.setItem("token", data.accessToken);
+        sessionStorage.setItem("token", data.accessToken);
         return data.accessToken;
       }
     } catch {
@@ -50,7 +50,7 @@ export async function fetchWithFallback(
 
   for (const baseUrl of API_URLS) {
     try {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
 
       const headers = {
         ...(options.headers || {}),
@@ -107,14 +107,14 @@ export async function fetchWithFallback(
    SAVE USER DATA
 ================================ */
 function saveUserData(response: LoginResponse, email: string): void {
-  localStorage.setItem("loggedIn", "true");
-  localStorage.setItem("userEmail", email);
-  localStorage.setItem("role", response.role || "customer");
-  localStorage.setItem("token", response.accessToken);
-  localStorage.setItem("username", response.username);
+  sessionStorage.setItem("loggedIn", "true");
+  sessionStorage.setItem("userEmail", email);
+  sessionStorage.setItem("role", response.role || "customer");
+  sessionStorage.setItem("token", response.accessToken);
+  sessionStorage.setItem("username", response.username);
 
   if (response.idClient) {
-    localStorage.setItem("idClient", String(response.idClient));
+    sessionStorage.setItem("idClient", String(response.idClient));
   }
   
   // Guardar si el perfil está completo (teléfono proporcionado)
@@ -122,7 +122,7 @@ function saveUserData(response: LoginResponse, email: string): void {
   const profileComplete = response.profileComplete !== undefined 
     ? response.profileComplete 
     : true;
-  localStorage.setItem("profileComplete", profileComplete ? "true" : "false");
+  sessionStorage.setItem("profileComplete", profileComplete ? "true" : "false");
 }
 
 /* ===============================
@@ -198,5 +198,6 @@ export async function registerUser(
    LOGOUT
 ================================ */
 export function logout(): void {
+  sessionStorage.clear();
   localStorage.clear();
 }

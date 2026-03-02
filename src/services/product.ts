@@ -31,7 +31,7 @@ export interface ProductResponse {
 export const createProduct = async (
   data: ProductData
 ): Promise<ProductResponse> => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   if (!token) {
     throw new Error("No autenticado");
@@ -63,7 +63,7 @@ export const updateProduct = async (
   id: number,
   data: ProductData
 ): Promise<{ message: string; price_usd: number; price_hnl: number }> => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   if (!token) {
     throw new Error("No autenticado");
@@ -94,7 +94,7 @@ export const updateProduct = async (
 export const deleteProduct = async (
   id: number
 ): Promise<{ message: string }> => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   if (!token) {
     throw new Error("No autenticado");

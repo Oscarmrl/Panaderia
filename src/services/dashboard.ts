@@ -4,7 +4,7 @@ import type { DashboardSummary, SalesByDayResponse, MonthlySales, TopProduct } f
 const API_URL = "http://localhost:3000";
 
 const getAuthHeaders = () => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   if (!token) {
     throw new Error("No autenticado");

@@ -6,7 +6,7 @@ type ProtectedRouteProps = {
 };
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+  const isLoggedIn = sessionStorage.getItem("loggedIn") === "true";
   if (!isLoggedIn) {
     return <Navigate to="/Panaderia/Login" />;
   }

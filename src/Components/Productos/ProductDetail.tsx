@@ -50,7 +50,7 @@ export default function ProductDetail() {
   // Manejo del click en favorito
   const handleFavorite = async () => {
     // Verificar si el usuario está logueado
-    const loggedIn = localStorage.getItem("loggedIn") === "true";
+    const loggedIn = sessionStorage.getItem("loggedIn") === "true";
     if (!loggedIn) return gotoLogin();
 
     try {
@@ -122,7 +122,7 @@ export default function ProductDetail() {
               <span>{quantity}</span>
               <Button
                 onClick={() => {
-                  const loggedIn = localStorage.getItem("loggedIn") === "true";
+    const loggedIn = sessionStorage.getItem("loggedIn") === "true";
                   if (!loggedIn) return gotoLogin();
 
                   dispatch({
