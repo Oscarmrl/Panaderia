@@ -38,13 +38,15 @@ function App() {
 function MainContent() {
   const location = useLocation();
 
-  const showBaner = location.pathname === "/Panaderia";
+  const showBaner =
+    location.pathname === "/" || location.pathname === "/Panaderia";
 
   return (
     <>
       <Navegacion />
       {showBaner && <Baner />}{" "}
       <Routes>
+        <Route path="/" element={<Products />} />
         <Route path="/Panaderia" element={<Products />} />
         <Route
           path="/Panaderia/cart"

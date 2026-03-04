@@ -5,7 +5,7 @@ export default function Baner() {
     <div className="bg-base flex justify-center items-center mt-0 sm:mt-2 px-2 sm:px-4">
       <div className="relative w-full h-64 sm:h-72 md:h-80 lg:h-96 bg-base-100 rounded-none sm:rounded-lg md:rounded-badge overflow-hidden shadow-lg sm:shadow-2xl max-w-7xl mx-auto">
         <img
-          src="/Panaderia/Principal.jpeg"
+          src="Principal.jpeg"
           alt="Imagen principal"
           className="w-full h-full object-cover opacity-80 sm:opacity-90"
         />
