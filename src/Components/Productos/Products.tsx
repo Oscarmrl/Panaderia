@@ -58,7 +58,7 @@ export default function Products() {
                   <div className="relative h-40 sm:h-44 md:h-48 lg:h-56 overflow-hidden">
                     <img
                       className="w-full h-full object-cover group-hover:scale-105 sm:group-hover:scale-110 transition-transform duration-700"
-                      src={pro.image ? pro.image : "/Panaderia/Principal.jpeg"}
+                       src={pro.image ? pro.image : "/Principal.jpeg"}
                       alt={pro.name}
                     />
                     <div className="absolute top-2 left-2 sm:top-3 sm:left-3 md:top-4 md:left-4 flex items-center gap-1 sm:gap-2">

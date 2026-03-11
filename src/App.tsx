@@ -38,8 +38,7 @@ function App() {
 function MainContent() {
   const location = useLocation();
 
-  const showBaner =
-    location.pathname === "/" || location.pathname === "/Panaderia";
+  const showBaner = location.pathname === "/";
 
   return (
     <>
@@ -47,9 +46,7 @@ function MainContent() {
       {showBaner && <Baner />}{" "}
       <Routes>
         <Route path="/" element={<Products />} />
-        <Route path="/Panaderia" element={<Products />} />
-        <Route
-          path="/Panaderia/cart"
+        <Route path="/cart"
           element={
             <div className="grid grid-cols-1 lg:grid-cols-2  gap-4 ">
               <ProtectedRoute>
@@ -62,7 +59,7 @@ function MainContent() {
         />
 
         <Route
-          path="/Panaderia/favoritos"
+          path="/favoritos"
           element={
             <ProtectedRoute>
               <Favoritos />
@@ -70,10 +67,10 @@ function MainContent() {
           }
         />
 
-        <Route path="/Panaderia/login" element={<Login />} />
-        <Route path="/Panaderia/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route
-          path="/Panaderia/profile"
+          path="/profile"
           element={
             <ProtectedRoute>
               <Profile />
@@ -82,7 +79,7 @@ function MainContent() {
         />
 
         <Route
-          path="/Panaderia/product/:id"
+          path="/product/:id"
           element={
             <>
               <ProductDetail />
@@ -92,7 +89,7 @@ function MainContent() {
         />
 
         <Route
-          path="/Panaderia/admin"
+          path="/admin"
           element={
             <AdminRoute>
               <AdminLayout />
@@ -101,7 +98,7 @@ function MainContent() {
         />
 
         <Route
-          path="/Panaderia/admin/Dashboard"
+          path="/admin/Dashboard"
           element={
             <AdminRoute>
               <Dashboard />
@@ -109,7 +106,7 @@ function MainContent() {
           }
         />
         <Route
-          path="/Panaderia/admin/Edit_Products"
+          path="/admin/Edit_Products"
           element={
             <AdminRoute>
               <EditProducts />
@@ -118,7 +115,7 @@ function MainContent() {
         />
 
         <Route
-          path="/Panaderia/admin/Add_Products"
+          path="/admin/Add_Products"
           element={
             <AdminRoute>
               <AddProducts />
@@ -127,7 +124,7 @@ function MainContent() {
         />
 
         <Route
-          path="/Panaderia/admin/Orders"
+          path="/admin/Orders"
           element={
             <AdminRoute>
               <OrdersAdmin />

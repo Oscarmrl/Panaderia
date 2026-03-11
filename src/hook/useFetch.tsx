@@ -60,7 +60,7 @@ export default function useFetch<T>(
           setLoading(false);
           return;
         } catch (err) {
-          console.log(`Error con ${baseUrl}`, err);
+          // console.log(`Error con ${baseUrl}`, err);
         }
       }
 

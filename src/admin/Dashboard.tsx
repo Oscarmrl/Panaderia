@@ -34,9 +34,9 @@ export default function Dashboard() {
           getTopProducts(),
         ]);
 
-         console.log('Dashboard summary:', summaryRes);
-         console.log('Sales by day:', salesRes);
-         console.log('Monthly sales:', monthlyRes);
+         // console.log('Dashboard summary:', summaryRes);
+         // console.log('Sales by day:', salesRes);
+         // console.log('Monthly sales:', monthlyRes);
          setSummary(summaryRes);
          setSales(salesRes);
          setMonthlySales(monthlyRes);

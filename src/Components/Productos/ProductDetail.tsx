@@ -69,7 +69,7 @@ export default function ProductDetail() {
         });
       }
     } catch (error) {
-      console.error("Error al actualizar favoritos", error);
+      console.error("Error al actualizar favoritos");
     }
   };
 
@@ -79,7 +79,7 @@ export default function ProductDetail() {
         <div className="relative">
           <img
             className="w-full h-auto object-cover rounded-lg"
-            src={product?.image ? product?.image : "/Panaderia/Principal.jpeg"}
+            src={product?.image ? product?.image : "/Principal.jpeg"}
             alt="Product Image"
           />
 

@@ -46,7 +46,7 @@ export async function fetchAndSyncFavorites(dispatch: Dispatch<CartActions>) {
         return; // Salir del bucle si fue exitoso
       }
     } catch (error) {
-      console.error("Error fetching favorites:", error);
+      console.error("Error fetching favorites");
       continue; // Probar siguiente URL
     }
   }

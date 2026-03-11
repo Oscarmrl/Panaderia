@@ -97,12 +97,12 @@ export default function EditProductModal({
         {!removeImage && (
           <div className="mb-4">
             <img
-              src={form.image || "/Panaderia/Principal.jpeg"}
-              alt="Producto"
-              className="h-40 w-full object-cover rounded"
-              onError={(e) => {
-                e.currentTarget.src = "/Panaderia/Principal.jpeg";
-              }}
+               src={form.image || "/Principal.jpeg"}
+               alt="Producto"
+               className="h-40 w-full object-cover rounded"
+               onError={(e) => {
+                 e.currentTarget.src = "/Principal.jpeg";
+               }}
             />
           </div>
         )}

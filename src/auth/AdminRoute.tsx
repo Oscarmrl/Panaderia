@@ -9,7 +9,7 @@ type AdminRouteProps = {
 export default function AdminRoute({ children }: AdminRouteProps) {
   const { role } = getAuthUser();
   if (role !== "admin") {
-    return <Navigate to="/Panaderia" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;

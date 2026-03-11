@@ -21,7 +21,7 @@ export default function Favoritos() {
         payload: { id: productId },
       });
     } catch (error) {
-      console.error("Error al eliminar favorito", error);
+      console.error("Error al eliminar favorito");
     }
   };
 

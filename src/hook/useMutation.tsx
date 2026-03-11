@@ -61,7 +61,7 @@ export default function useMutation<T>() {
         setLoading(false);
         return result;
       } catch (err) {
-        console.log(`Error con ${baseUrl}`, err);
+        // console.log(`Error con ${baseUrl}`, err);
       }
     }
 

@@ -33,14 +33,14 @@ export default function Navegacion() {
       localStorage.clear();
       gotToHome();
     } catch (err) {
-      console.error("Error al hacer logout:", err);
+      console.error("Error al hacer logout");
     }
   };
 
   return (
     <div className="navbar bg-base-100 sticky top-0 left-0 w-full z-50 shadow-md md:rounded-2xl">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <a className="btn btn-outline text-xl">Vínculo y sabor</a>
       </div>
 
       <div className="flex-none">

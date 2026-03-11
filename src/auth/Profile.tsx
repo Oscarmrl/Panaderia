@@ -20,14 +20,14 @@ export default function Profile() {
     // Si es admin, redirigir al home (el admin no tiene perfil de cliente)
     const role = sessionStorage.getItem("role");
     if (role === "admin") {
-      navigate("/Panaderia");
+      navigate("/");
       return;
     }
 
     if (!idClient || idClient === 0) {
-      console.log("idClient no válido, redirigiendo a home");
+      // console.log("idClient no válido, redirigiendo a home");
       toast.error("Debes iniciar sesión para ver tu perfil");
-      navigate("/Panaderia");
+      navigate("/");
       return;
     }
 
@@ -38,7 +38,7 @@ export default function Profile() {
 
       setLoading(true);
       try {
-        console.log("Cargando perfil para idClient:", idClient);
+        // console.log("Cargando perfil para idClient:", idClient);
         const data = await getProfile(idClient);
 
         if (!isMounted) return;
@@ -50,9 +50,9 @@ export default function Profile() {
           address: data.address || "",
         });
 
-        console.log("Perfil cargado:", data);
+        // console.log("Perfil cargado:", data);
       } catch (error) {
-        console.error("Error cargando perfil:", error);
+        console.error("Error cargando perfil");
         if (!isMounted) return;
         toast.error("No se pudo cargar el perfil");
       } finally {
@@ -90,10 +90,10 @@ export default function Profile() {
 
       // redirigir automáticamente al inicio
       setTimeout(() => {
-        navigate("/Panaderia");
+      navigate("/");
       }, 1200);
     } catch (error) {
-      console.error(error);
+      console.error("Error al actualizar perfil");
       toast.error("Error al actualizar el perfil");
     } finally {
       setSaving(false);

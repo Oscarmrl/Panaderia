@@ -11,61 +11,61 @@ export default function useNavigation() {
     // Usuario
     gotToHome: () => {
       setActiveTab("home");
-      navigate("/Panaderia");
+      navigate("/");
     },
 
     goToAdd: (id: string) => {
-      navigate(`/Panaderia/product/${id}`);
+      navigate(`/product/${id}`);
       setActiveTab("add");
     },
     goToCart: () => {
-      navigate("/Panaderia/cart");
+      navigate("/cart");
       setActiveTab("carrito");
     },
     goToFavorites: () => {
-      navigate("/Panaderia/favoritos");
+      navigate("/favoritos");
       setActiveTab("favoritos");
     },
     gotoLogin: () => {
-      navigate("/Panaderia/login");
+      navigate("/login");
     },
     gotoRegister: () => {
-      navigate("/Panaderia/register");
+      navigate("/register");
     },
     gotoProfile: () => {
-      navigate("/Panaderia/profile");
+      navigate("/profile");
     },
 
     // Admin
     goToAdminLayout: () => {
       if (role === "admin") {
         setActiveTab("admin");
-        navigate("/Panaderia/admin");
+        navigate("/admin");
       }
     },
     goToDashboard: () => {
       if (role === "admin") {
         setActiveTab("admin");
-        navigate("/Panaderia/admin/Dashboard");
+        navigate("/admin/Dashboard");
       }
     },
     goToEditProducts: () => {
       if (role === "admin") {
         setActiveTab("admin");
-        navigate("/Panaderia/admin/Edit_Products");
+        navigate("/admin/Edit_Products");
       }
     },
     goToAddProducts: () => {
       if (role === "admin") {
         setActiveTab("admin");
-        navigate("/Panaderia/admin/Add_Products");
+        navigate("/admin/Add_Products");
       }
     },
 
     goToOrders: () => {
       if (role === "admin") {
         setActiveTab("admin");
-        navigate("/Panaderia/admin/Orders");
+        navigate("/admin/Orders");
       }
     },
   };

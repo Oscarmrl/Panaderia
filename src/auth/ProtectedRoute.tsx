@@ -8,7 +8,7 @@ type ProtectedRouteProps = {
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const isLoggedIn = sessionStorage.getItem("loggedIn") === "true";
   if (!isLoggedIn) {
-    return <Navigate to="/Panaderia/Login" />;
+    return <Navigate to="/login" />;
   }
   return children;
 }

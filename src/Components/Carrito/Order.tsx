@@ -151,7 +151,7 @@ export default function Order() {
                     setShowModal(false);
                   } catch (error: any) {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    console.error(error);
+                    console.error("Error al crear orden");
                     toast.error(error.message || "Error al crear la orden");
                   } finally {
                     setIsProcessing(false);

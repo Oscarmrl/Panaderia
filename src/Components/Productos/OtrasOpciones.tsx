@@ -32,9 +32,9 @@ export default function OtrasOpciones() {
               className="cursor-pointer rounded-badge bg-base-100 border-2 border-base-300  p-4 hover:shadow-2xl transition-shadow duration-300"
             >
               <img
-                src={
-                  product.image ? product.image : "/Panaderia/Principal.jpeg"
-                }
+                 src={
+                   product.image ? product.image : "/Principal.jpeg"
+                 }
                 alt={product.name}
                 className="w-full h-40 object-cover rounded"
               />
